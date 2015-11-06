@@ -4,6 +4,7 @@
 Android Multi Tool is a tool inittially created for Nexus 6P but designed to be modular, easy to modify and port to other device and to be trully cross-platform.
 
 This tool wants to stand out from the rest of the tools out there by providing a intuitive UI that uses most of the ADB and Fastboot commands.
+As a bonus, this tool also checks for updates.
 
 The UI has been carefully tested and designed in mind with 3 operating systems (Windows, Linux and MAC).
 
@@ -57,6 +58,8 @@ After that, you should be able to build, debug, edit and so on.
  - Add more Code Comments
  - Add context menus for refresh and detele files in some menus
  - Use layouts so you can resize the menus
+ - Add messages when you want to save files with a name that already exists
+ - Add APK Install functionality
 
 License
 ----
