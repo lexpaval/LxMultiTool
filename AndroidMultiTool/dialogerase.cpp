@@ -191,8 +191,6 @@ void DialogErase::on_eraseButton_clicked()
 
 void DialogErase::processFinished(int exitCode)
 {
-    QProcess *p = dynamic_cast<QProcess *>( sender() );
-
     if(exitCode != 0)
     {
         // Prepare a messagebox

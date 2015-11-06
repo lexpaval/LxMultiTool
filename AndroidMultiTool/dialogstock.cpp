@@ -92,7 +92,7 @@ DialogStock::~DialogStock()
 
 void DialogStock::processOutput()
 {
-    QProcess *p = dynamic_cast<QProcess *>( sender() );
+    // Do nothing
 }
 
 void DialogStock::processFinished(int exitCode)
