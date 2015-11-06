@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../Icons/android.png</file>
+        <file>../Icons/backup.png</file>
+        <file>../Icons/lock.png</file>
+        <file>../Icons/recovery.png</file>
+        <file>../Icons/restore.png</file>
+        <file>../Icons/unlock.png</file>
+        <file>../Icons/update.png</file>
+        <file>../Icons/sideload_2.png</file>
+        <file>../Icons/reboot.png</file>
+        <file>../Icons/kernel.png</file>
+        <file>../Icons/version.png</file>
+        <file>../Icons/about.png</file>
+        <file>../Icons/updates.png</file>
+        <file>../Icons/xda_developers.png</file>
+        <file>../Icons/log.png</file>
+        <file>../Icons/stock.png</file>
+        <file>../Icons/erase.png</file>
+        <file>../Icons/screenshot.png</file>
+    </qresource>
+</RCC>
