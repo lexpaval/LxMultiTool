@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>../../../../Android/6PMultiTool/6PMultiTool.v0.3/Data/adb.exe</file>
-        <file>../../../../Android/6PMultiTool/6PMultiTool.v0.3/Data/AdbWinApi.dll</file>
-        <file>../../../../Android/6PMultiTool/6PMultiTool.v0.3/Data/AdbWinUsbApi.dll</file>
-        <file>../../../../Android/6PMultiTool/6PMultiTool.v0.3/Data/fastboot.exe</file>
-    </qresource>
-</RCC>
