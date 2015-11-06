@@ -832,12 +832,93 @@ void MainWindow::on_kernelButton_clicked()
 
 void MainWindow::on_actionGo_to_XDA_Thread_triggered()
 {
-
+    QUrl link_to_xda("http://forum.xda-developers.com/nexus-6p/development/tool-6p-multi-tool-v0-1-t3214015");
+    QDesktopServices::openUrl (link_to_xda);
 }
 
 void MainWindow::on_actionCheck_for_updates_triggered()
 {
+    QUrl version("https://raw.githubusercontent.com/lexmazter/AndroidMultiTool/master/version.txt");
 
+    mgr = new FileDownloader(version, this);
+    mgr->downloadedData();
+
+    connect(mgr, SIGNAL (downloaded()), this, SLOT (checkUpdate()));
+}
+
+void MainWindow::checkUpdate()
+{
+    QFile file(QDir::currentPath()+"/version.txt");
+
+    // Open the file to write the data to it
+    file.open(QFile::WriteOnly);
+    file.write(mgr->downloadedData());
+    file.close();
+
+    // Open the temporary version file
+    if(!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(this, "Error", file.errorString());
+    }
+
+    QString output = file.readLine();
+
+    // Here we parse the version file
+    QRegularExpression rxlen("(?<major>\\d).(?<minor>\\d).(?<patch>\\d)");
+    QRegularExpressionMatch match = rxlen.match(output);
+    bool newVersion = false;
+    int newVerMajor = QString(match.captured("major")).toInt();
+    int newVerMinor = QString(match.captured("minor")).toInt();
+    int newVerPatch = QString(match.captured("patch")).toInt();
+
+    if(match.hasMatch())
+    {
+        if (newVerPatch > VERSION_PATCH)
+        {
+            newVersion = true;
+        }
+        else if (newVerMinor > VERSION_MINOR)
+        {
+            newVersion = true;
+        }
+        else if (newVerMajor > VERSION_MAJOR)
+        {
+            newVersion = true;
+        }
+    }
+
+    // It was temporary so delete it at this point
+    file.remove();
+
+    if(newVersion)
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this);
+        QPixmap unlock("../Icons/updates.png");
+        msgBox.setIconPixmap(unlock);
+        msgBox.setText("A new version has been found!");
+        msgBox.setInformativeText(QString("Would you like to open the link for version %1.%2.%3").arg(newVerMajor).arg(newVerMinor).arg(newVerPatch));
+        msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::Yes);
+        int exec = msgBox.exec();
+
+        if (exec == QMessageBox::Yes)
+        {
+            QUrl link_to_download("https://www.mediafire.com/folder/esvlkgsvcxxi3/MultiTool");
+            QDesktopServices::openUrl (link_to_download);
+        }
+    }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this);
+        QPixmap unlock("../Icons/updates.png");
+        msgBox.setIconPixmap(unlock);
+        msgBox.setText("Nothing new!");
+        msgBox.setInformativeText("Nothing new under the sun, check later maybe.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
 }
 
 void MainWindow::on_actionAbout_triggered()

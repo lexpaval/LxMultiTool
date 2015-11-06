@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,7 +22,8 @@ SOURCES += main.cpp\
     dialoglogging.cpp \
     dialogstock.cpp \
     dialogscreenshot.cpp \
-    dialogerase.cpp
+    dialogerase.cpp \
+    filedownloader.cpp
 
 HEADERS  += mainwindow.h \
     dialogrecovery.h \
@@ -32,7 +34,8 @@ HEADERS  += mainwindow.h \
     dialogstock.h \
     version.h \
     dialogscreenshot.h \
-    dialogerase.h
+    dialogerase.h \
+    filedownloader.h
 
 FORMS    += mainwindow.ui \
     dialogrecovery.ui \

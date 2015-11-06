@@ -4,10 +4,13 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QProcess>
+#include <QFile>
 #include <QDir>
 #include <QFileDialog>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
+#include <QDesktopServices>
+#include <QNetworkAccessManager>
 #include "dialogrecovery.h"
 #include "dialogsideload.h"
 #include "dialogkernel.h"
@@ -15,6 +18,7 @@
 #include "dialogstock.h"
 #include "dialogscreenshot.h"
 #include "dialogerase.h"
+#include "filedownloader.h"
 #include "aboutdialog.h"
 #include "version.h"
 
@@ -67,10 +71,13 @@ private slots:
 
     void on_eraseButton_clicked();
 
+    void checkUpdate();
+
 private:
     void checkOptions();
     void getDeviceName();
     Ui::MainWindow *ui;
+    FileDownloader* mgr;
 };
 
 #endif // MAINWINDOW_H
