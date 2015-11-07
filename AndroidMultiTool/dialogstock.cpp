@@ -20,8 +20,17 @@ DialogStock::DialogStock(QWidget *parent) :
     // Enable the button upon selection only!
     ui->flashButton->setEnabled(false);
 
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(QDir::currentPath()+"/Data/StockPackages/"),QDirIterator::NoIteratorFlags);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"),QDirIterator::NoIteratorFlags);
 
     while(dirit.hasNext())
     {
@@ -121,8 +130,17 @@ void DialogStock::on_flashButton_clicked()
 {
     if(ui->tableWidget->currentItem() != NULL)
     {
+        QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+        // Because apple likes it's application folders
+        temp_path.cdUp();
+        temp_path.cdUp();
+        temp_path.cdUp();
+#endif
+
         QProcess* process_flash = new QProcess(this);
-        QString temp_folder = QDir::toNativeSeparators(QDir::currentPath()+"/Data/StockPackages/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"/");
+        QString temp_folder = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"/");
 
         qDebug() << temp_folder;
 
@@ -135,7 +153,7 @@ void DialogStock::on_flashButton_clicked()
 
         QDirIterator dirit(temp_folder,QDirIterator::Subdirectories);
 
-        process_flash->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data"));
+        process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
 
 #ifdef Q_OS_WIN
         // Windows code here
@@ -239,7 +257,16 @@ void DialogStock::closeEvent(QCloseEvent *event)
 
 void DialogStock::on_exploreButton_clicked()
 {
-    QString path = QDir::toNativeSeparators(QDir::currentPath()+"/Data/StockPackages/"+ui->tableWidget->currentItem()->text());
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"+ui->tableWidget->currentItem()->text());
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 

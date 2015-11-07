@@ -21,8 +21,17 @@ DialogRecovery::DialogRecovery(QWidget *parent) :
     // Enable the button upon selection only!
     ui->flashButton->setEnabled(false);
 
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(QDir::currentPath()+"/Data/Recoveries/"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Recoveries/"),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -121,8 +130,17 @@ void DialogRecovery::on_flashButton_clicked()
 {
     if(ui->tableWidget->currentItem() != NULL)
     {
+        QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+        // Because apple likes it's application folders
+        temp_path.cdUp();
+        temp_path.cdUp();
+        temp_path.cdUp();
+#endif
+
         QProcess* process_flash = new QProcess(this);
-        QString temp_cmd = QDir::currentPath()+QDir::toNativeSeparators("/Data/Recoveries/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+        QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Recoveries/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
         QString recovery;
 
         process_flash->setProcessChannelMode(QProcess::ForwardedChannels);
@@ -132,7 +150,7 @@ void DialogRecovery::on_flashButton_clicked()
         // Restrict from closing while flashing
         *busy = true;
 
-        process_flash->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data"));
+        process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
 #ifdef Q_OS_WIN
         // Windows code here
         process_flash->start("cmd");
@@ -172,7 +190,16 @@ void DialogRecovery::closeEvent(QCloseEvent *event)
 
 void DialogRecovery::on_exploreButton_clicked()
 {
-    QString path = QDir::toNativeSeparators(QDir::currentPath()+"/Data/Recoveries");
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Recoveries");
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 

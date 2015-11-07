@@ -21,8 +21,17 @@ DialogSideload::DialogSideload(QWidget *parent) :
     // Enable the button upon selection only!
     ui->sideloadButton->setEnabled(false);
 
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(QDir::currentPath()+"/Sideload"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Sideload"),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -138,8 +147,17 @@ void DialogSideload::on_sideloadButton_clicked()
 {
     if(ui->tableWidget->currentItem() != NULL)
     {
+        QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+        // Because apple likes it's application folders
+        temp_path.cdUp();
+        temp_path.cdUp();
+        temp_path.cdUp();
+#endif
+
         QProcess* process_flash = new QProcess(this);
-        QString temp_cmd = QDir::currentPath()+QDir::toNativeSeparators("/Sideload")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+        QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+"/Sideload")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
         QString sideload;
 
         process_flash->setProcessChannelMode(QProcess::ForwardedChannels);
@@ -149,7 +167,7 @@ void DialogSideload::on_sideloadButton_clicked()
         // Restrict from closing while flashing
         *busy = true;
 
-        process_flash->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Sideload"));
+        process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Sideload"));
 #ifdef Q_OS_WIN
         // Windows code here
         process_flash->start("cmd");
@@ -179,7 +197,16 @@ void DialogSideload::on_sideloadButton_clicked()
 
 void DialogSideload::on_exploreButton_clicked()
 {
-    QString path = QDir::toNativeSeparators((QDir::currentPath()+"/Sideload"));
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    QString path = QDir::toNativeSeparators((temp_path.absolutePath()+"/Sideload"));
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 

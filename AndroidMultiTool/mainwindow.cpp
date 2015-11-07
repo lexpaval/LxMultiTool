@@ -13,11 +13,20 @@ MainWindow::MainWindow(QWidget *parent) :
     // Set our version in the status bar
     ui->statusBar->addPermanentWidget(new QLabel(QString("Version v%1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_PATCH)));
 
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
     QProcess process_adb;
     QProcess process_fastboot;
 
     // We just want to start the adb daemon and check for connection while at it
-    process_adb.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    process_adb.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
     // Windows code here
     process_adb.start("cmd");
@@ -47,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->checkBox_ADB->setChecked(false);
     }
 
-    process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
     // Windows code here
     process_fastboot.start("cmd");
@@ -94,8 +103,16 @@ void MainWindow::getDeviceName()
     if(ui->checkBox_ADB->checkState())
     {
         QProcess process;
+        QDir temp_path(QCoreApplication::applicationDirPath());
 
-        process.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+#ifdef __APPLE__
+        // Because apple likes it's application folders
+        temp_path.cdUp();
+        temp_path.cdUp();
+        temp_path.cdUp();
+#endif
+
+        process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
         // Windows code here
         process.start("cmd");
@@ -161,8 +178,16 @@ void MainWindow::on_UnlockButton_clicked()
         if (ret == QMessageBox::Yes)
         {
             QProcess process;
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
-            process.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    #ifdef __APPLE__
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+    #endif
+
+            process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process.start("cmd");
@@ -216,8 +241,16 @@ void MainWindow::on_RelockButton_clicked()
         if (ret == QMessageBox::Yes)
         {
             QProcess process;
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
-            process.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    #ifdef __APPLE__
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+    #endif
+
+            process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process.start("cmd");
@@ -234,7 +267,6 @@ void MainWindow::on_RelockButton_clicked()
 
             process.write("exit\n");
             process.waitForFinished(); // sets current thread to sleep and waits for process end
-            QString output(process.readAllStandardOutput());
             ui->statusBar->clearMessage();
             ui->statusBar->showMessage("Reloking command performed.");
         }
@@ -278,8 +310,19 @@ void MainWindow::on_refreshButton_clicked()
 {
     QProcess process_adb;
     QProcess process_fastboot;
+    QDir temp_path(QCoreApplication::applicationDirPath());
 
-    process_adb.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    process_adb.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+
+    qDebug() << temp_path.absolutePath();
+
 #ifdef Q_OS_WIN
     // Windows code here
     process_adb.start("cmd");
@@ -308,7 +351,7 @@ void MainWindow::on_refreshButton_clicked()
         ui->checkBox_ADB->setChecked(false);
     }
 
-    process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
     // Windows code here
     process_fastboot.start("cmd");
@@ -394,8 +437,16 @@ void MainWindow::on_BackupButton_clicked()
             fileName = fileName+"\"\n";
 
             QProcess process;
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
-            process.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    #ifdef __APPLE__
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+    #endif
+
+            process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process.start("cmd");
@@ -463,8 +514,16 @@ void MainWindow::on_RestoreButton_clicked()
             fileName = fileName+"\"\n";
 
             QProcess process;
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
-            process.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    #ifdef __APPLE__
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+    #endif
+
+            process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process.start("cmd");
@@ -555,8 +614,16 @@ void MainWindow::on_rebootFastbootButton_clicked()
         if(ui->normalRebootButton->isChecked())
         {
             QProcess process_fastboot;
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
-            process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    #ifdef __APPLE__
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+    #endif
+
+            process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_fastboot.start("cmd");
@@ -580,8 +647,16 @@ void MainWindow::on_rebootFastbootButton_clicked()
         else if(ui->bootloaderRebootButton->isChecked())
         {
             QProcess process_fastboot;
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
-            process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    #ifdef __APPLE__
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+    #endif
+
+            process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_fastboot.start("cmd");
@@ -645,8 +720,16 @@ void MainWindow::on_rebootAdbButton_clicked()
         if(ui->normalRebootButton->isChecked())
         {
             QProcess process_adb;
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
-            process_adb.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    #ifdef __APPLE__
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+    #endif
+
+            process_adb.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_adb.start("cmd");
@@ -671,8 +754,16 @@ void MainWindow::on_rebootAdbButton_clicked()
         else if(ui->bootloaderRebootButton->isChecked())
         {
             QProcess process_adb;
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
-            process_adb.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    #ifdef __APPLE__
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+    #endif
+
+            process_adb.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_adb.start("cmd");
@@ -697,8 +788,16 @@ void MainWindow::on_rebootAdbButton_clicked()
         else if (ui->recoveryRebootButton->isChecked())
         {
             QProcess process_adb;
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
-            process_adb.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+    #ifdef __APPLE__
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+    #endif
+
+            process_adb.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_adb.start("cmd");
@@ -760,8 +859,16 @@ void MainWindow::on_versionButton_clicked()
     if(ui->checkBox_ADB->checkState())
     {
         QProcess process;
+        QDir temp_path(QCoreApplication::applicationDirPath());
 
-        process.setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+#ifdef __APPLE__
+        // Because apple likes it's application folders
+        temp_path.cdUp();
+        temp_path.cdUp();
+        temp_path.cdUp();
+#endif
+
+        process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
         // Windows code here
         process.start("cmd");
@@ -848,7 +955,16 @@ void MainWindow::on_actionCheck_for_updates_triggered()
 
 void MainWindow::checkUpdate()
 {
-    QFile file(QDir::currentPath()+"/version.txt");
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    QFile file(temp_path.absolutePath()+"/version.txt");
 
     // Open the file to write the data to it
     file.open(QFile::WriteOnly);
@@ -993,7 +1109,7 @@ void MainWindow::on_screenshotButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap icon("../Icons/stock.png");
+        QPixmap icon("../Icons/screenshot.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("You need to be in fastboot mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");

@@ -44,8 +44,17 @@ void DialogLogging::getFiles()
     // Reset our row count
     ui->tableWidget->setRowCount(0);
 
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(QDir::currentPath()+"/Logfiles/"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Logfiles/"),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -109,6 +118,15 @@ void DialogLogging::on_getLogButton_clicked()
 {
     if(ui->radioLogcat->isChecked())
     {
+        QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+        // Because apple likes it's application folders
+        temp_path.cdUp();
+        temp_path.cdUp();
+        temp_path.cdUp();
+#endif
+
         // Restrict from closing while getting the log
         *busy = true;
 
@@ -117,7 +135,7 @@ void DialogLogging::on_getLogButton_clicked()
         ui->buttonBox->setEnabled(false);
         ui->getLogButton->setEnabled(false);
 
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Select logfile name or a custom folder"), QDir::toNativeSeparators(QString(QDir::currentPath()+"/Logfiles")), tr("Text File (*.txt)"));
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Select logfile name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Logfiles")), tr("Text File (*.txt)"));
         QProcess* process_log = new QProcess(this);
         QString logCommand;
 
@@ -138,7 +156,7 @@ void DialogLogging::on_getLogButton_clicked()
             // Restrict from closing while flashing
             *busy = true;
 
-            process_log->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data"));
+            process_log->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_log->start("cmd");
@@ -176,6 +194,15 @@ void DialogLogging::on_getLogButton_clicked()
     }
     else if(ui->radioDmesg->isChecked())
     {
+        QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+        // Because apple likes it's application folders
+        temp_path.cdUp();
+        temp_path.cdUp();
+        temp_path.cdUp();
+#endif
+
         // Restrict from closing while getting the log
         *busy = true;
 
@@ -184,7 +211,7 @@ void DialogLogging::on_getLogButton_clicked()
         ui->buttonBox->setEnabled(false);
         ui->getLogButton->setEnabled(false);
 
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Select logfile name or a custom folder"), QDir::toNativeSeparators(QString(QDir::currentPath()+"/Logfiles")), tr("Text File (*.txt)"));
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Select logfile name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Logfiles")), tr("Text File (*.txt)"));
         QProcess* process_log = new QProcess(this);
         QString logCommand;
 
@@ -205,7 +232,7 @@ void DialogLogging::on_getLogButton_clicked()
             // Restrict from closing while flashing
             *busy = true;
 
-            process_log->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data"));
+            process_log->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_log->start("cmd");
@@ -256,7 +283,16 @@ void DialogLogging::on_getLogButton_clicked()
 
 void DialogLogging::on_openFolderButton_clicked()
 {
-    QString path = QDir::toNativeSeparators(QDir::currentPath()+"/Logfiles");
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Logfiles");
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 

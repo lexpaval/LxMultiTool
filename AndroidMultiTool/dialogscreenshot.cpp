@@ -41,11 +41,20 @@ DialogScreenshot::~DialogScreenshot()
 
 void DialogScreenshot::getFiles()
 {
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
     // Reset our row count
     ui->tableWidget->setRowCount(0);
 
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(QDir::currentPath()+"/Screenshots/"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Screenshots/"),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -107,7 +116,16 @@ void DialogScreenshot::processFinished(int exitCode)
 
 void DialogScreenshot::on_exploreButton_clicked()
 {
-    QString path = QDir::toNativeSeparators(QDir::currentPath()+"/Screenshots");
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Screenshots");
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 
@@ -124,6 +142,15 @@ void DialogScreenshot::closeEvent(QCloseEvent *event)
 
 void DialogScreenshot::on_getScreenButton_clicked()
 {
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
     // Restrict from closing while getting the log
     *busy = true;
 
@@ -132,7 +159,7 @@ void DialogScreenshot::on_getScreenButton_clicked()
     ui->buttonBox->setEnabled(false);
     ui->getScreenButton->setEnabled(false);
 
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Select a name or a custom folder"), QDir::toNativeSeparators(QString(QDir::currentPath()+"/Screenshots/"+QDate::currentDate().toString().remove(" ").remove("."))), tr("Image File (*.png)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Select a name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Screenshots/"+QDate::currentDate().toString().remove(" ").remove("."))), tr("Image File (*.png)"));
     QProcess* process_screen = new QProcess(this);
     QString screenCommand;
 
@@ -150,7 +177,7 @@ void DialogScreenshot::on_getScreenButton_clicked()
         // Restrict from closing while flashing
         *busy = true;
 
-        process_screen->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data"));
+        process_screen->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
 #ifdef Q_OS_WIN
         // Windows code here
         process_screen->start("cmd");

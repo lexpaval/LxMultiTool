@@ -21,8 +21,17 @@ DialogKernel::DialogKernel(QWidget *parent) :
     // Enable the button upon selection only!
     ui->flashButton->setEnabled(false);
 
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(QDir::currentPath()+"/Data/Kernels/"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Kernels/"),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -128,8 +137,17 @@ void DialogKernel::on_flashButton_clicked()
 {
     if(ui->tableWidget->currentItem() != NULL)
     {
+        QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+        // Because apple likes it's application folders
+        temp_path.cdUp();
+        temp_path.cdUp();
+        temp_path.cdUp();
+#endif
+
         QProcess* process_flash = new QProcess(this);
-        QString temp_cmd = QDir::currentPath()+QDir::toNativeSeparators("/Data/Kernels/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+        QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators("/Data/Kernels/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
         QString recovery;
 
         process_flash->setProcessChannelMode(QProcess::ForwardedChannels);
@@ -139,7 +157,7 @@ void DialogKernel::on_flashButton_clicked()
         // Restrict from closing while flashing
         *busy = true;
 
-        process_flash->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data"));
+        process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
         // Windows code here
         process_flash->start("cmd");
@@ -180,8 +198,16 @@ void DialogKernel::closeEvent(QCloseEvent *event)
 
 void DialogKernel::on_exploreButton_clicked()
 {
-    // Hopefully this is cross-platform to open the Kernels folder
-    QString path = QDir::toNativeSeparators(QDir::currentPath()+"/Data/Kernels");
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Kernels");
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 

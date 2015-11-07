@@ -24,6 +24,14 @@ void DialogErase::on_eraseButton_clicked()
     QProcess* process_erase = new QProcess(this);
     process_erase->setProcessChannelMode(QProcess::ForwardedChannels);
     connect( process_erase, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef __APPLE__
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
 
     if(ui->boot_radioButton->isChecked())
     {
@@ -38,7 +46,7 @@ void DialogErase::on_eraseButton_clicked()
 
         if (ret == QMessageBox::Yes)
         {
-            process_erase->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+            process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_erase->start("cmd");
@@ -68,7 +76,7 @@ void DialogErase::on_eraseButton_clicked()
 
         if (ret == QMessageBox::Yes)
         {
-            process_erase->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+            process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_erase->start("cmd");
@@ -99,7 +107,7 @@ void DialogErase::on_eraseButton_clicked()
 
         if (ret == QMessageBox::Yes)
         {
-            process_erase->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+            process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_erase->start("cmd");
@@ -130,7 +138,7 @@ void DialogErase::on_eraseButton_clicked()
 
         if (ret == QMessageBox::Yes)
         {
-            process_erase->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+            process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_erase->start("cmd");
@@ -161,7 +169,7 @@ void DialogErase::on_eraseButton_clicked()
 
         if (ret == QMessageBox::Yes)
         {
-            process_erase->setWorkingDirectory(QDir::toNativeSeparators(QDir::currentPath()+"/Data/"));
+            process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_erase->start("cmd");
