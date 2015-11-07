@@ -4,4 +4,7 @@ Screenshots
 Sideload
 build-AndroidMultiTool-Desktop_Qt_5_5_1_GCC_64bit-Debug
 build-AndroidMultiTool-Desktop_Qt_5_5_1_MinGW_32bit-Debug
+build-AndroidMultiTool-Desktop_Qt_5_5_1_GCC_64bit-Release
+build-AndroidMultiTool-Desktop_Qt_5_5_1_MinGW_32bit-Release
 TODO.txt
+AndroidMultiTool.pro.user
