@@ -15,6 +15,9 @@ TEMPLATE = app
 #ifdef __APPLE__
 ICON = ../Icons/android.icns
 #endif
+#ifdef Q_OS_WIN
+RC_ICONS = ../Icons/android.ico
+#endif
 
 SOURCES += main.cpp\
         mainwindow.cpp \
