@@ -43,7 +43,7 @@ void DialogErase::on_eraseButton_clicked()
             // Windows code here
             process_erase->start("cmd");
             process_erase->write("fastboot erase boot\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_erase->start("sh");
             process_erase->write("./fastboot_mac erase boot\n");
@@ -73,7 +73,7 @@ void DialogErase::on_eraseButton_clicked()
             // Windows code here
             process_erase->start("cmd");
             process_erase->write("fastboot.exe erase cache\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_erase->start("sh");
             process_erase->write("./fastboot_mac erase cache\n");
@@ -104,7 +104,7 @@ void DialogErase::on_eraseButton_clicked()
             // Windows code here
             process_erase->start("cmd");
             process_erase->write("fastboot.exe erase recovery\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_erase->start("sh");
             process_erase->write("./fastboot_mac erase recovery\n");
@@ -135,7 +135,7 @@ void DialogErase::on_eraseButton_clicked()
             // Windows code here
             process_erase->start("cmd");
             process_erase->write("fastboot.exe erase userdata\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_erase->start("sh");
             process_erase->write("./fastboot_mac erase userdata\n");
@@ -166,7 +166,7 @@ void DialogErase::on_eraseButton_clicked()
             // Windows code here
             process_erase->start("cmd");
             process_erase->write("fastboot.exe erase system\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_erase->start("sh");
             process_erase->write("./fastboot_mac erase system\n");

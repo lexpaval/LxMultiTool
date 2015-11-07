@@ -140,7 +140,7 @@ void DialogStock::on_flashButton_clicked()
 #ifdef Q_OS_WIN
         // Windows code here
         process_flash->start("cmd");
-#elif Q_OS_MAC
+#elif __APPLE__
         // MAC code here
         process_flash->start("sh");
 #else
@@ -162,7 +162,7 @@ void DialogStock::on_flashButton_clicked()
                 process_flash->write("fastboot.exe flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("fastboot.exe reboot-bootloader\n");
                 process_flash->write("ping -n 5 localhost >nul\n");
-#elif Q_OS_MAC
+#elif __APPLE__
                 // MAC code here
                 process_flash->write("./fastboot_mac flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("./fastboot_mac reboot-bootloader\n");
@@ -182,7 +182,7 @@ void DialogStock::on_flashButton_clicked()
                 process_flash->write("fastboot.exe flash radio \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("fastboot.exe reboot-bootloader\n");
                 process_flash->write("ping -n 5 localhost >nul\n");
-#elif Q_OS_MAC
+#elif __APPLE__
                 // MAC code here
                 process_flash->write("./fastboot_mac flash radio \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("./fastboot_mac reboot-bootloader\n");
@@ -202,7 +202,7 @@ void DialogStock::on_flashButton_clicked()
                 process_flash->write("fastboot.exe -w update \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("fastboot.exe reboot-bootloader\n");
                 process_flash->write("ping -n 5 localhost >nul\n");
-#elif Q_OS_MAC
+#elif __APPLE__
                 // MAC code here
                 process_flash->write("./fastboot_mac -w update \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("./fastboot_mac reboot-bootloader\n");

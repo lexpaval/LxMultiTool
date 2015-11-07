@@ -143,7 +143,7 @@ void DialogLogging::on_getLogButton_clicked()
             // Windows code here
             process_log->start("cmd");
             logCommand = "adb.exe logcat -d > \"" + fileName;
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_log->start("sh");
             logCommand = "./adb_mac logcat -d > \"" + fileName;
@@ -210,7 +210,7 @@ void DialogLogging::on_getLogButton_clicked()
             // Windows code here
             process_log->start("cmd");
             logCommand = "adb.exe shell dmesg > \"" + fileName;
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_log->start("sh");
             logCommand = "./adb_mac shell dmesg > \"" + fileName;

@@ -137,7 +137,7 @@ void DialogRecovery::on_flashButton_clicked()
         // Windows code here
         process_flash->start("cmd");
         recovery = "fastboot.exe flash recovery \"" + temp_cmd;
-#elif Q_OS_MAC
+#elif __APPLE__
         // MAC code here
         process_flash->start("sh");
         recovery = "./fastboot_mac flash recovery \"" + temp_cmd;

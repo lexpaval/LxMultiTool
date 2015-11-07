@@ -154,7 +154,7 @@ void DialogSideload::on_sideloadButton_clicked()
         // Windows code here
         process_flash->start("cmd");
         sideload = "adb.exe sideload \"" + temp_cmd;
-#elif Q_OS_MAC
+#elif __APPLE__
         // MAC code here
         process_flash->start("sh");
         sideload = "./adb_mac sideload \""+temp_cmd;

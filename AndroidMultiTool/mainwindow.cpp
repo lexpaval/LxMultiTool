@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Windows code here
     process_adb.start("cmd");
     process_adb.write("adb.exe devices\n");
-#elif Q_OS_MAC
+#elif __APPLE__
     // MAC code here
     process_adb.start("sh");
     process_adb.write("./adb_mac devices\n");
@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Windows code here
     process_fastboot.start("cmd");
     process_fastboot.write("fastboot.exe devices\n");
-#elif Q_OS_MAC
+#elif __APPLE__
     // MAC code here
     process_fastboot.start("sh");
     process_fastboot.write("./fastboot_mac devices\n");
@@ -100,7 +100,7 @@ void MainWindow::getDeviceName()
         // Windows code here
         process.start("cmd");
         process.write("adb.exe shell getprop\n");
-#elif Q_OS_MAC
+#elif __APPLE__
         // MAC code here
         process.start("sh");
         process.write("./adb_mac shell getprop\n");
@@ -167,7 +167,7 @@ void MainWindow::on_UnlockButton_clicked()
             // Windows code here
             process.start("cmd");
             process.write("fastboot.exe flashing unlock\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process.start("sh");
             process.write("./fastboot_mac flashing unlock\n");
@@ -222,7 +222,7 @@ void MainWindow::on_RelockButton_clicked()
             // Windows code here
             process.start("cmd");
             process.write("fastboot.exe flashing lock\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process.start("sh");
             process.write("./fastboot_mac flashing lock\n");
@@ -284,7 +284,7 @@ void MainWindow::on_refreshButton_clicked()
     // Windows code here
     process_adb.start("cmd");
     process_adb.write("adb.exe devices\n");
-#elif Q_OS_MAC
+#elif __APPLE__
     // MAC code here
     process_adb.start("sh");
     process_adb.write("./adb_mac devices\n");
@@ -313,7 +313,7 @@ void MainWindow::on_refreshButton_clicked()
     // Windows code here
     process_fastboot.start("cmd");
     process_fastboot.write("fastboot.exe devices\n");
-#elif Q_OS_MAC
+#elif __APPLE__
     // MAC code here
     process_fastboot.start("sh");
     process_fastboot.write("./fastboot_mac devices\n");
@@ -400,7 +400,7 @@ void MainWindow::on_BackupButton_clicked()
             // Windows code here
             process.start("cmd");
             fileName = "adb.exe backup -all -f \""+fileName;
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process.start("sh");
             fileName = "./adb_mac backup -all -f \""+fileName;
@@ -469,7 +469,7 @@ void MainWindow::on_RestoreButton_clicked()
             // Windows code here
             process.start("cmd");
             fileName = "adb.exe restore \""+fileName;
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process.start("sh");
             fileName = "./adb_mac restore \""+fileName;
@@ -561,7 +561,7 @@ void MainWindow::on_rebootFastbootButton_clicked()
             // Windows code here
             process_fastboot.start("cmd");
             process_fastboot.write("fastboot.exe reboot\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_fastboot.start("sh");
             process_fastboot.write("./fastboot_mac reboot\n");
@@ -586,7 +586,7 @@ void MainWindow::on_rebootFastbootButton_clicked()
             // Windows code here
             process_fastboot.start("cmd");
             process_fastboot.write("fastboot.exe reboot-bootloader\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_fastboot.start("sh");
             process_fastboot.write("./fastboot_mac reboot-bootloader\n");
@@ -651,7 +651,7 @@ void MainWindow::on_rebootAdbButton_clicked()
             // Windows code here
             process_adb.start("cmd");
             process_adb.write("adb.exe reboot\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_adb.start("sh");
             process_adb.write("./adb_mac reboot\n");
@@ -677,7 +677,7 @@ void MainWindow::on_rebootAdbButton_clicked()
             // Windows code here
             process_adb.start("cmd");
             process_adb.write("adb.exe reboot bootloader\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_adb.start("sh");
             process_adb.write("./adb_mac reboot bootloader\n");
@@ -703,7 +703,7 @@ void MainWindow::on_rebootAdbButton_clicked()
             // Windows code here
             process_adb.start("cmd");
             process_adb.write("adb.exe reboot recovery\n");
-#elif Q_OS_MAC
+#elif __APPLE__
             // MAC code here
             process_adb.start("sh");
             process_adb.write("./adb_mac reboot recovery\n");
@@ -766,7 +766,7 @@ void MainWindow::on_versionButton_clicked()
         // Windows code here
         process.start("cmd");
         process.write("adb.exe version\n");
-#elif Q_OS_MAC
+#elif __APPLE__
         // MAC code here
         process.start("sh");
         process.write("./adb_mac version\n");

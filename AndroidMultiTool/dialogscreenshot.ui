@@ -47,9 +47,9 @@
   <widget class="QPushButton" name="exploreButton">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>314</x>
      <y>270</y>
-     <width>75</width>
+     <width>91</width>
      <height>21</height>
     </rect>
    </property>
@@ -63,9 +63,9 @@
   <widget class="QPushButton" name="getScreenButton">
    <property name="geometry">
     <rect>
-     <x>234</x>
+     <x>200</x>
      <y>270</y>
-     <width>91</width>
+     <width>101</width>
      <height>21</height>
     </rect>
    </property>

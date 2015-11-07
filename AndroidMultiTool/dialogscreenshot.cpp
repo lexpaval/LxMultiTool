@@ -156,15 +156,15 @@ void DialogScreenshot::on_getScreenButton_clicked()
         process_screen->start("cmd");
         screenCommand = "adb.exe shell screencap -p |sed.exe \"s/\\r$//\">"+fileName+"\n";
         process_screen->write(screenCommand.toLatin1());
-#elif Q_OS_MAC
+#elif __APPLE__
         // MAC code here
         process_screen->start("sh");
-        screenCommand = "adb_mac shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' >"+fileName+"\n";
+        screenCommand = "./adb_mac shell screencap -p | perl -pe \"s/\\x0D\\x0A/\\x0A/g\" >"+fileName+"\n";
         process_screen->write(screenCommand.toLatin1());
 #else
         // Linux code here
         process_screen->start("sh");
-        screenCommand = "adb_linux shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' >"+fileName+"\n";
+        screenCommand = "./adb_linux shell screencap -p | perl -pe \"s/\\x0D\\x0A/\\x0A/g\" >"+fileName+"\n";
         process_screen->write(screenCommand.toLatin1());
 #endif
         process_screen->waitForStarted();
