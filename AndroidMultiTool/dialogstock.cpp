@@ -22,7 +22,7 @@ DialogStock::DialogStock(QWidget *parent) :
 
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -132,7 +132,7 @@ void DialogStock::on_flashButton_clicked()
     {
         QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
         // Because apple likes it's application folders
         temp_path.cdUp();
         temp_path.cdUp();
@@ -158,7 +158,7 @@ void DialogStock::on_flashButton_clicked()
 #ifdef Q_OS_WIN
         // Windows code here
         process_flash->start("cmd");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
         // MAC code here
         process_flash->start("sh");
 #else
@@ -180,7 +180,7 @@ void DialogStock::on_flashButton_clicked()
                 process_flash->write("fastboot.exe flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("fastboot.exe reboot-bootloader\n");
                 process_flash->write("ping -n 5 localhost >nul\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
                 // MAC code here
                 process_flash->write("./fastboot_mac flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("./fastboot_mac reboot-bootloader\n");
@@ -200,7 +200,7 @@ void DialogStock::on_flashButton_clicked()
                 process_flash->write("fastboot.exe flash radio \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("fastboot.exe reboot-bootloader\n");
                 process_flash->write("ping -n 5 localhost >nul\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
                 // MAC code here
                 process_flash->write("./fastboot_mac flash radio \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("./fastboot_mac reboot-bootloader\n");
@@ -220,7 +220,7 @@ void DialogStock::on_flashButton_clicked()
                 process_flash->write("fastboot.exe -w update \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("fastboot.exe reboot-bootloader\n");
                 process_flash->write("ping -n 5 localhost >nul\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
                 // MAC code here
                 process_flash->write("./fastboot_mac -w update \""+dirit.filePath().toLatin1()+"\"\n");
                 process_flash->write("./fastboot_mac reboot-bootloader\n");
@@ -259,7 +259,7 @@ void DialogStock::on_exploreButton_clicked()
 {
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();

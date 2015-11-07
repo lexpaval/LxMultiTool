@@ -23,7 +23,7 @@ DialogRecovery::DialogRecovery(QWidget *parent) :
 
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -132,7 +132,7 @@ void DialogRecovery::on_flashButton_clicked()
     {
         QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
         // Because apple likes it's application folders
         temp_path.cdUp();
         temp_path.cdUp();
@@ -155,7 +155,7 @@ void DialogRecovery::on_flashButton_clicked()
         // Windows code here
         process_flash->start("cmd");
         recovery = "fastboot.exe flash recovery \"" + temp_cmd;
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
         // MAC code here
         process_flash->start("sh");
         recovery = "./fastboot_mac flash recovery \"" + temp_cmd;
@@ -192,7 +192,7 @@ void DialogRecovery::on_exploreButton_clicked()
 {
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();

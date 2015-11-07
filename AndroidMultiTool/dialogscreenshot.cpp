@@ -43,7 +43,7 @@ void DialogScreenshot::getFiles()
 {
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -118,7 +118,7 @@ void DialogScreenshot::on_exploreButton_clicked()
 {
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -144,7 +144,7 @@ void DialogScreenshot::on_getScreenButton_clicked()
 {
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -183,7 +183,7 @@ void DialogScreenshot::on_getScreenButton_clicked()
         process_screen->start("cmd");
         screenCommand = "adb.exe shell screencap -p |sed.exe \"s/\\r$//\">"+fileName+"\n";
         process_screen->write(screenCommand.toLatin1());
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
         // MAC code here
         process_screen->start("sh");
         screenCommand = "./adb_mac shell screencap -p | perl -pe \"s/\\x0D\\x0A/\\x0A/g\" >"+fileName+"\n";

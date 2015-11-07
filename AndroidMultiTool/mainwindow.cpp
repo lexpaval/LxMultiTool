@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Windows code here
     process_adb.start("cmd");
     process_adb.write("adb.exe devices\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
     // MAC code here
     process_adb.start("sh");
     process_adb.write("./adb_mac devices\n");
@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Windows code here
     process_fastboot.start("cmd");
     process_fastboot.write("fastboot.exe devices\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
     // MAC code here
     process_fastboot.start("sh");
     process_fastboot.write("./fastboot_mac devices\n");
@@ -105,7 +105,7 @@ void MainWindow::getDeviceName()
         QProcess process;
         QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
         // Because apple likes it's application folders
         temp_path.cdUp();
         temp_path.cdUp();
@@ -117,7 +117,7 @@ void MainWindow::getDeviceName()
         // Windows code here
         process.start("cmd");
         process.write("adb.exe shell getprop\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
         // MAC code here
         process.start("sh");
         process.write("./adb_mac shell getprop\n");
@@ -180,7 +180,7 @@ void MainWindow::on_UnlockButton_clicked()
             QProcess process;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef __APPLE__
+    #ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
@@ -192,7 +192,7 @@ void MainWindow::on_UnlockButton_clicked()
             // Windows code here
             process.start("cmd");
             process.write("fastboot.exe flashing unlock\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process.start("sh");
             process.write("./fastboot_mac flashing unlock\n");
@@ -243,7 +243,7 @@ void MainWindow::on_RelockButton_clicked()
             QProcess process;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef __APPLE__
+    #ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
@@ -255,7 +255,7 @@ void MainWindow::on_RelockButton_clicked()
             // Windows code here
             process.start("cmd");
             process.write("fastboot.exe flashing lock\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process.start("sh");
             process.write("./fastboot_mac flashing lock\n");
@@ -312,7 +312,7 @@ void MainWindow::on_refreshButton_clicked()
     QProcess process_fastboot;
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -327,7 +327,7 @@ void MainWindow::on_refreshButton_clicked()
     // Windows code here
     process_adb.start("cmd");
     process_adb.write("adb.exe devices\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
     // MAC code here
     process_adb.start("sh");
     process_adb.write("./adb_mac devices\n");
@@ -356,7 +356,7 @@ void MainWindow::on_refreshButton_clicked()
     // Windows code here
     process_fastboot.start("cmd");
     process_fastboot.write("fastboot.exe devices\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
     // MAC code here
     process_fastboot.start("sh");
     process_fastboot.write("./fastboot_mac devices\n");
@@ -439,7 +439,7 @@ void MainWindow::on_BackupButton_clicked()
             QProcess process;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef __APPLE__
+    #ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
@@ -451,7 +451,7 @@ void MainWindow::on_BackupButton_clicked()
             // Windows code here
             process.start("cmd");
             fileName = "adb.exe backup -all -f \""+fileName;
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process.start("sh");
             fileName = "./adb_mac backup -all -f \""+fileName;
@@ -516,7 +516,7 @@ void MainWindow::on_RestoreButton_clicked()
             QProcess process;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef __APPLE__
+    #ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
@@ -528,7 +528,7 @@ void MainWindow::on_RestoreButton_clicked()
             // Windows code here
             process.start("cmd");
             fileName = "adb.exe restore \""+fileName;
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process.start("sh");
             fileName = "./adb_mac restore \""+fileName;
@@ -616,7 +616,7 @@ void MainWindow::on_rebootFastbootButton_clicked()
             QProcess process_fastboot;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef __APPLE__
+    #ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
@@ -628,7 +628,7 @@ void MainWindow::on_rebootFastbootButton_clicked()
             // Windows code here
             process_fastboot.start("cmd");
             process_fastboot.write("fastboot.exe reboot\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_fastboot.start("sh");
             process_fastboot.write("./fastboot_mac reboot\n");
@@ -649,7 +649,7 @@ void MainWindow::on_rebootFastbootButton_clicked()
             QProcess process_fastboot;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef __APPLE__
+    #ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
@@ -661,7 +661,7 @@ void MainWindow::on_rebootFastbootButton_clicked()
             // Windows code here
             process_fastboot.start("cmd");
             process_fastboot.write("fastboot.exe reboot-bootloader\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_fastboot.start("sh");
             process_fastboot.write("./fastboot_mac reboot-bootloader\n");
@@ -722,7 +722,7 @@ void MainWindow::on_rebootAdbButton_clicked()
             QProcess process_adb;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef __APPLE__
+    #ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
@@ -734,7 +734,7 @@ void MainWindow::on_rebootAdbButton_clicked()
             // Windows code here
             process_adb.start("cmd");
             process_adb.write("adb.exe reboot\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_adb.start("sh");
             process_adb.write("./adb_mac reboot\n");
@@ -756,7 +756,7 @@ void MainWindow::on_rebootAdbButton_clicked()
             QProcess process_adb;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef __APPLE__
+    #ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
@@ -768,7 +768,7 @@ void MainWindow::on_rebootAdbButton_clicked()
             // Windows code here
             process_adb.start("cmd");
             process_adb.write("adb.exe reboot bootloader\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_adb.start("sh");
             process_adb.write("./adb_mac reboot bootloader\n");
@@ -790,7 +790,7 @@ void MainWindow::on_rebootAdbButton_clicked()
             QProcess process_adb;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef __APPLE__
+    #ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
@@ -802,7 +802,7 @@ void MainWindow::on_rebootAdbButton_clicked()
             // Windows code here
             process_adb.start("cmd");
             process_adb.write("adb.exe reboot recovery\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_adb.start("sh");
             process_adb.write("./adb_mac reboot recovery\n");
@@ -861,7 +861,7 @@ void MainWindow::on_versionButton_clicked()
         QProcess process;
         QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
         // Because apple likes it's application folders
         temp_path.cdUp();
         temp_path.cdUp();
@@ -873,7 +873,7 @@ void MainWindow::on_versionButton_clicked()
         // Windows code here
         process.start("cmd");
         process.write("adb.exe version\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
         // MAC code here
         process.start("sh");
         process.write("./adb_mac version\n");
@@ -957,7 +957,7 @@ void MainWindow::checkUpdate()
 {
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();

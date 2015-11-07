@@ -12,7 +12,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = AndroidMultiTool
 TEMPLATE = app
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
 ICON = ../Icons/android.icns
 #endif
 #ifdef Q_OS_WIN

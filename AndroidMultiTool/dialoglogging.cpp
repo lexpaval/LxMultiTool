@@ -46,7 +46,7 @@ void DialogLogging::getFiles()
 
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -120,7 +120,7 @@ void DialogLogging::on_getLogButton_clicked()
     {
         QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
         // Because apple likes it's application folders
         temp_path.cdUp();
         temp_path.cdUp();
@@ -161,7 +161,7 @@ void DialogLogging::on_getLogButton_clicked()
             // Windows code here
             process_log->start("cmd");
             logCommand = "adb.exe logcat -d > \"" + fileName;
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_log->start("sh");
             logCommand = "./adb_mac logcat -d > \"" + fileName;
@@ -196,7 +196,7 @@ void DialogLogging::on_getLogButton_clicked()
     {
         QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
         // Because apple likes it's application folders
         temp_path.cdUp();
         temp_path.cdUp();
@@ -237,7 +237,7 @@ void DialogLogging::on_getLogButton_clicked()
             // Windows code here
             process_log->start("cmd");
             logCommand = "adb.exe shell dmesg > \"" + fileName;
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_log->start("sh");
             logCommand = "./adb_mac shell dmesg > \"" + fileName;
@@ -285,7 +285,7 @@ void DialogLogging::on_openFolderButton_clicked()
 {
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();

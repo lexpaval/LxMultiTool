@@ -23,7 +23,7 @@ DialogKernel::DialogKernel(QWidget *parent) :
 
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -139,7 +139,7 @@ void DialogKernel::on_flashButton_clicked()
     {
         QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
         // Because apple likes it's application folders
         temp_path.cdUp();
         temp_path.cdUp();
@@ -162,7 +162,7 @@ void DialogKernel::on_flashButton_clicked()
         // Windows code here
         process_flash->start("cmd");
         recovery = "fastboot.exe flash boot \"" + temp_cmd;
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
         // MAC code here
         process_flash->start("sh");
         recovery = "./fastboot_mac flash boot \"" + temp_cmd;
@@ -200,7 +200,7 @@ void DialogKernel::on_exploreButton_clicked()
 {
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();

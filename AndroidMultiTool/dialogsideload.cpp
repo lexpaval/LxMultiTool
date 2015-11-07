@@ -23,7 +23,7 @@ DialogSideload::DialogSideload(QWidget *parent) :
 
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -149,7 +149,7 @@ void DialogSideload::on_sideloadButton_clicked()
     {
         QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
         // Because apple likes it's application folders
         temp_path.cdUp();
         temp_path.cdUp();
@@ -172,7 +172,7 @@ void DialogSideload::on_sideloadButton_clicked()
         // Windows code here
         process_flash->start("cmd");
         sideload = "adb.exe sideload \"" + temp_cmd;
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
         // MAC code here
         process_flash->start("sh");
         sideload = "./adb_mac sideload \""+temp_cmd;
@@ -199,7 +199,7 @@ void DialogSideload::on_exploreButton_clicked()
 {
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();

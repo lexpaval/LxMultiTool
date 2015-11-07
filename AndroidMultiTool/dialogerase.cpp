@@ -26,7 +26,7 @@ void DialogErase::on_eraseButton_clicked()
     connect( process_erase, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
     QDir temp_path(QCoreApplication::applicationDirPath());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACX
     // Because apple likes it's application folders
     temp_path.cdUp();
     temp_path.cdUp();
@@ -51,7 +51,7 @@ void DialogErase::on_eraseButton_clicked()
             // Windows code here
             process_erase->start("cmd");
             process_erase->write("fastboot erase boot\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_erase->start("sh");
             process_erase->write("./fastboot_mac erase boot\n");
@@ -81,7 +81,7 @@ void DialogErase::on_eraseButton_clicked()
             // Windows code here
             process_erase->start("cmd");
             process_erase->write("fastboot.exe erase cache\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_erase->start("sh");
             process_erase->write("./fastboot_mac erase cache\n");
@@ -112,7 +112,7 @@ void DialogErase::on_eraseButton_clicked()
             // Windows code here
             process_erase->start("cmd");
             process_erase->write("fastboot.exe erase recovery\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_erase->start("sh");
             process_erase->write("./fastboot_mac erase recovery\n");
@@ -143,7 +143,7 @@ void DialogErase::on_eraseButton_clicked()
             // Windows code here
             process_erase->start("cmd");
             process_erase->write("fastboot.exe erase userdata\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_erase->start("sh");
             process_erase->write("./fastboot_mac erase userdata\n");
@@ -174,7 +174,7 @@ void DialogErase::on_eraseButton_clicked()
             // Windows code here
             process_erase->start("cmd");
             process_erase->write("fastboot.exe erase system\n");
-#elif __APPLE__
+#elif defined(Q_OS_MACX)
             // MAC code here
             process_erase->start("sh");
             process_erase->write("./fastboot_mac erase system\n");
