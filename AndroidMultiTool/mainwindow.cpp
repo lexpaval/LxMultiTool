@@ -1019,7 +1019,7 @@ void MainWindow::checkUpdate()
 
         if (exec == QMessageBox::Yes)
         {
-            QUrl link_to_download("https://www.mediafire.com/folder/esvlkgsvcxxi3/MultiTool");
+            QUrl link_to_download("https://www.mediafire.com/folder/fvk6cuhsd7nsj/AndroidMultiTool");
             QDesktopServices::openUrl (link_to_download);
         }
     }
