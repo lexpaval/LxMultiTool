@@ -89,6 +89,9 @@
    </item>
    <item row="1" column="1">
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="focusPolicy">
+      <enum>Qt::TabFocus</enum>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -99,6 +102,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>boot_radioButton</tabstop>
+  <tabstop>cache_radioButton</tabstop>
+  <tabstop>recovery_radioButton</tabstop>
+  <tabstop>system_radioButton</tabstop>
+  <tabstop>data_radioButton</tabstop>
+  <tabstop>eraseButton</tabstop>
+ </tabstops>
  <resources>
   <include location="icons.qrc"/>
  </resources>

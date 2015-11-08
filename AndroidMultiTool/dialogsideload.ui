@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>550</width>
     <height>300</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
+    <width>550</width>
     <height>300</height>
    </size>
   </property>
@@ -68,23 +68,11 @@
    </item>
    <item row="1" column="2">
     <widget class="QFrame" name="frame">
-     <property name="minimumSize">
-      <size>
-       <width>251</width>
-       <height>43</height>
-      </size>
-     </property>
      <property name="maximumSize">
       <size>
-       <width>251</width>
-       <height>43</height>
+       <width>328</width>
+       <height>44</height>
       </size>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -119,6 +107,15 @@
       </item>
       <item>
        <widget class="QDialogButtonBox" name="buttonBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Close this window.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
@@ -138,12 +135,6 @@
    </item>
    <item row="1" column="0">
     <widget class="QProgressBar" name="progressBar">
-     <property name="minimumSize">
-      <size>
-       <width>219</width>
-       <height>21</height>
-      </size>
-     </property>
      <property name="toolTip">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shows the progress of the command.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -167,6 +158,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>tableWidget</tabstop>
+  <tabstop>sideloadButton</tabstop>
+  <tabstop>exploreButton</tabstop>
+ </tabstops>
  <resources>
   <include location="icons.qrc"/>
  </resources>
