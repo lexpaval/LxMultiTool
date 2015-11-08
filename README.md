@@ -33,7 +33,7 @@ The features presented in this README are according to the version mentioned in 
   - Tool tips for all buttons
   
 ### Version
-1.0.0
+1.0.1
 
 ### Tech
 
