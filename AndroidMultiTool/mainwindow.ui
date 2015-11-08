@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
-    <height>344</height>
+    <width>490</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>493</width>
-    <height>344</height>
+    <width>490</width>
+    <height>400</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>493</width>
-    <height>344</height>
+    <width>490</width>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -30,620 +30,794 @@
     <normaloff>:/Icons/android.png</normaloff>:/Icons/android.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGroupBox" name="fasbootGroup">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>10</y>
-      <width>121</width>
-      <height>231</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Fastboot</string>
-    </property>
-    <widget class="QPushButton" name="RelockButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Relock your bootloader. Why would you do this?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Lock</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/lock.png</normaloff>:/Icons/lock.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="RecoveryButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the recovery flashing menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Recovery</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/recovery.png</normaloff>:/Icons/recovery.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="rebootFastbootButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>200</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reboot to your selected option from Fastboot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Reboot</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/reboot.png</normaloff>:/Icons/reboot.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="kernelButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>110</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the kernel flashing menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Kernel</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/kernel.png</normaloff>:/Icons/kernel.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="UnlockButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Unlock the bootloader. Unlocking the bootloader will result in a factory reset!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="whatsThis">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Unlock</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/unlock.png</normaloff>:/Icons/unlock.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-     <property name="checkable">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="StockButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>140</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the menu to select the stock image. You can return you phone to the factory image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Stock</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/stock.png</normaloff>:/Icons/stock.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="eraseButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the fastboot erase menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Erase</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/erase.png</normaloff>:/Icons/erase.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="adbGroup">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>10</y>
-      <width>121</width>
-      <height>231</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>ADB</string>
-    </property>
-    <widget class="QPushButton" name="SideloadButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the sideload menu. You need to be in recovery in sideload mode!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Sideload</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/sideload_2.png</normaloff>:/Icons/sideload_2.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="BackupButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wanna backup?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Backup</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/backup.png</normaloff>:/Icons/backup.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="RestoreButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Want your stuff back?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Restore</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/restore.png</normaloff>:/Icons/restore.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="rebootAdbButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>200</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reboot to your selected option from ADB.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Reboot</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/reboot.png</normaloff>:/Icons/reboot.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="versionButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>110</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check the ADB tools version.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Version</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/version.png</normaloff>:/Icons/version.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="loggingButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>140</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the logging menu for ADB Logcat and kernel DMESG.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Logging</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/log.png</normaloff>:/Icons/log.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="screenshotButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Take a screenshot from your phone directly on your PC.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Screenshot</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/screenshot.png</normaloff>:/Icons/screenshot.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="connectionGroup">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>250</y>
-      <width>421</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Connection</string>
-    </property>
-    <widget class="QCheckBox" name="checkBox_ADB">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>20</y>
-       <width>61</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>ADB</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="refreshButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>101</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;What does this button do?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Refresh</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/Icons/update.png</normaloff>:/Icons/update.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>15</width>
-       <height>15</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_Fastboot">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>20</y>
-       <width>91</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Fastboot</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>20</y>
-       <width>51</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The name of the device connected - ADB only!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Device:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_device">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>20</y>
-       <width>101</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>None</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>120</y>
-      <width>111</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Non-racist android logo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="icons.qrc">:/Icons/android.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="rebootGroup">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>10</y>
-      <width>111</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Reboot Options</string>
-    </property>
-    <widget class="QRadioButton" name="normalRebootButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>81</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reboot to normal system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Normally</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="bootloaderRebootButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>91</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reboot to bootloader.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Bootloader</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="recoveryRebootButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>91</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reboot to recovery.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Recovery</string>
-     </property>
-    </widget>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="1" colspan="5">
+     <widget class="QGroupBox" name="connectionGroup">
+      <property name="minimumSize">
+       <size>
+        <width>440</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>800</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Connection</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="refreshButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;What does this button do?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Refresh</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/update.png</normaloff>:/Icons/update.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_Fastboot">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Fastboot</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_ADB">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>ADB</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame">
+         <property name="minimumSize">
+          <size>
+           <width>181</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>181</width>
+           <height>21</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QLabel" name="label_2">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>0</y>
+            <width>51</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The name of the device connected - ADB only!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="text">
+           <string>Device:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_device">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>0</y>
+            <width>101</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>None</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="1" rowspan="2">
+     <widget class="QGroupBox" name="fasbootGroup">
+      <property name="minimumSize">
+       <size>
+        <width>121</width>
+        <height>250</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>121</width>
+        <height>231</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Fastboot</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="UnlockButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Unlock the bootloader. Unlocking the bootloader will result in a factory reset!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="whatsThis">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A button.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Unlock</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/unlock.png</normaloff>:/Icons/unlock.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="RelockButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Relock your bootloader. Why would you do this?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Lock</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/lock.png</normaloff>:/Icons/lock.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="RecoveryButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the recovery flashing menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Recovery</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/recovery.png</normaloff>:/Icons/recovery.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="kernelButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the kernel flashing menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Kernel</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/kernel.png</normaloff>:/Icons/kernel.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="StockButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the menu to select the stock image. You can return you phone to the factory image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Stock</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/stock.png</normaloff>:/Icons/stock.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="eraseButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the fastboot erase menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Erase</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/erase.png</normaloff>:/Icons/erase.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="rebootFastbootButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reboot to your selected option from Fastboot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Reboot</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/reboot.png</normaloff>:/Icons/reboot.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="3" rowspan="2">
+     <widget class="QGroupBox" name="adbGroup">
+      <property name="minimumSize">
+       <size>
+        <width>121</width>
+        <height>250</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>121</width>
+        <height>231</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>ADB</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QPushButton" name="SideloadButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the sideload menu. You need to be in recovery in sideload mode!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Sideload</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/sideload_2.png</normaloff>:/Icons/sideload_2.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="BackupButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wanna backup?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Backup</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/backup.png</normaloff>:/Icons/backup.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="RestoreButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Want your stuff back?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Restore</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/restore.png</normaloff>:/Icons/restore.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="versionButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check the ADB tools version.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Version</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/version.png</normaloff>:/Icons/version.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="loggingButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the logging menu for ADB Logcat and kernel DMESG.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Logging</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/log.png</normaloff>:/Icons/log.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="screenshotButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Take a screenshot from your phone directly on your PC.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Screenshot</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/screenshot.png</normaloff>:/Icons/screenshot.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="rebootAdbButton">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reboot to your selected option from ADB.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Reboot</string>
+         </property>
+         <property name="icon">
+          <iconset resource="icons.qrc">
+           <normaloff>:/Icons/reboot.png</normaloff>:/Icons/reboot.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>15</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="5">
+     <widget class="QGroupBox" name="rebootGroup">
+      <property name="minimumSize">
+       <size>
+        <width>111</width>
+        <height>120</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>111</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Reboot Options</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QRadioButton" name="normalRebootButton">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reboot to normal system.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Normally</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="bootloaderRebootButton">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reboot to bootloader.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Bootloader</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="recoveryRebootButton">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reboot to recovery.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Recovery</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <spacer name="horizontalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="2">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="5">
+     <widget class="QLabel" name="label">
+      <property name="minimumSize">
+       <size>
+        <width>111</width>
+        <height>111</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>111</width>
+        <height>111</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Non-racist android logo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="icons.qrc">:/Icons/android.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="6">
+     <spacer name="horizontalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>493</width>
-     <height>27</height>
+     <width>490</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
