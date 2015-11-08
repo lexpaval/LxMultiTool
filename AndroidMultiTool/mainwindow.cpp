@@ -163,7 +163,7 @@ void MainWindow::on_UnlockButton_clicked()
 
     // Prepare a messagebox
     QMessageBox msgBox(this);
-    QPixmap unlock("../Icons/unlock.png");
+    QPixmap unlock(":/Icons/unlock.png");
     msgBox.setIconPixmap(unlock);
 
     // Check if we have fastboot connection
@@ -226,7 +226,7 @@ void MainWindow::on_RelockButton_clicked()
 
     // Prepare a messagebox
     QMessageBox msgBox(this);
-    QPixmap unlock("../Icons/lock.png");
+    QPixmap unlock(":/Icons/lock.png");
     msgBox.setIconPixmap(unlock);
 
     // Check if we have fastboot connection
@@ -296,7 +296,7 @@ void MainWindow::on_RecoveryButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap recovery("../Icons/recovery.png");
+        QPixmap recovery(":/Icons/recovery.png");
         msgBox.setIconPixmap(recovery);
         msgBox.setText("You need to be in fastboot mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -406,7 +406,7 @@ void MainWindow::on_SideloadButton_clicked()
     else
     {    // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap sideload("../Icons/sideload_2.png");
+        QPixmap sideload(":/Icons/sideload_2.png");
         msgBox.setIconPixmap(sideload);
         msgBox.setText("You need to be in adb mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -473,7 +473,7 @@ void MainWindow::on_BackupButton_clicked()
         {
             // Prepare a messagebox
             QMessageBox msgBox(this);
-            QPixmap backup("../Icons/backup.png");
+            QPixmap backup(":/Icons/backup.png");
             msgBox.setIconPixmap(backup);
             msgBox.setText("No backup name selected!");
             msgBox.setInformativeText("You really need to put a name to your backup.");
@@ -488,7 +488,7 @@ void MainWindow::on_BackupButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap backup("../Icons/backup.png");
+        QPixmap backup(":/Icons/backup.png");
         msgBox.setIconPixmap(backup);
         msgBox.setText("You need to be in adb mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -549,7 +549,7 @@ void MainWindow::on_RestoreButton_clicked()
         {
             // Prepare a messagebox
             QMessageBox msgBox(this);
-            QPixmap restore("../Icons/restore.png");
+            QPixmap restore(":/Icons/restore.png");
             msgBox.setIconPixmap(restore);
             msgBox.setText("No backup selected!");
             msgBox.setInformativeText("You really need select a backup.");
@@ -562,7 +562,7 @@ void MainWindow::on_RestoreButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap restore("../Icons/restore.png");
+        QPixmap restore(":/Icons/restore.png");
         msgBox.setIconPixmap(restore);
         msgBox.setText("You need to be in adb mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -682,7 +682,7 @@ void MainWindow::on_rebootFastbootButton_clicked()
         {
             // Prepare a messagebox
             QMessageBox msgBox(this);
-            QPixmap reboot("../Icons/reboot.png");
+            QPixmap reboot(":/Icons/reboot.png");
             msgBox.setIconPixmap(reboot);
             msgBox.setText("Reboot to what?");
             msgBox.setInformativeText("You really need to choose where you want to reboot...");
@@ -695,7 +695,7 @@ void MainWindow::on_rebootFastbootButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap reboot("../Icons/reboot.png");
+        QPixmap reboot(":/Icons/reboot.png");
         msgBox.setIconPixmap(reboot);
         msgBox.setText("You need to be in fastboot mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -823,7 +823,7 @@ void MainWindow::on_rebootAdbButton_clicked()
         {
             // Prepare a messagebox
             QMessageBox msgBox(this);
-            QPixmap reboot("../Icons/reboot.png");
+            QPixmap reboot(":/Icons/reboot.png");
             msgBox.setIconPixmap(reboot);
             msgBox.setText("Reboot to what?");
             msgBox.setInformativeText("You really need to choose where you want to reboot...");
@@ -836,7 +836,7 @@ void MainWindow::on_rebootAdbButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap reboot("../Icons/reboot.png");
+        QPixmap reboot(":/Icons/reboot.png");
         msgBox.setIconPixmap(reboot);
         msgBox.setText("You need to be in adb mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -902,7 +902,7 @@ void MainWindow::on_versionButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap version("../Icons/version.png");
+        QPixmap version(":/Icons/version.png");
         msgBox.setIconPixmap(version);
         msgBox.setText("You need to be in ADB mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -927,7 +927,7 @@ void MainWindow::on_kernelButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap kernel("../Icons/kernel.png");
+        QPixmap kernel(":/Icons/kernel.png");
         msgBox.setIconPixmap(kernel);
         msgBox.setText("You need to be in fastboot mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -1009,7 +1009,7 @@ void MainWindow::checkUpdate()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap unlock("../Icons/updates.png");
+        QPixmap unlock(":/Icons/updates.png");
         msgBox.setIconPixmap(unlock);
         msgBox.setText("A new version has been found!");
         msgBox.setInformativeText(QString("Would you like to open the link for version %1.%2.%3").arg(newVerMajor).arg(newVerMinor).arg(newVerPatch));
@@ -1027,7 +1027,7 @@ void MainWindow::checkUpdate()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap unlock("../Icons/updates.png");
+        QPixmap unlock(":/Icons/updates.png");
         msgBox.setIconPixmap(unlock);
         msgBox.setText("Nothing new!");
         msgBox.setInformativeText("Nothing new under the sun, check later maybe.");
@@ -1059,7 +1059,7 @@ void MainWindow::on_loggingButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap unlock("../Icons/log.png");
+        QPixmap unlock(":/Icons/log.png");
         msgBox.setIconPixmap(unlock);
         msgBox.setText("You need to be in ADB mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -1084,7 +1084,7 @@ void MainWindow::on_StockButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap stock("../Icons/stock.png");
+        QPixmap stock(":/Icons/stock.png");
         msgBox.setIconPixmap(stock);
         msgBox.setText("You need to be in fastboot mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -1109,7 +1109,7 @@ void MainWindow::on_screenshotButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap icon("../Icons/screenshot.png");
+        QPixmap icon(":/Icons/screenshot.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("You need to be in fastboot mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
@@ -1134,7 +1134,7 @@ void MainWindow::on_eraseButton_clicked()
     {
         // Prepare a messagebox
         QMessageBox msgBox(this);
-        QPixmap icon("../Icons/erase.png");
+        QPixmap icon(":/Icons/erase.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("You need to be in fastboot mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");

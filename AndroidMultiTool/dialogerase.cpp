@@ -17,8 +17,8 @@ DialogErase::~DialogErase()
 void DialogErase::on_eraseButton_clicked()
 {
     // Prepare a messagebox
-    QMessageBox msgBox(this);
-    QPixmap icon("../Icons/erase.png");
+    QMessageBox msgBox(this->parentWidget());
+    QPixmap icon(":/Icons/erase.png");
     msgBox.setIconPixmap(icon);
 
     QProcess* process_erase = new QProcess(this);
@@ -202,8 +202,8 @@ void DialogErase::processFinished(int exitCode)
     if(exitCode != 0)
     {
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap icon("../Icons/erase.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/erase.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
         msgBox.setInformativeText("Apparently the flashing exited with code "+ QString(exitCode) +".");

@@ -69,8 +69,8 @@ DialogRecovery::DialogRecovery(QWidget *parent) :
     if(ui->tableWidget->rowCount() == 0)
     {
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap icon("../Icons/recovery.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/recovery.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("There are no recoveries available!");
         msgBox.setInformativeText("You can manually add one or wait for a new release.");
@@ -108,8 +108,8 @@ void DialogRecovery::processFinished(int exitCode)
     if(exitCode != 0)
     {
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap icon("../Icons/recovery.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/recovery.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
         msgBox.setInformativeText("Apparently the flashing exited with code "+ QString(exitCode) +".");

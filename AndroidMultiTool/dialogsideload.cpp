@@ -69,8 +69,8 @@ DialogSideload::DialogSideload(QWidget *parent) :
     if(ui->tableWidget->rowCount() == 0)
     {
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap recovery("../Icons/sideload_2.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap recovery(":/Icons/sideload_2.png");
         msgBox.setIconPixmap(recovery);
         msgBox.setText("There are no zip files available!");
         msgBox.setInformativeText("You can manually add one or wait for a new release.");
@@ -124,8 +124,8 @@ void DialogSideload::processFinished(int exitCode)
     if(exitCode != 0)
     {
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap recovery("../Icons/sideload_2.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap recovery(":/Icons/sideload_2.png");
         msgBox.setIconPixmap(recovery);
         msgBox.setText("Oups! Something went wrong...");
         msgBox.setInformativeText("Apparently the flashing exited with code "+ QString(exitCode) +".");

@@ -23,8 +23,8 @@ DialogLogging::DialogLogging(QWidget *parent) :
     if(ui->tableWidget->rowCount() == 0)
     {
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap icon("../Icons/log.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/log.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("There are no logfiles available!");
         msgBox.setInformativeText("I guess it's time you make one.");
@@ -94,8 +94,8 @@ void DialogLogging::processFinished(int exitCode)
     if(exitCode != 0)
     {
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap icon("../Icons/log.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/log.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
         msgBox.setInformativeText("Apparently the procedure exited with code "+ QString(exitCode) +".");
@@ -182,8 +182,8 @@ void DialogLogging::on_getLogButton_clicked()
             ui->getLogButton->setEnabled(true);
 
             // Prepare a messagebox
-            QMessageBox msgBox(this);
-            QPixmap recovery("../Icons/log.png");
+            QMessageBox msgBox(this->parentWidget());
+            QPixmap recovery(":/Icons/log.png");
             msgBox.setIconPixmap(recovery);
             msgBox.setText("No name selected for the log!");
             msgBox.setInformativeText("You really need to input a name for your log.");
@@ -257,8 +257,8 @@ void DialogLogging::on_getLogButton_clicked()
             ui->getLogButton->setEnabled(true);
 
             // Prepare a messagebox
-            QMessageBox msgBox(this);
-            QPixmap icon("../Icons/log.png");
+            QMessageBox msgBox(this->parentWidget());
+            QPixmap icon(":/Icons/log.png");
             msgBox.setIconPixmap(icon);
             msgBox.setText("No name selected for the log!");
             msgBox.setInformativeText("You really need to input a name for your log.");
@@ -270,8 +270,8 @@ void DialogLogging::on_getLogButton_clicked()
     else
     {
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap icon("../Icons/log.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/log.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("No log type selected!");
         msgBox.setInformativeText("You really need to check Logcat or Dmesg.");

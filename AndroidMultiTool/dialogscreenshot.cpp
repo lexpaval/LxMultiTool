@@ -23,8 +23,8 @@ DialogScreenshot::DialogScreenshot(QWidget *parent) :
     if(ui->tableWidget->rowCount() == 0)
     {
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap recovery("../Icons/screenshot.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap recovery(":/Icons/screenshot.png");
         msgBox.setIconPixmap(recovery);
         msgBox.setText("There are no screenshots available!");
         msgBox.setInformativeText("I guess it's time you make one.");
@@ -94,8 +94,8 @@ void DialogScreenshot::processFinished(int exitCode)
     if(exitCode != 0)
     {
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap icon("../Icons/screenshot.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/screenshot.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
         msgBox.setInformativeText("Apparently the procedure exited with code "+ QString(exitCode) +".");
@@ -205,8 +205,8 @@ void DialogScreenshot::on_getScreenButton_clicked()
         ui->getScreenButton->setEnabled(true);
 
         // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap icon("../Icons/screenshot.png");
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/screenshot.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("No name selected for the screenshot!");
         msgBox.setInformativeText("You really need to input a name for your screenshot.");
