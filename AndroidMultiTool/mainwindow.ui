@@ -333,6 +333,37 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="checkBox_Fastboot">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>Fastboot</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="checkBox_ADB">
          <property name="enabled">
           <bool>false</bool>
@@ -363,37 +394,6 @@
          </property>
          <property name="text">
           <string>ADB</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_Fastboot">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>90</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>25</height>
-          </size>
-         </property>
-         <property name="mouseTracking">
-          <bool>false</bool>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <property name="text">
-          <string>Fastboot</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -810,7 +810,7 @@
      <x>0</x>
      <y>0</y>
      <width>490</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -854,7 +854,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>refreshButton</tabstop>
   <tabstop>UnlockButton</tabstop>
   <tabstop>RelockButton</tabstop>
   <tabstop>RecoveryButton</tabstop>
@@ -872,7 +871,6 @@
   <tabstop>normalRebootButton</tabstop>
   <tabstop>bootloaderRebootButton</tabstop>
   <tabstop>recoveryRebootButton</tabstop>
-  <tabstop>checkBox_Fastboot</tabstop>
   <tabstop>checkBox_ADB</tabstop>
  </tabstops>
  <resources>
