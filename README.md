@@ -27,6 +27,11 @@ The features presented in this README are according to the version mentioned in 
   - Screenshots (you can directly take screenshots to your PC)
   - Reboot (lots of choices)
 
+##### Tool specific
+  - Check for updates
+  - Go to xda-developers thread
+  - Tool tips for all buttons
+  
 ### Version
 1.0.0
 
@@ -57,7 +62,6 @@ After that, you should be able to build, debug, edit and so on.
  - Properly handle fastboot and adb output text for more user friendliness
  - Add more Code Comments
  - Add context menus for refresh and detele files in some menus
- - Use layouts so you can resize the menus
  - Add messages when you want to save files with a name that already exists
  - Add APK Install functionality
 
