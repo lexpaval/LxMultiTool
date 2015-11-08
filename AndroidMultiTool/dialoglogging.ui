@@ -135,6 +135,12 @@
          <iconset resource="icons.qrc">
           <normaloff>:/Icons/log.png</normaloff>:/Icons/log.png</iconset>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>15</width>
+          <height>15</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item>
