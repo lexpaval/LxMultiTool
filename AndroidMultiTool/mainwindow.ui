@@ -679,13 +679,13 @@
      <widget class="QGroupBox" name="rebootGroup">
       <property name="minimumSize">
        <size>
-        <width>111</width>
+        <width>121</width>
         <height>120</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>111</width>
+        <width>121</width>
         <height>100</height>
        </size>
       </property>
@@ -817,7 +817,7 @@
      <x>0</x>
      <y>0</y>
      <width>490</width>
-     <height>21</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
