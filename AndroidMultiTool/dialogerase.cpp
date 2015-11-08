@@ -211,6 +211,18 @@ void DialogErase::processFinished(int exitCode)
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
     }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/erase.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("Erase finished!");
+        msgBox.setInformativeText("Your selected partition has been erased successfully.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
 
     *busy = false;
 

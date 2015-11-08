@@ -118,6 +118,18 @@ void DialogStock::processFinished(int exitCode)
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
     }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/stock.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("Return to stock finished");
+        msgBox.setInformativeText("Your selected image has been successfully flashed!");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
 
     *busy = false;
 

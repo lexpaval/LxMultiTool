@@ -117,6 +117,18 @@ void DialogRecovery::processFinished(int exitCode)
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
     }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/recovery.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("Flashing finished!");
+        msgBox.setInformativeText("Your selected recovery has been flashed successfully.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
 
     *busy = false;
 

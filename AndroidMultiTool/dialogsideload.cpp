@@ -133,6 +133,18 @@ void DialogSideload::processFinished(int exitCode)
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
     }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap recovery(":/Icons/sideload_2.png");
+        msgBox.setIconPixmap(recovery);
+        msgBox.setText("Sideload finished!");
+        msgBox.setInformativeText("Your selected .zip has been sideloaded successfully.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
 
     *busy = false;
 
