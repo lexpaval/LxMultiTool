@@ -31,9 +31,10 @@ The features presented in this README are according to the version mentioned in 
   - Check for updates
   - Go to xda-developers thread
   - Tool tips for all buttons
+  - Context for refresh and delete on all menus
   
 ### Version
-1.0.1
+1.0.2
 
 ### Tech
 
@@ -61,7 +62,6 @@ After that, you should be able to build, debug, edit and so on.
 
  - Properly handle fastboot and adb output text for more user friendliness
  - Add more Code Comments
- - Add context menus for refresh and detele files in some menus
  - Add messages when you want to save files with a name that already exists
  - Add APK Install functionality
 
