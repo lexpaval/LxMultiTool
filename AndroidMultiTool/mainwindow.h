@@ -22,7 +22,7 @@
 #include "aboutdialog.h"
 #include "version.h"
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
 #warning "YOU ARE IN DEBUG MODE"
