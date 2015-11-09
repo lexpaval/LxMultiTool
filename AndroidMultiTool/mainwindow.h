@@ -1,8 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define DEBUG
-
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QProcess>
@@ -23,6 +21,12 @@
 #include "filedownloader.h"
 #include "aboutdialog.h"
 #include "version.h"
+
+#define DEBUG
+
+#ifdef DEBUG
+#warning "YOU ARE IN DEBUG MODE"
+#endif
 
 namespace Ui {
 class MainWindow;
