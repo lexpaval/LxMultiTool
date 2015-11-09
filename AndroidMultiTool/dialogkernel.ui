@@ -166,6 +166,9 @@
       </item>
       <item>
        <widget class="QDialogButtonBox" name="buttonBox">
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="standardButtons">
          <set>QDialogButtonBox::Close</set>
         </property>
@@ -207,6 +210,7 @@
   </action>
  </widget>
  <tabstops>
+  <tabstop>buttonBox</tabstop>
   <tabstop>tableWidget</tabstop>
   <tabstop>flashButton</tabstop>
   <tabstop>exploreButton</tabstop>
