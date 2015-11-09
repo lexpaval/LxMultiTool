@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#define DEBUG
+
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QProcess>

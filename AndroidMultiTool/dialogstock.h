@@ -34,10 +34,15 @@ private slots:
 
     void on_tableWidget_itemClicked();
 
+    void on_actionRefresh_triggered();
+
+    void on_actionDelete_triggered();
+
 private:
     Ui::DialogStock *ui;
     bool *busy;
     void closeEvent(QCloseEvent *event);
+    void getFiles();
 };
 
 #endif // DIALOGSTOCK_H

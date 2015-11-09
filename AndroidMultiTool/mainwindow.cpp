@@ -180,12 +180,12 @@ void MainWindow::on_UnlockButton_clicked()
             QProcess process;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
             temp_path.cdUp();
-    #endif
+#endif
 
             process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -243,12 +243,12 @@ void MainWindow::on_RelockButton_clicked()
             QProcess process;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
             temp_path.cdUp();
-    #endif
+#endif
 
             process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -439,12 +439,12 @@ void MainWindow::on_BackupButton_clicked()
             QProcess process;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
             temp_path.cdUp();
-    #endif
+#endif
 
             process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -516,12 +516,12 @@ void MainWindow::on_RestoreButton_clicked()
             QProcess process;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
             temp_path.cdUp();
-    #endif
+#endif
 
             process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -601,6 +601,16 @@ void MainWindow::checkOptions()
         ui->adbGroup->setEnabled(false);
         ui->fasbootGroup->setEnabled(false);
     }
+
+#ifdef DEBUG
+    ui->normalRebootButton->setEnabled(true);
+    ui->bootloaderRebootButton->setEnabled(true);
+    ui->recoveryRebootButton->setEnabled(true);
+    ui->adbGroup->setEnabled(true);
+    ui->fasbootGroup->setEnabled(true);
+    ui->checkBox_ADB->setChecked(true);
+    ui->checkBox_Fastboot->setChecked(true);
+#endif
 }
 
 void MainWindow::on_rebootFastbootButton_clicked()
@@ -616,12 +626,12 @@ void MainWindow::on_rebootFastbootButton_clicked()
             QProcess process_fastboot;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
             temp_path.cdUp();
-    #endif
+#endif
 
             process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -649,12 +659,12 @@ void MainWindow::on_rebootFastbootButton_clicked()
             QProcess process_fastboot;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
             temp_path.cdUp();
-    #endif
+#endif
 
             process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -722,12 +732,12 @@ void MainWindow::on_rebootAdbButton_clicked()
             QProcess process_adb;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
             temp_path.cdUp();
-    #endif
+#endif
 
             process_adb.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -756,12 +766,12 @@ void MainWindow::on_rebootAdbButton_clicked()
             QProcess process_adb;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
             temp_path.cdUp();
-    #endif
+#endif
 
             process_adb.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -790,12 +800,12 @@ void MainWindow::on_rebootAdbButton_clicked()
             QProcess process_adb;
             QDir temp_path(QCoreApplication::applicationDirPath());
 
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
             // Because apple likes it's application folders
             temp_path.cdUp();
             temp_path.cdUp();
             temp_path.cdUp();
-    #endif
+#endif
 
             process_adb.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN

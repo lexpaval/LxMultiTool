@@ -17,9 +17,37 @@ DialogStock::DialogStock(QWidget *parent) :
     // Beautification
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 
+    // Get our context menu up and running
+    ui->tableWidget->insertAction(NULL,ui->actionDelete);
+    ui->tableWidget->insertAction(ui->actionDelete,ui->actionRefresh);
+
     // Enable the button upon selection only!
     ui->flashButton->setEnabled(false);
 
+    getFiles();
+
+    // Let's check if we have something
+    if(ui->tableWidget->rowCount() == 0)
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/stock.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("There are no stock packages available!");
+        msgBox.setInformativeText("You can manually add one or wait for a new release.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
+}
+
+DialogStock::~DialogStock()
+{
+    delete ui;
+}
+
+void DialogStock::getFiles()
+{
     QDir temp_path(QCoreApplication::applicationDirPath());
 
 #ifdef Q_OS_MACX
@@ -28,6 +56,9 @@ DialogStock::DialogStock(QWidget *parent) :
     temp_path.cdUp();
     temp_path.cdUp();
 #endif
+
+    // Reset our row count
+    ui->tableWidget->setRowCount(0);
 
     // Let's populate the list
     QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"),QDirIterator::NoIteratorFlags);
@@ -76,27 +107,6 @@ DialogStock::DialogStock(QWidget *parent) :
             ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,1,new QTableWidgetItem(size_converted_string));
         }
     }
-
-    // Let's check if we have something
-    if(ui->tableWidget->rowCount() == 0)
-    {
-        // Prepare a messagebox
-        QMessageBox msgBox(this->parentWidget());
-        QPixmap icon(":/Icons/stock.png");
-        msgBox.setIconPixmap(icon);
-        msgBox.setText("There are no stock packages available!");
-        msgBox.setInformativeText("You can manually add one or wait for a new release.");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        msgBox.exec();
-
-        this->hide();
-    }
-}
-
-DialogStock::~DialogStock()
-{
-    delete ui;
 }
 
 void DialogStock::processOutput()
@@ -285,4 +295,54 @@ void DialogStock::on_exploreButton_clicked()
 void DialogStock::on_tableWidget_itemClicked()
 {
     ui->flashButton->setEnabled(true);
+}
+
+void DialogStock::on_actionRefresh_triggered()
+{
+    getFiles();
+}
+
+void DialogStock::on_actionDelete_triggered()
+{
+    if(ui->tableWidget->currentItem() != NULL)
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/stock.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("Are you sure you want to delete?");
+        msgBox.setInformativeText("The folder will be PERMANENTLY deleted from you hard drive.");
+        msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+        int option = msgBox.exec();
+
+        if(option == QMessageBox::Yes)
+        {
+            QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef Q_OS_MACX
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+#endif
+
+            QDir folder(temp_path.absolutePath()+"/Data/StockPackages/"+ui->tableWidget->currentItem()->text());
+            folder.removeRecursively();
+
+            getFiles();
+        }
+    }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/stock.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("Nothing selected!");
+        msgBox.setInformativeText("You need to select something in order to delete...");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
 }

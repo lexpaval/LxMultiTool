@@ -31,10 +31,15 @@ private slots:
     void processOutput();
 
     void processFinished(int exitCode);
+    void on_actionRefresh_triggered();
+
+    void on_actionDelete_triggered();
+
 private:
     Ui::DialogSideload *ui;
     bool *busy;
     void closeEvent(QCloseEvent *event);
+    void getFiles();
 };
 
 #endif // DIALOGSIDELOAD_H

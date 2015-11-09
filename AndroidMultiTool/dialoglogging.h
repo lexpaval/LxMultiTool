@@ -30,6 +30,10 @@ private slots:
 
     void on_openFolderButton_clicked();
 
+    void on_actionRefresh_triggered();
+
+    void on_actionDelete_triggered();
+
 private:
     Ui::DialogLogging *ui;
     bool *busy;

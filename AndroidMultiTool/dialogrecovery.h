@@ -33,9 +33,14 @@ private slots:
 
     void on_tableWidget_itemClicked();
 
+    void on_actionRefresh_triggered();
+
+    void on_actionDelete_triggered();
+
 private:
     Ui::DialogRecovery *ui;
     bool *busy;
+    void getFiles();
     void closeEvent(QCloseEvent *event);
 };
 

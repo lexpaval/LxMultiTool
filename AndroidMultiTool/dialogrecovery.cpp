@@ -16,10 +16,41 @@ DialogRecovery::DialogRecovery(QWidget *parent) :
     // Beautification
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 
+    // Get our context menu up and running
+    ui->tableWidget->insertAction(NULL,ui->actionDelete);
+    ui->tableWidget->insertAction(ui->actionDelete,ui->actionRefresh);
+
     // We don't want to see the empty progress bar
     ui->progressBar->setVisible(false);
     // Enable the button upon selection only!
     ui->flashButton->setEnabled(false);
+
+    getFiles();
+
+    // Let's check if we have something
+    if(ui->tableWidget->rowCount() == 0)
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/recovery.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("There are no recoveries available!");
+        msgBox.setInformativeText("You can manually add one or wait for a new release.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
+}
+
+DialogRecovery::~DialogRecovery()
+{
+    delete ui;
+}
+
+void DialogRecovery::getFiles()
+{
+    // Reset our row count
+    ui->tableWidget->setRowCount(0);
 
     QDir temp_path(QCoreApplication::applicationDirPath());
 
@@ -64,27 +95,6 @@ DialogRecovery::DialogRecovery(QWidget *parent) :
             ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,1,new QTableWidgetItem(size_converted_string));
         }
     }
-
-    // Let's check if we have something
-    if(ui->tableWidget->rowCount() == 0)
-    {
-        // Prepare a messagebox
-        QMessageBox msgBox(this->parentWidget());
-        QPixmap icon(":/Icons/recovery.png");
-        msgBox.setIconPixmap(icon);
-        msgBox.setText("There are no recoveries available!");
-        msgBox.setInformativeText("You can manually add one or wait for a new release.");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        msgBox.exec();
-
-        this->hide();
-    }
-}
-
-DialogRecovery::~DialogRecovery()
-{
-    delete ui;
 }
 
 // Not used right now
@@ -218,4 +228,54 @@ void DialogRecovery::on_exploreButton_clicked()
 void DialogRecovery::on_tableWidget_itemClicked()
 {
     ui->flashButton->setEnabled(true);
+}
+
+void DialogRecovery::on_actionRefresh_triggered()
+{
+    getFiles();
+}
+
+void DialogRecovery::on_actionDelete_triggered()
+{
+    if(ui->tableWidget->currentItem() != NULL)
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/recovery.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("Are you sure you want to delete?");
+        msgBox.setInformativeText("The file will be PERMANENTLY deleted from you hard drive.");
+        msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+        int option = msgBox.exec();
+
+        if(option == QMessageBox::Yes)
+        {
+            QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef Q_OS_MACX
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+#endif
+
+            QFile file(temp_path.absolutePath()+"/Data/Recoveries/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
+            file.remove();
+
+            getFiles();
+        }
+    }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/recovery.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("Nothing selected!");
+        msgBox.setInformativeText("You need to select something in order to delete...");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
 }

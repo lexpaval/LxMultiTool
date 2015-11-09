@@ -10,6 +10,7 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QDesktopServices>
+#include <QMenu>
 
 namespace Ui {
 class DialogKernel;
@@ -34,9 +35,14 @@ private slots:
 
     void on_tableWidget_itemClicked();
 
+    void on_actionRefresh_triggered();
+
+    void on_actionDelete_triggered();
+
 private:
     Ui::DialogKernel *ui;
     bool *busy;
+    void getFiles();
     void closeEvent(QCloseEvent *event);
 };
 
