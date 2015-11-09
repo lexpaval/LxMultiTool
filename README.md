@@ -64,6 +64,8 @@ After that, you should be able to build, debug, edit and so on.
  - Add more Code Comments
  - Add messages when you want to save files with a name that already exists
  - Add APK Install functionality
+ - Add online database to download stuff from (kernels, stock, recoveries)
+ - Extend the file downloader to download directly from the tool
 
 License
 ----
