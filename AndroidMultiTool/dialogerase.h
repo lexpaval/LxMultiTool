@@ -4,8 +4,6 @@
 #include <QDialog>
 #include <QMessageBox>
 #include <QProcess>
-#include <QPushButton>
-#include <QListWidgetItem>
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QDir>

@@ -5,12 +5,9 @@
 #include <QDirIterator>
 #include <QMessageBox>
 #include <QProcess>
-#include <QPushButton>
-#include <QListWidgetItem>
 #include <QCloseEvent>
 #include <QDebug>
 #include <QDesktopServices>
-#include <QMenu>
 
 namespace Ui {
 class DialogKernel;

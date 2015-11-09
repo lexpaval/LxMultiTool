@@ -5,8 +5,6 @@
 #include <QDirIterator>
 #include <QMessageBox>
 #include <QProcess>
-#include <QPushButton>
-#include <QListWidgetItem>
 #include <QCloseEvent>
 #include <QDesktopServices>
 
