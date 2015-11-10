@@ -1,7 +1,7 @@
-![logo](https://raw.githubusercontent.com/lexmazter/AndroidMultiTool/master/Icons/android.png "Android Multi Tool Logo") 
-# Android Multi Tool
+![logo](https://raw.githubusercontent.com/lexmazter/LxMultiTool/master/Icons/android.png "Lx Multi Tool Logo") 
+# Lx Multi Tool
 
-Android Multi Tool is a tool inittially created for Nexus 6P but designed to be modular, easy to modify and port to other device and to be trully cross-platform.
+Lx Multi Tool is a tool inittially created for Nexus 6P but designed to be modular, easy to modify and port to other device and to be trully cross-platform.
 
 This tool wants to stand out from the rest of the tools out there by providing a intuitive UI that uses most of the ADB and Fastboot commands.
 As a bonus, this tool also checks for updates.
@@ -38,7 +38,7 @@ The features presented in this README are according to the version mentioned in 
 
 ### Tech
 
-Android Multi Tool uses a number of technologies to work properly:
+Lx Multi Tool uses a number of technologies to work properly:
 
 * [Qt] - An awesome cross-platform IDE.
 * [Dillinger] - Awesome web platform that made this document so handsome!
@@ -48,13 +48,13 @@ Android Multi Tool uses a number of technologies to work properly:
 
 ### Installation
 
-In order to use Android Multi Tool, you need to extract the archive for the respective operating system and run the AndroidMultiTool executable.
+In order to use Lx Multi Tool, you need to extract the archive for the respective operating system and run the LxMultiTool executable.
 
 ### Development
 
 Want to contribute? Great!
 
-All you need to do is download the [Qt IDE](http://www.qt.io/download-open-source/) for your operating system, clone this repository, open the Qt Creator, click Open Project and then select AndroidMultiTools .pro.
+All you need to do is download the [Qt IDE](http://www.qt.io/download-open-source/) for your operating system, clone this repository, open the Qt Creator, click Open Project and then select LxMultiTool .pro.
 
 After that, you should be able to build, debug, edit and so on.
 

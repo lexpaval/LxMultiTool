@@ -9,7 +9,7 @@ QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = AndroidMultiTool
+TARGET = "Lx Multi Tool"
 TEMPLATE = app
 
 #ifdef Q_OS_MACX
