@@ -9,7 +9,7 @@ QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = "Lx Multi Tool"
+TARGET = LxMultiTool
 TEMPLATE = app
 
 #ifdef Q_OS_MACX
@@ -29,7 +29,9 @@ SOURCES += main.cpp\
     dialogstock.cpp \
     dialogscreenshot.cpp \
     dialogerase.cpp \
-    filedownloader.cpp
+    filedownloader.cpp \
+    dialogbackups.cpp \
+    dialoginstallapk.cpp
 
 HEADERS  += mainwindow.h \
     dialogrecovery.h \
@@ -41,7 +43,9 @@ HEADERS  += mainwindow.h \
     version.h \
     dialogscreenshot.h \
     dialogerase.h \
-    filedownloader.h
+    filedownloader.h \
+    dialogbackups.h \
+    dialoginstallapk.h
 
 FORMS    += mainwindow.ui \
     dialogrecovery.ui \
@@ -51,7 +55,12 @@ FORMS    += mainwindow.ui \
     dialoglogging.ui \
     dialogstock.ui \
     dialogscreenshot.ui \
-    dialogerase.ui
+    dialogerase.ui \
+    dialogbackups.ui \
+    dialoginstallapk.ui
 
 RESOURCES += \
     icons.qrc
+
+DISTFILES += \
+    ../Icons/application.png

@@ -421,68 +421,11 @@ void MainWindow::on_BackupButton_clicked()
     // Refresh before trying to do stuff
     on_refreshButton_clicked();
 
-    // Check if we have adb connection
+    // Check if we have fastboot connection
     if(ui->checkBox_ADB->checkState())
     {
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Select backup name and folder"), QDir::toNativeSeparators(QString(QDir::currentPath()+"/Data/Backup")), tr("Android Backup Files (*.ab)"));
-        if(fileName != "")
-        {
-            if(!fileName.contains(".ab"))
-            {
-                // Append the ab extension if it's not available - linux limitation
-                fileName = fileName+".ab";
-            }
-
-            // Prepare the file name for insertion in the process
-            fileName = fileName+"\"\n";
-
-            QProcess process;
-            QDir temp_path(QCoreApplication::applicationDirPath());
-
-#ifdef Q_OS_MACX
-            // Because apple likes it's application folders
-            temp_path.cdUp();
-            temp_path.cdUp();
-            temp_path.cdUp();
-#endif
-
-            process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
-#ifdef Q_OS_WIN
-            // Windows code here
-            process.start("cmd");
-            fileName = "adb.exe backup -all -f \""+fileName;
-#elif defined(Q_OS_MACX)
-            // MAC code here
-            process.start("sh");
-            fileName = "./adb_mac backup -all -f \""+fileName;
-#else
-            // Linux code here
-            process.start("sh");
-            fileName = "./adb_linux backup -all -f \""+fileName;
-#endif
-            process.write(fileName.toLatin1());
-            process.write("exit\n");
-            process.waitForFinished(); // sets current thread to sleep and waits for process end
-
-            // Use the statusbar
-            ui->statusBar->clearMessage();
-            ui->statusBar->showMessage("Backup command successfull!");
-
-        }
-        else
-        {
-            // Prepare a messagebox
-            QMessageBox msgBox(this);
-            QPixmap backup(":/Icons/backup.png");
-            msgBox.setIconPixmap(backup);
-            msgBox.setText("No backup name selected!");
-            msgBox.setInformativeText("You really need to put a name to your backup.");
-            msgBox.setStandardButtons(QMessageBox::Ok);
-            msgBox.setDefaultButton(QMessageBox::Ok);
-            msgBox.exec();
-        }
-
-        qDebug() << fileName << " file_dialog";
+        DialogBackups* backup_ui = new DialogBackups(this);
+        backup_ui->exec();
     }
     else
     {
@@ -490,80 +433,6 @@ void MainWindow::on_BackupButton_clicked()
         QMessageBox msgBox(this);
         QPixmap backup(":/Icons/backup.png");
         msgBox.setIconPixmap(backup);
-        msgBox.setText("You need to be in adb mode!");
-        msgBox.setInformativeText("Please refresh the connection before you try again.");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        msgBox.exec();
-    }
-}
-
-void MainWindow::on_RestoreButton_clicked()
-{
-    // Refresh before trying to do stuff
-    on_refreshButton_clicked();
-
-    // Check if we have adb connection
-    if(ui->checkBox_ADB->checkState())
-    {
-        QString fileName = QFileDialog::getOpenFileName(this, tr("Select the backup for restoring"), QDir::toNativeSeparators(QString(QDir::currentPath()+"/Data/Backup")), tr("Android Backup Files (*.ab)"));
-
-        if(fileName != "")
-        {
-            // Prepare the file name for insertion in the process
-            fileName = fileName+"\"\n";
-
-            QProcess process;
-            QDir temp_path(QCoreApplication::applicationDirPath());
-
-#ifdef Q_OS_MACX
-            // Because apple likes it's application folders
-            temp_path.cdUp();
-            temp_path.cdUp();
-            temp_path.cdUp();
-#endif
-
-            process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
-#ifdef Q_OS_WIN
-            // Windows code here
-            process.start("cmd");
-            fileName = "adb.exe restore \""+fileName;
-#elif defined(Q_OS_MACX)
-            // MAC code here
-            process.start("sh");
-            fileName = "./adb_mac restore \""+fileName;
-#else
-            // Linux code here
-            process.start("sh");
-            fileName = "./adb_linux restore \""+fileName;
-#endif
-            process.write(fileName.toLatin1());
-            process.write("exit\n");
-            process.waitForFinished(); // sets current thread to sleep and waits for process end
-
-            // Use the statusbar
-            ui->statusBar->clearMessage();
-            ui->statusBar->showMessage("Restore command successfull!");
-        }
-        else
-        {
-            // Prepare a messagebox
-            QMessageBox msgBox(this);
-            QPixmap restore(":/Icons/restore.png");
-            msgBox.setIconPixmap(restore);
-            msgBox.setText("No backup selected!");
-            msgBox.setInformativeText("You really need select a backup.");
-            msgBox.setStandardButtons(QMessageBox::Ok);
-            msgBox.setDefaultButton(QMessageBox::Ok);
-            msgBox.exec();
-        }
-    }
-    else
-    {
-        // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap restore(":/Icons/restore.png");
-        msgBox.setIconPixmap(restore);
         msgBox.setText("You need to be in adb mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
         msgBox.setStandardButtons(QMessageBox::Ok);
@@ -949,7 +818,7 @@ void MainWindow::on_kernelButton_clicked()
 
 void MainWindow::on_actionGo_to_XDA_Thread_triggered()
 {
-    QUrl link_to_xda("http://forum.xda-developers.com/nexus-6p/development/tool-6p-multi-tool-v0-1-t3214015");
+    QUrl link_to_xda("http://forum.xda-developers.com/nexus-6p/orig-development/tool-6p-multi-tool-v0-1-t3214015");
     QDesktopServices::openUrl (link_to_xda);
 }
 
@@ -1029,7 +898,7 @@ void MainWindow::checkUpdate()
 
         if (exec == QMessageBox::Yes)
         {
-            QUrl link_to_download("https://www.mediafire.com/folder/fvk6cuhsd7nsj/AndroidMultiTool");
+            QUrl link_to_download("https://www.androidfilehost.com/?w=files&flid=43243");
             QDesktopServices::openUrl (link_to_download);
         }
     }
@@ -1147,6 +1016,31 @@ void MainWindow::on_eraseButton_clicked()
         QPixmap icon(":/Icons/erase.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("You need to be in fastboot mode!");
+        msgBox.setInformativeText("Please refresh the connection before you try again.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
+}
+
+void MainWindow::on_installApkButton_clicked()
+{
+    // Refresh before trying to do stuff
+    on_refreshButton_clicked();
+
+    // Check if we have fastboot connection
+    if(ui->checkBox_ADB->checkState())
+    {
+        DialogInstallApk* instapk_ui = new DialogInstallApk(this);
+        instapk_ui->exec();
+    }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this);
+        QPixmap backup(":/Icons/application.png");
+        msgBox.setIconPixmap(backup);
+        msgBox.setText("You need to be in adb mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);

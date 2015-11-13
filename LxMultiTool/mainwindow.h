@@ -6,7 +6,6 @@
 #include <QProcess>
 #include <QFile>
 #include <QDir>
-#include <QFileDialog>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QDesktopServices>
@@ -18,13 +17,15 @@
 #include "dialogstock.h"
 #include "dialogscreenshot.h"
 #include "dialogerase.h"
+#include "dialogbackups.h"
+#include "dialoginstallapk.h"
 #include "filedownloader.h"
 #include "aboutdialog.h"
 #include "version.h"
 
 //#define DEBUG
 
-#ifdef DEBUG
+#ifdef debug
 #warning "YOU ARE IN DEBUG MODE"
 #endif
 
@@ -53,8 +54,6 @@ private slots:
 
     void on_BackupButton_clicked();
 
-    void on_RestoreButton_clicked();
-
     void on_rebootFastbootButton_clicked();
 
     void on_rebootAdbButton_clicked();
@@ -78,6 +77,8 @@ private slots:
     void on_eraseButton_clicked();
 
     void checkUpdate();
+
+    void on_installApkButton_clicked();
 
 private:
     void checkOptions();

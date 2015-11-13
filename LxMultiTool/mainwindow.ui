@@ -78,10 +78,10 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wanna backup?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open Backup and Restore menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="text">
-          <string>Backup</string>
+          <string>Backups</string>
          </property>
          <property name="icon">
           <iconset resource="icons.qrc">
@@ -96,7 +96,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="RestoreButton">
+        <widget class="QPushButton" name="installApkButton">
          <property name="minimumSize">
           <size>
            <width>100</width>
@@ -104,14 +104,14 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Want your stuff back?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open apk install menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="text">
-          <string>Restore</string>
+          <string>Apk Install</string>
          </property>
          <property name="icon">
           <iconset resource="icons.qrc">
-           <normaloff>:/Icons/restore.png</normaloff>:/Icons/restore.png</iconset>
+           <normaloff>:/Icons/application.png</normaloff>:/Icons/application.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -863,7 +863,7 @@
   <tabstop>rebootFastbootButton</tabstop>
   <tabstop>SideloadButton</tabstop>
   <tabstop>BackupButton</tabstop>
-  <tabstop>RestoreButton</tabstop>
+  <tabstop>installApkButton</tabstop>
   <tabstop>versionButton</tabstop>
   <tabstop>loggingButton</tabstop>
   <tabstop>screenshotButton</tabstop>

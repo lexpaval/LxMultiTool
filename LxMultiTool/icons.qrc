@@ -19,5 +19,6 @@
         <file>../Icons/erase.png</file>
         <file>../Icons/screenshot.png</file>
         <file>../Icons/delete.png</file>
+        <file>../Icons/application.png</file>
     </qresource>
 </RCC>
