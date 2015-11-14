@@ -116,6 +116,12 @@ void DialogStock::processOutput()
 
 void DialogStock::processFinished(int exitCode)
 {
+    QProcess *p = dynamic_cast<QProcess *>( sender() );
+
+    QString error(p->readAllStandardError());
+    error.remove("\n");
+    error.remove("\r");
+
     if(exitCode != 0)
     {
         // Prepare a messagebox
@@ -123,7 +129,7 @@ void DialogStock::processFinished(int exitCode)
         QPixmap icon(":/Icons/stock.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
-        msgBox.setInformativeText("Apparently the flashing exited with code "+ QString(exitCode) +".");
+        msgBox.setInformativeText(error);
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -166,7 +172,6 @@ void DialogStock::on_flashButton_clicked()
 
         qDebug() << temp_folder;
 
-        process_flash->setProcessChannelMode(QProcess::MergedChannels);
         connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
         connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 

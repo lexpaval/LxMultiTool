@@ -119,8 +119,9 @@ void DialogKernel::processFinished(int exitCode)
 {
     QProcess *p = dynamic_cast<QProcess *>( sender() );
 
-    qDebug() <<  exitCode;
-    qDebug() <<  p->readAll();
+    QString error(p->readAllStandardError());
+    error.remove("\n");
+    error.remove("\r");
 
     if(exitCode != 0)
     {
@@ -129,7 +130,7 @@ void DialogKernel::processFinished(int exitCode)
         QPixmap icon(":/Icons/kernel.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
-        msgBox.setInformativeText("Apparently the flashing exited with code "+ QString(exitCode) +".");
+        msgBox.setInformativeText(error);
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -172,7 +173,6 @@ void DialogKernel::on_flashButton_clicked()
         QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators("/Data/Kernels/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
         QString recovery;
 
-        process_flash->setProcessChannelMode(QProcess::ForwardedChannels);
         connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
         connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 

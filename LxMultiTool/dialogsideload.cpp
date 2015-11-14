@@ -113,8 +113,6 @@ void DialogSideload::processOutput()
     QProcess *p = dynamic_cast<QProcess *>( sender() );
     QString progress = p->readAllStandardOutput();
 
-    qDebug() <<  p->readAll() << "output";
-
     if(progress.contains("%"))
     {
         int aux = progress.indexOf("%");
@@ -128,8 +126,9 @@ void DialogSideload::processFinished(int exitCode)
 {
     QProcess *p = dynamic_cast<QProcess *>( sender() );
 
-    qDebug() <<  exitCode;
-    qDebug() <<  p->readAll();
+    QString error(p->readAllStandardError());
+    error.remove("\n");
+    error.remove("\r");
 
     if(exitCode != 0)
     {
@@ -138,7 +137,7 @@ void DialogSideload::processFinished(int exitCode)
         QPixmap recovery(":/Icons/sideload_2.png");
         msgBox.setIconPixmap(recovery);
         msgBox.setText("Oups! Something went wrong...");
-        msgBox.setInformativeText("Apparently the flashing exited with code "+ QString(exitCode) +".");
+        msgBox.setInformativeText(error);
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -182,7 +181,6 @@ void DialogSideload::on_sideloadButton_clicked()
         QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+"/Sideload")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
         QString sideload;
 
-        process_flash->setProcessChannelMode(QProcess::ForwardedChannels);
         connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
         connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 

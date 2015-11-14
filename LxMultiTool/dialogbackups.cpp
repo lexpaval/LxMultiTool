@@ -96,8 +96,11 @@ void DialogBackups::processFinishedBackup(int exitCode)
 {
     QProcess *p = dynamic_cast<QProcess *>( sender() );
 
+    QString error(p->readAllStandardError());
+    error.remove("\n");
+    error.remove("\r");
+
     qDebug() <<  exitCode;
-    qDebug() <<  p->readAll();
 
     if(exitCode != 0)
     {
@@ -106,7 +109,7 @@ void DialogBackups::processFinishedBackup(int exitCode)
         QPixmap icon(":/Icons/backup.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
-        msgBox.setInformativeText("Apparently the backup exited with code "+ QString(exitCode).toLatin1() +".");
+        msgBox.setInformativeText(error);
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -138,8 +141,11 @@ void DialogBackups::processFinishedRestore(int exitCode)
 {
     QProcess *p = dynamic_cast<QProcess *>( sender() );
 
+    QString error(p->readAllStandardError());
+    error.remove("\n");
+    error.remove("\r");
+
     qDebug() <<  exitCode;
-    qDebug() <<  p->readAll();
 
     if(exitCode != 0)
     {
@@ -148,7 +154,7 @@ void DialogBackups::processFinishedRestore(int exitCode)
         QPixmap icon(":/Icons/restore.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
-        msgBox.setInformativeText("Apparently the restore exited with code "+ QString(exitCode) +".");
+        msgBox.setInformativeText(error);
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -231,12 +237,20 @@ void DialogBackups::on_actionDelete_triggered()
 
 void DialogBackups::on_backupButton_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Select backup name and folder"), QDir::toNativeSeparators(QString(QDir::currentPath()+"/Data/Backup")), tr("Android Backup Files (*.ab)"));
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef Q_OS_MACX
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Select backup name and folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Data/Backup")), tr("Android Backup Files (*.ab)"));
     if(fileName != "")
     {
         QProcess* process_backup = new QProcess(this);
 
-        process_backup->setProcessChannelMode(QProcess::ForwardedChannels);
         connect( process_backup, SIGNAL(finished(int)), this, SLOT(processFinishedBackup(int)));
 
         if(!fileName.contains(".ab"))
@@ -247,15 +261,6 @@ void DialogBackups::on_backupButton_clicked()
 
         // Prepare the file name for insertion in the process
         fileName = fileName+"\"\n";
-
-        QDir temp_path(QCoreApplication::applicationDirPath());
-
-#ifdef Q_OS_MACX
-        // Because apple likes it's application folders
-        temp_path.cdUp();
-        temp_path.cdUp();
-        temp_path.cdUp();
-#endif
 
         process_backup->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -307,7 +312,6 @@ void DialogBackups::on_restoreButton_clicked()
         QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators("/Data/Backup/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
         QString restore;
 
-        process_restore->setProcessChannelMode(QProcess::ForwardedChannels);
         connect( process_restore, SIGNAL(finished(int)), this, SLOT(processFinishedRestore(int)));
 
         // Restrict from closing while flashing

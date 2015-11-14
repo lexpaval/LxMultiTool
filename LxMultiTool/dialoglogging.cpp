@@ -95,6 +95,12 @@ void DialogLogging::getFiles()
 
 void DialogLogging::processFinished(int exitCode)
 {
+    QProcess *p = dynamic_cast<QProcess *>( sender() );
+
+    QString error(p->readAllStandardError());
+    error.remove("\n");
+    error.remove("\r");
+
     if(exitCode != 0)
     {
         // Prepare a messagebox
@@ -102,7 +108,7 @@ void DialogLogging::processFinished(int exitCode)
         QPixmap icon(":/Icons/log.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
-        msgBox.setInformativeText("Apparently the procedure exited with code "+ QString(exitCode) +".");
+        msgBox.setInformativeText(error);
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -154,7 +160,6 @@ void DialogLogging::on_getLogButton_clicked()
             // Prepare the file name for insertion in the process
             fileName = fileName+"\"\n";
 
-            process_log->setProcessChannelMode(QProcess::ForwardedChannels);
             connect( process_log, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
             // Restrict from closing while flashing
@@ -230,7 +235,6 @@ void DialogLogging::on_getLogButton_clicked()
             // Prepare the file name for insertion in the process
             fileName = fileName+"\"\n";
 
-            process_log->setProcessChannelMode(QProcess::ForwardedChannels);
             connect( process_log, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
             // Restrict from closing while flashing

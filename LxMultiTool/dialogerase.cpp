@@ -22,7 +22,6 @@ void DialogErase::on_eraseButton_clicked()
     msgBox.setIconPixmap(icon);
 
     QProcess* process_erase = new QProcess(this);
-    process_erase->setProcessChannelMode(QProcess::ForwardedChannels);
     connect( process_erase, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
     QDir temp_path(QCoreApplication::applicationDirPath());
 
@@ -199,6 +198,12 @@ void DialogErase::on_eraseButton_clicked()
 
 void DialogErase::processFinished(int exitCode)
 {
+    QProcess *p = dynamic_cast<QProcess *>( sender() );
+
+    QString error(p->readAllStandardError());
+    error.remove("\n");
+    error.remove("\r");
+
     if(exitCode != 0)
     {
         // Prepare a messagebox
@@ -206,7 +211,7 @@ void DialogErase::processFinished(int exitCode)
         QPixmap icon(":/Icons/erase.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
-        msgBox.setInformativeText("Apparently the flashing exited with code "+ QString(exitCode) +".");
+        msgBox.setInformativeText(error);
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();

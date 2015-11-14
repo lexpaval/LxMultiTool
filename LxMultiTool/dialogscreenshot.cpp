@@ -95,6 +95,12 @@ void DialogScreenshot::getFiles()
 
 void DialogScreenshot::processFinished(int exitCode)
 {
+    QProcess *p = dynamic_cast<QProcess *>( sender() );
+
+    QString error(p->readAllStandardError());
+    error.remove("\n");
+    error.remove("\r");
+
     if(exitCode != 0)
     {
         // Prepare a messagebox
@@ -102,7 +108,7 @@ void DialogScreenshot::processFinished(int exitCode)
         QPixmap icon(":/Icons/screenshot.png");
         msgBox.setIconPixmap(icon);
         msgBox.setText("Oups! Something went wrong...");
-        msgBox.setInformativeText("Apparently the procedure exited with code "+ QString(exitCode) +".");
+        msgBox.setInformativeText(error);
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
@@ -175,7 +181,6 @@ void DialogScreenshot::on_getScreenButton_clicked()
             fileName = fileName+".png";
         }
 
-        process_screen->setProcessChannelMode(QProcess::ForwardedChannels);
         connect( process_screen, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
         // Restrict from closing while flashing
