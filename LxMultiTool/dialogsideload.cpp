@@ -189,7 +189,7 @@ void DialogSideload::on_sideloadButton_clicked()
             // Restrict from closing while flashing
             *busy = true;
 
-            process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Sideload"));
+            process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_flash->start("cmd");
