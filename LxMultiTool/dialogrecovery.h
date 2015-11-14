@@ -7,6 +7,7 @@
 #include <QProcess>
 #include <QCloseEvent>
 #include <QDesktopServices>
+#include "deviceconnection.h"
 
 namespace Ui {
 class DialogRecovery;

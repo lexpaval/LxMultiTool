@@ -8,6 +8,7 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QDesktopServices>
+#include "deviceconnection.h"
 
 namespace Ui {
 class DialogKernel;

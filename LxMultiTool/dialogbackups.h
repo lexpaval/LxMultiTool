@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QDesktopServices>
 #include <QFileDialog>
+#include "deviceconnection.h"
 
 namespace Ui {
 class DialogBackups;

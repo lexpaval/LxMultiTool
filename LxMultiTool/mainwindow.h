@@ -19,6 +19,7 @@
 #include "dialogerase.h"
 #include "dialogbackups.h"
 #include "dialoginstallapk.h"
+#include "deviceconnection.h"
 #include "filedownloader.h"
 #include "aboutdialog.h"
 #include "version.h"

@@ -11,6 +11,7 @@
 #include <QProcess>
 #include <QCloseEvent>
 #include <QDate>
+#include "deviceconnection.h"
 
 namespace Ui {
 class DialogScreenshot;

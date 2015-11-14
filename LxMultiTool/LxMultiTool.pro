@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     dialogerase.cpp \
     filedownloader.cpp \
     dialogbackups.cpp \
-    dialoginstallapk.cpp
+    dialoginstallapk.cpp \
+    deviceconnection.cpp
 
 HEADERS  += mainwindow.h \
     dialogrecovery.h \
@@ -45,7 +46,8 @@ HEADERS  += mainwindow.h \
     dialogerase.h \
     filedownloader.h \
     dialogbackups.h \
-    dialoginstallapk.h
+    dialoginstallapk.h \
+    deviceconnection.h
 
 FORMS    += mainwindow.ui \
     dialogrecovery.ui \

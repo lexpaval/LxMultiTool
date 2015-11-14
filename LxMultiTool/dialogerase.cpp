@@ -16,180 +16,195 @@ DialogErase::~DialogErase()
 
 void DialogErase::on_eraseButton_clicked()
 {
-    // Prepare a messagebox
-    QMessageBox msgBox(this->parentWidget());
-    QPixmap icon(":/Icons/erase.png");
-    msgBox.setIconPixmap(icon);
+    if (DeviceConnection::getConnection() == FASTBOOT)
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/erase.png");
+        msgBox.setIconPixmap(icon);
 
-    QProcess* process_erase = new QProcess(this);
-    connect( process_erase, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
-    QDir temp_path(QCoreApplication::applicationDirPath());
+        QProcess* process_erase = new QProcess(this);
+        connect( process_erase, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
+        QDir temp_path(QCoreApplication::applicationDirPath());
 
 #ifdef Q_OS_MACX
-    // Because apple likes it's application folders
-    temp_path.cdUp();
-    temp_path.cdUp();
-    temp_path.cdUp();
+        // Because apple likes it's application folders
+        temp_path.cdUp();
+        temp_path.cdUp();
+        temp_path.cdUp();
 #endif
 
-    if(ui->boot_radioButton->isChecked())
-    {
-        ui->groupBox->setEnabled(false);
-        ui->eraseButton->setEnabled(false);
-
-        msgBox.setText("You are about to erase your boot partition.");
-        msgBox.setInformativeText("Are you sure you want to continue?");
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgBox.setDefaultButton(QMessageBox::Yes);
-        int ret = msgBox.exec();
-
-        if (ret == QMessageBox::Yes)
+        if(ui->boot_radioButton->isChecked())
         {
-            process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+            ui->groupBox->setEnabled(false);
+            ui->eraseButton->setEnabled(false);
+
+            msgBox.setText("You are about to erase your boot partition.");
+            msgBox.setInformativeText("Are you sure you want to continue?");
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::Yes);
+            int ret = msgBox.exec();
+
+            if (ret == QMessageBox::Yes)
+            {
+                process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
-            // Windows code here
-            process_erase->start("cmd");
-            process_erase->write("fastboot erase boot\n");
+                // Windows code here
+                process_erase->start("cmd");
+                process_erase->write("fastboot erase boot\n");
 #elif defined(Q_OS_MACX)
-            // MAC code here
-            process_erase->start("sh");
-            process_erase->write("./fastboot_mac erase boot\n");
+                // MAC code here
+                process_erase->start("sh");
+                process_erase->write("./fastboot_mac erase boot\n");
 #else
-            // Linux code here
-            process_erase->start("sh");
-            process_erase->write("./fastboot_linux erase boot\n");
+                // Linux code here
+                process_erase->start("sh");
+                process_erase->write("./fastboot_linux erase boot\n");
 #endif
-            process_erase->write("exit\n");
+                process_erase->write("exit\n");
+            }
         }
-    }
-    else if (ui->cache_radioButton->isChecked())
-    {
-        ui->groupBox->setEnabled(false);
-        ui->eraseButton->setEnabled(false);
-
-        msgBox.setText("You are about to erase your cache partition.");
-        msgBox.setInformativeText("Are you sure you want to continue?");
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgBox.setDefaultButton(QMessageBox::Yes);
-        int ret = msgBox.exec();
-
-        if (ret == QMessageBox::Yes)
+        else if (ui->cache_radioButton->isChecked())
         {
-            process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+            ui->groupBox->setEnabled(false);
+            ui->eraseButton->setEnabled(false);
+
+            msgBox.setText("You are about to erase your cache partition.");
+            msgBox.setInformativeText("Are you sure you want to continue?");
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::Yes);
+            int ret = msgBox.exec();
+
+            if (ret == QMessageBox::Yes)
+            {
+                process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
-            // Windows code here
-            process_erase->start("cmd");
-            process_erase->write("fastboot.exe erase cache\n");
+                // Windows code here
+                process_erase->start("cmd");
+                process_erase->write("fastboot.exe erase cache\n");
 #elif defined(Q_OS_MACX)
-            // MAC code here
-            process_erase->start("sh");
-            process_erase->write("./fastboot_mac erase cache\n");
+                // MAC code here
+                process_erase->start("sh");
+                process_erase->write("./fastboot_mac erase cache\n");
 #else
-            // Linux code here
-            process_erase->start("sh");
-            process_erase->write("./fastboot_linux erase cache\n");
+                // Linux code here
+                process_erase->start("sh");
+                process_erase->write("./fastboot_linux erase cache\n");
 #endif
 
-            process_erase->write("exit\n");
+                process_erase->write("exit\n");
+            }
         }
-    }
-    else if (ui->recovery_radioButton->isChecked())
-    {
-        ui->groupBox->setEnabled(false);
-        ui->eraseButton->setEnabled(false);
-
-        msgBox.setText("You are about to erase your recovery partition.");
-        msgBox.setInformativeText("Are you sure you want to continue?");
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgBox.setDefaultButton(QMessageBox::Yes);
-        int ret = msgBox.exec();
-
-        if (ret == QMessageBox::Yes)
+        else if (ui->recovery_radioButton->isChecked())
         {
-            process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+            ui->groupBox->setEnabled(false);
+            ui->eraseButton->setEnabled(false);
+
+            msgBox.setText("You are about to erase your recovery partition.");
+            msgBox.setInformativeText("Are you sure you want to continue?");
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::Yes);
+            int ret = msgBox.exec();
+
+            if (ret == QMessageBox::Yes)
+            {
+                process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
-            // Windows code here
-            process_erase->start("cmd");
-            process_erase->write("fastboot.exe erase recovery\n");
+                // Windows code here
+                process_erase->start("cmd");
+                process_erase->write("fastboot.exe erase recovery\n");
 #elif defined(Q_OS_MACX)
-            // MAC code here
-            process_erase->start("sh");
-            process_erase->write("./fastboot_mac erase recovery\n");
+                // MAC code here
+                process_erase->start("sh");
+                process_erase->write("./fastboot_mac erase recovery\n");
 #else
-            // Linux code here
-            process_erase->start("sh");
-            process_erase->write("./fastboot_linux erase recovery\n");
+                // Linux code here
+                process_erase->start("sh");
+                process_erase->write("./fastboot_linux erase recovery\n");
 #endif
 
-            process_erase->write("exit\n");
+                process_erase->write("exit\n");
+            }
         }
-    }
-    else if (ui->data_radioButton->isChecked())
-    {
-        ui->groupBox->setEnabled(false);
-        ui->eraseButton->setEnabled(false);
-
-        msgBox.setText("You are about to erase your data partition.");
-        msgBox.setInformativeText("Are you sure you want to continue?");
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgBox.setDefaultButton(QMessageBox::Yes);
-        int ret = msgBox.exec();
-
-        if (ret == QMessageBox::Yes)
+        else if (ui->data_radioButton->isChecked())
         {
-            process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+            ui->groupBox->setEnabled(false);
+            ui->eraseButton->setEnabled(false);
+
+            msgBox.setText("You are about to erase your data partition.");
+            msgBox.setInformativeText("Are you sure you want to continue?");
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::Yes);
+            int ret = msgBox.exec();
+
+            if (ret == QMessageBox::Yes)
+            {
+                process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
-            // Windows code here
-            process_erase->start("cmd");
-            process_erase->write("fastboot.exe erase userdata\n");
+                // Windows code here
+                process_erase->start("cmd");
+                process_erase->write("fastboot.exe erase userdata\n");
 #elif defined(Q_OS_MACX)
-            // MAC code here
-            process_erase->start("sh");
-            process_erase->write("./fastboot_mac erase userdata\n");
+                // MAC code here
+                process_erase->start("sh");
+                process_erase->write("./fastboot_mac erase userdata\n");
 #else
-            // Linux code here
-            process_erase->start("sh");
-            process_erase->write("./fastboot_linux erase userdata\n");
+                // Linux code here
+                process_erase->start("sh");
+                process_erase->write("./fastboot_linux erase userdata\n");
 #endif
 
-            process_erase->write("exit\n");
+                process_erase->write("exit\n");
+            }
         }
-    }
-    else if (ui->system_radioButton->isChecked())
-    {
-        ui->groupBox->setEnabled(false);
-        ui->eraseButton->setEnabled(false);
-
-        msgBox.setText("You are about to erase your system partition.");
-        msgBox.setInformativeText("Are you sure you want to continue?");
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgBox.setDefaultButton(QMessageBox::Yes);
-        int ret = msgBox.exec();
-
-        if (ret == QMessageBox::Yes)
+        else if (ui->system_radioButton->isChecked())
         {
-            process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+            ui->groupBox->setEnabled(false);
+            ui->eraseButton->setEnabled(false);
+
+            msgBox.setText("You are about to erase your system partition.");
+            msgBox.setInformativeText("Are you sure you want to continue?");
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::Yes);
+            int ret = msgBox.exec();
+
+            if (ret == QMessageBox::Yes)
+            {
+                process_erase->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
-            // Windows code here
-            process_erase->start("cmd");
-            process_erase->write("fastboot.exe erase system\n");
+                // Windows code here
+                process_erase->start("cmd");
+                process_erase->write("fastboot.exe erase system\n");
 #elif defined(Q_OS_MACX)
-            // MAC code here
-            process_erase->start("sh");
-            process_erase->write("./fastboot_mac erase system\n");
+                // MAC code here
+                process_erase->start("sh");
+                process_erase->write("./fastboot_mac erase system\n");
 #else
-            // Linux code here
-            process_erase->start("sh");
-            process_erase->write("./fastboot_linux erase system\n");
+                // Linux code here
+                process_erase->start("sh");
+                process_erase->write("./fastboot_linux erase system\n");
 #endif
 
-            process_erase->write("exit\n");
+                process_erase->write("exit\n");
+            }
+        }
+        else
+        {
+            msgBox.setText("Nothing selected!");
+            msgBox.setInformativeText("You really need to select an erase option before erasing.");
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
         }
     }
     else
     {
-        msgBox.setText("Nothing selected!");
-        msgBox.setInformativeText("You really need to select an erase option before erasing.");
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/erase.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("No connection!");
+        msgBox.setInformativeText("Check your phone connection and try again.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();

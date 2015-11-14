@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QProcess>
 #include <QCloseEvent>
+#include "deviceconnection.h"
 
 namespace Ui {
 class DialogLogging;

@@ -156,118 +156,133 @@ void DialogStock::processFinished(int exitCode)
 
 void DialogStock::on_flashButton_clicked()
 {
-    if(ui->tableWidget->currentItem() != NULL)
+    if (DeviceConnection::getConnection() == FASTBOOT)
     {
-        QDir temp_path(QCoreApplication::applicationDirPath());
+        if(ui->tableWidget->currentItem() != NULL)
+        {
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
 #ifdef Q_OS_MACX
-        // Because apple likes it's application folders
-        temp_path.cdUp();
-        temp_path.cdUp();
-        temp_path.cdUp();
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
 #endif
 
-        QProcess* process_flash = new QProcess(this);
-        QString temp_folder = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"/");
+            QProcess* process_flash = new QProcess(this);
+            QString temp_folder = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"/");
 
-        qDebug() << temp_folder;
+            qDebug() << temp_folder;
 
-        connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
-        connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
+            connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
+            connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
-        // Restrict from closing while flashing
-        *busy = true;
+            // Restrict from closing while flashing
+            *busy = true;
 
-        QDirIterator dirit(temp_folder,QDirIterator::Subdirectories);
+            QDirIterator dirit(temp_folder,QDirIterator::Subdirectories);
 
-        process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
+            process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
 
 #ifdef Q_OS_WIN
-        // Windows code here
-        process_flash->start("cmd");
+            // Windows code here
+            process_flash->start("cmd");
 #elif defined(Q_OS_MACX)
-        // MAC code here
-        process_flash->start("sh");
+            // MAC code here
+            process_flash->start("sh");
 #else
-        // Linux code here
-        process_flash->start("sh");
+            // Linux code here
+            process_flash->start("sh");
 #endif
 
-        while(dirit.hasNext())
-        {
-            dirit.next();
-
-            qDebug() << "reached while" + dirit.fileName();
-
-            // We need the bootloader
-            if ((QFileInfo(dirit.filePath()).suffix() == "img") && (dirit.fileName().contains("bootloader")))
+            while(dirit.hasNext())
             {
+                dirit.next();
+
+                qDebug() << "reached while" + dirit.fileName();
+
+                // We need the bootloader
+                if ((QFileInfo(dirit.filePath()).suffix() == "img") && (dirit.fileName().contains("bootloader")))
+                {
 #ifdef Q_OS_WIN
-                // Windows code here
-                process_flash->write("fastboot.exe flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
-                process_flash->write("fastboot.exe reboot-bootloader\n");
-                process_flash->write("ping -n 5 localhost >nul\n");
+                    // Windows code here
+                    process_flash->write("fastboot.exe flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
+                    process_flash->write("ping -n 5 localhost >nul\n");
 #elif defined(Q_OS_MACX)
-                // MAC code here
-                process_flash->write("./fastboot_mac flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
-                process_flash->write("./fastboot_mac reboot-bootloader\n");
-                process_flash->write("sleep 5\n");
+                    // MAC code here
+                    process_flash->write("./fastboot_mac flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
+                    process_flash->write("sleep 5\n");
 #else
-                // Linux code here
-                process_flash->write("./fastboot_linux flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
-                process_flash->write("./fastboot_linux reboot-bootloader\n");
-                process_flash->write("sleep 5\n");
+                    // Linux code here
+                    process_flash->write("./fastboot_linux flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
+                    process_flash->write("sleep 5\n");
 #endif
-            }
-            // We need the radio
-            if ((QFileInfo(dirit.filePath()).suffix() == "img") && (dirit.fileName().contains("radio")))
-            {
+                }
+                // We need the radio
+                if ((QFileInfo(dirit.filePath()).suffix() == "img") && (dirit.fileName().contains("radio")))
+                {
 #ifdef Q_OS_WIN
-                // Windows code here
-                process_flash->write("fastboot.exe flash radio \""+dirit.filePath().toLatin1()+"\"\n");
-                process_flash->write("fastboot.exe reboot-bootloader\n");
-                process_flash->write("ping -n 5 localhost >nul\n");
+                    // Windows code here
+                    process_flash->write("fastboot.exe flash radio \""+dirit.filePath().toLatin1()+"\"\n");
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
+                    process_flash->write("ping -n 5 localhost >nul\n");
 #elif defined(Q_OS_MACX)
-                // MAC code here
-                process_flash->write("./fastboot_mac flash radio \""+dirit.filePath().toLatin1()+"\"\n");
-                process_flash->write("./fastboot_mac reboot-bootloader\n");
-                process_flash->write("sleep 5\n");
+                    // MAC code here
+                    process_flash->write("./fastboot_mac flash radio \""+dirit.filePath().toLatin1()+"\"\n");
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
+                    process_flash->write("sleep 5\n");
 #else
-                // Linux code here
-                process_flash->write("./fastboot_linux flash radio \""+dirit.filePath().toLatin1()+"\"\n");
-                process_flash->write("./fastboot_linux reboot-bootloader\n");
-                process_flash->write("sleep 5\n");
+                    // Linux code here
+                    process_flash->write("./fastboot_linux flash radio \""+dirit.filePath().toLatin1()+"\"\n");
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
+                    process_flash->write("sleep 5\n");
 #endif
-            }
-            // We need the update zip
-            if ((QFileInfo(dirit.filePath()).suffix() == "zip") && (dirit.fileName().contains("image-")))
-            {
+                }
+                // We need the update zip
+                if ((QFileInfo(dirit.filePath()).suffix() == "zip") && (dirit.fileName().contains("image-")))
+                {
 #ifdef Q_OS_WIN
-                // Windows code here
-                process_flash->write("fastboot.exe -w update \""+dirit.filePath().toLatin1()+"\"\n");
-                process_flash->write("fastboot.exe reboot-bootloader\n");
-                process_flash->write("ping -n 5 localhost >nul\n");
+                    // Windows code here
+                    process_flash->write("fastboot.exe -w update \""+dirit.filePath().toLatin1()+"\"\n");
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
+                    process_flash->write("ping -n 5 localhost >nul\n");
 #elif defined(Q_OS_MACX)
-                // MAC code here
-                process_flash->write("./fastboot_mac -w update \""+dirit.filePath().toLatin1()+"\"\n");
-                process_flash->write("./fastboot_mac reboot-bootloader\n");
-                process_flash->write("sleep 5\n");
+                    // MAC code here
+                    process_flash->write("./fastboot_mac -w update \""+dirit.filePath().toLatin1()+"\"\n");
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
+                    process_flash->write("sleep 5\n");
 #else
-                // Linux code here
-                process_flash->write("./fastboot_linux -w update \""+dirit.filePath().toLatin1()+"\"\n");
-                process_flash->write("./fastboot_linux reboot-bootloader\n");
-                process_flash->write("sleep 5\n");
+                    // Linux code here
+                    process_flash->write("./fastboot_linux -w update \""+dirit.filePath().toLatin1()+"\"\n");
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
+                    process_flash->write("sleep 5\n");
 #endif
+                }
             }
+
+            process_flash->waitForStarted();
+            process_flash->write("exit\n");
+
+            // UI restrictions
+            ui->tableWidget->setEnabled(false);
+            ui->buttonBox->setEnabled(false);
+            ui->flashButton->setEnabled(false);
         }
-
-        process_flash->waitForStarted();
-        process_flash->write("exit\n");
-
-        // UI restrictions
-        ui->tableWidget->setEnabled(false);
-        ui->buttonBox->setEnabled(false);
-        ui->flashButton->setEnabled(false);
+    }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/stock.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("No connection!");
+        msgBox.setInformativeText("Check your phone connection and try again.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
     }
 }
 

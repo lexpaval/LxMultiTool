@@ -126,150 +126,165 @@ void DialogLogging::processFinished(int exitCode)
 
 void DialogLogging::on_getLogButton_clicked()
 {
-    if(ui->radioLogcat->isChecked())
+    if (DeviceConnection::getConnection() == ADB)
     {
-        QDir temp_path(QCoreApplication::applicationDirPath());
+        if(ui->radioLogcat->isChecked())
+        {
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
 #ifdef Q_OS_MACX
-        // Because apple likes it's application folders
-        temp_path.cdUp();
-        temp_path.cdUp();
-        temp_path.cdUp();
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
 #endif
 
-        // Restrict from closing while getting the log
-        *busy = true;
-
-        // UI restrictions
-        ui->tableWidget->setEnabled(false);
-        ui->buttonBox->setEnabled(false);
-        ui->getLogButton->setEnabled(false);
-
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Select logfile name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Logfiles")), tr("Text File (*.txt)"));
-        QProcess* process_log = new QProcess(this);
-        QString logCommand;
-
-        if(fileName != "")
-        {
-            if(!fileName.contains(".txt"))
-            {
-                // Append the txt extension if it's not available - linux limitation
-                fileName = fileName+".txt";
-            }
-
-            // Prepare the file name for insertion in the process
-            fileName = fileName+"\"\n";
-
-            connect( process_log, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
-
-            // Restrict from closing while flashing
+            // Restrict from closing while getting the log
             *busy = true;
 
-            process_log->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
+            // UI restrictions
+            ui->tableWidget->setEnabled(false);
+            ui->buttonBox->setEnabled(false);
+            ui->getLogButton->setEnabled(false);
+
+            QString fileName = QFileDialog::getSaveFileName(this, tr("Select logfile name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Logfiles")), tr("Text File (*.txt)"));
+            QProcess* process_log = new QProcess(this);
+            QString logCommand;
+
+            if(fileName != "")
+            {
+                if(!fileName.contains(".txt"))
+                {
+                    // Append the txt extension if it's not available - linux limitation
+                    fileName = fileName+".txt";
+                }
+
+                // Prepare the file name for insertion in the process
+                fileName = fileName+"\"\n";
+
+                connect( process_log, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
+
+                // Restrict from closing while flashing
+                *busy = true;
+
+                process_log->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
 #ifdef Q_OS_WIN
-            // Windows code here
-            process_log->start("cmd");
-            logCommand = "adb.exe logcat -d > \"" + fileName;
+                // Windows code here
+                process_log->start("cmd");
+                logCommand = "adb.exe logcat -d > \"" + fileName;
 #elif defined(Q_OS_MACX)
-            // MAC code here
-            process_log->start("sh");
-            logCommand = "./adb_mac logcat -d > \"" + fileName;
+                // MAC code here
+                process_log->start("sh");
+                logCommand = "./adb_mac logcat -d > \"" + fileName;
 #else
-            // Linux code here
-            process_log->start("sh");
-            logCommand = "./adb_linux logcat -d > \"" + fileName;
+                // Linux code here
+                process_log->start("sh");
+                logCommand = "./adb_linux logcat -d > \"" + fileName;
 #endif
-            process_log->waitForStarted();
-            process_log->write(logCommand.toLatin1());
-            process_log->write("exit\n");
+                process_log->waitForStarted();
+                process_log->write(logCommand.toLatin1());
+                process_log->write("exit\n");
+            }
+            else
+            {
+                // UI restrictions
+                ui->tableWidget->setEnabled(true);
+                ui->buttonBox->setEnabled(true);
+                ui->getLogButton->setEnabled(true);
+
+                // Prepare a messagebox
+                QMessageBox msgBox(this->parentWidget());
+                QPixmap recovery(":/Icons/log.png");
+                msgBox.setIconPixmap(recovery);
+                msgBox.setText("No name selected for the log!");
+                msgBox.setInformativeText("You really need to input a name for your log.");
+                msgBox.setStandardButtons(QMessageBox::Ok);
+                msgBox.setDefaultButton(QMessageBox::Ok);
+                msgBox.exec();
+            }
+        }
+        else if(ui->radioDmesg->isChecked())
+        {
+            QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef Q_OS_MACX
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+#endif
+
+            // Restrict from closing while getting the log
+            *busy = true;
+
+            // UI restrictions
+            ui->tableWidget->setEnabled(false);
+            ui->buttonBox->setEnabled(false);
+            ui->getLogButton->setEnabled(false);
+
+            QString fileName = QFileDialog::getSaveFileName(this, tr("Select logfile name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Logfiles")), tr("Text File (*.txt)"));
+            QProcess* process_log = new QProcess(this);
+            QString logCommand;
+
+            if(fileName != "")
+            {
+                if(!fileName.contains(".txt"))
+                {
+                    // Append the txt extension if it's not available - linux limitation
+                    fileName = fileName+".txt";
+                }
+
+                // Prepare the file name for insertion in the process
+                fileName = fileName+"\"\n";
+
+                connect( process_log, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
+
+                // Restrict from closing while flashing
+                *busy = true;
+
+                process_log->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
+#ifdef Q_OS_WIN
+                // Windows code here
+                process_log->start("cmd");
+                logCommand = "adb.exe shell dmesg > \"" + fileName;
+#elif defined(Q_OS_MACX)
+                // MAC code here
+                process_log->start("sh");
+                logCommand = "./adb_mac shell dmesg > \"" + fileName;
+#else
+                // Linux code here
+                process_log->start("sh");
+                logCommand = "./adb_linux shell dmesg > \"" + fileName;
+#endif
+                process_log->write(logCommand.toLatin1());
+                process_log->write("exit\n");
+            }
+            else
+            {
+                // UI restrictions
+                ui->tableWidget->setEnabled(true);
+                ui->buttonBox->setEnabled(true);
+                ui->getLogButton->setEnabled(true);
+
+                // Prepare a messagebox
+                QMessageBox msgBox(this->parentWidget());
+                QPixmap icon(":/Icons/log.png");
+                msgBox.setIconPixmap(icon);
+                msgBox.setText("No name selected for the log!");
+                msgBox.setInformativeText("You really need to input a name for your log.");
+                msgBox.setStandardButtons(QMessageBox::Ok);
+                msgBox.setDefaultButton(QMessageBox::Ok);
+                msgBox.exec();
+            }
         }
         else
         {
-            // UI restrictions
-            ui->tableWidget->setEnabled(true);
-            ui->buttonBox->setEnabled(true);
-            ui->getLogButton->setEnabled(true);
-
-            // Prepare a messagebox
-            QMessageBox msgBox(this->parentWidget());
-            QPixmap recovery(":/Icons/log.png");
-            msgBox.setIconPixmap(recovery);
-            msgBox.setText("No name selected for the log!");
-            msgBox.setInformativeText("You really need to input a name for your log.");
-            msgBox.setStandardButtons(QMessageBox::Ok);
-            msgBox.setDefaultButton(QMessageBox::Ok);
-            msgBox.exec();
-        }
-    }
-    else if(ui->radioDmesg->isChecked())
-    {
-        QDir temp_path(QCoreApplication::applicationDirPath());
-
-#ifdef Q_OS_MACX
-        // Because apple likes it's application folders
-        temp_path.cdUp();
-        temp_path.cdUp();
-        temp_path.cdUp();
-#endif
-
-        // Restrict from closing while getting the log
-        *busy = true;
-
-        // UI restrictions
-        ui->tableWidget->setEnabled(false);
-        ui->buttonBox->setEnabled(false);
-        ui->getLogButton->setEnabled(false);
-
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Select logfile name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Logfiles")), tr("Text File (*.txt)"));
-        QProcess* process_log = new QProcess(this);
-        QString logCommand;
-
-        if(fileName != "")
-        {
-            if(!fileName.contains(".txt"))
-            {
-                // Append the txt extension if it's not available - linux limitation
-                fileName = fileName+".txt";
-            }
-
-            // Prepare the file name for insertion in the process
-            fileName = fileName+"\"\n";
-
-            connect( process_log, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
-
-            // Restrict from closing while flashing
-            *busy = true;
-
-            process_log->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
-#ifdef Q_OS_WIN
-            // Windows code here
-            process_log->start("cmd");
-            logCommand = "adb.exe shell dmesg > \"" + fileName;
-#elif defined(Q_OS_MACX)
-            // MAC code here
-            process_log->start("sh");
-            logCommand = "./adb_mac shell dmesg > \"" + fileName;
-#else
-            // Linux code here
-            process_log->start("sh");
-            logCommand = "./adb_linux shell dmesg > \"" + fileName;
-#endif
-            process_log->write(logCommand.toLatin1());
-            process_log->write("exit\n");
-        }
-        else
-        {
-            // UI restrictions
-            ui->tableWidget->setEnabled(true);
-            ui->buttonBox->setEnabled(true);
-            ui->getLogButton->setEnabled(true);
-
             // Prepare a messagebox
             QMessageBox msgBox(this->parentWidget());
             QPixmap icon(":/Icons/log.png");
             msgBox.setIconPixmap(icon);
-            msgBox.setText("No name selected for the log!");
-            msgBox.setInformativeText("You really need to input a name for your log.");
+            msgBox.setText("No log type selected!");
+            msgBox.setInformativeText("You really need to check Logcat or Dmesg.");
             msgBox.setStandardButtons(QMessageBox::Ok);
             msgBox.setDefaultButton(QMessageBox::Ok);
             msgBox.exec();
@@ -281,8 +296,8 @@ void DialogLogging::on_getLogButton_clicked()
         QMessageBox msgBox(this->parentWidget());
         QPixmap icon(":/Icons/log.png");
         msgBox.setIconPixmap(icon);
-        msgBox.setText("No log type selected!");
-        msgBox.setInformativeText("You really need to check Logcat or Dmesg.");
+        msgBox.setText("No connection!");
+        msgBox.setInformativeText("Check your phone connection and try again.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();

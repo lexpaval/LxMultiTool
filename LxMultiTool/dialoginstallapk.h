@@ -2,6 +2,7 @@
 #define DIALOGINSTALLAPK_H
 
 #include <QDialog>
+#include "deviceconnection.h"
 
 namespace Ui {
 class DialogInstallApk;

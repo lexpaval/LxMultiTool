@@ -152,73 +152,88 @@ void DialogScreenshot::closeEvent(QCloseEvent *event)
 
 void DialogScreenshot::on_getScreenButton_clicked()
 {
-    QDir temp_path(QCoreApplication::applicationDirPath());
+    if (DeviceConnection::getConnection() == ADB)
+    {
+        QDir temp_path(QCoreApplication::applicationDirPath());
 
 #ifdef Q_OS_MACX
-    // Because apple likes it's application folders
-    temp_path.cdUp();
-    temp_path.cdUp();
-    temp_path.cdUp();
+        // Because apple likes it's application folders
+        temp_path.cdUp();
+        temp_path.cdUp();
+        temp_path.cdUp();
 #endif
 
-    // Restrict from closing while getting the log
-    *busy = true;
-
-    // UI restrictions
-    ui->tableWidget->setEnabled(false);
-    ui->buttonBox->setEnabled(false);
-    ui->getScreenButton->setEnabled(false);
-
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Select a name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Screenshots/"+QDate::currentDate().toString().remove(" ").remove("."))), tr("Image File (*.png)"));
-    QProcess* process_screen = new QProcess(this);
-    QString screenCommand;
-
-    if(fileName != "")
-    {
-        if(!fileName.contains(".png"))
-        {
-            // Append the .png extension if it's not available - linux limitation
-            fileName = fileName+".png";
-        }
-
-        connect( process_screen, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
-
-        // Restrict from closing while flashing
+        // Restrict from closing while getting the log
         *busy = true;
 
-        process_screen->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
+        // UI restrictions
+        ui->tableWidget->setEnabled(false);
+        ui->buttonBox->setEnabled(false);
+        ui->getScreenButton->setEnabled(false);
+
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Select a name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Screenshots/"+QDate::currentDate().toString().remove(" ").remove("."))), tr("Image File (*.png)"));
+        QProcess* process_screen = new QProcess(this);
+        QString screenCommand;
+
+        if(fileName != "")
+        {
+            if(!fileName.contains(".png"))
+            {
+                // Append the .png extension if it's not available - linux limitation
+                fileName = fileName+".png";
+            }
+
+            connect( process_screen, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
+
+            // Restrict from closing while flashing
+            *busy = true;
+
+            process_screen->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
 #ifdef Q_OS_WIN
-        // Windows code here
-        process_screen->start("cmd");
-        screenCommand = "adb.exe shell screencap -p |sed.exe \"s/\\r$//\">"+fileName+"\n";
-        process_screen->write(screenCommand.toLatin1());
+            // Windows code here
+            process_screen->start("cmd");
+            screenCommand = "adb.exe shell screencap -p |sed.exe \"s/\\r$//\">"+fileName+"\n";
+            process_screen->write(screenCommand.toLatin1());
 #elif defined(Q_OS_MACX)
-        // MAC code here
-        process_screen->start("sh");
-        screenCommand = "./adb_mac shell screencap -p | perl -pe \"s/\\x0D\\x0A/\\x0A/g\" >"+fileName+"\n";
-        process_screen->write(screenCommand.toLatin1());
+            // MAC code here
+            process_screen->start("sh");
+            screenCommand = "./adb_mac shell screencap -p | perl -pe \"s/\\x0D\\x0A/\\x0A/g\" >"+fileName+"\n";
+            process_screen->write(screenCommand.toLatin1());
 #else
-        // Linux code here
-        process_screen->start("sh");
-        screenCommand = "./adb_linux shell screencap -p | perl -pe \"s/\\x0D\\x0A/\\x0A/g\" >"+fileName+"\n";
-        process_screen->write(screenCommand.toLatin1());
+            // Linux code here
+            process_screen->start("sh");
+            screenCommand = "./adb_linux shell screencap -p | perl -pe \"s/\\x0D\\x0A/\\x0A/g\" >"+fileName+"\n";
+            process_screen->write(screenCommand.toLatin1());
 #endif
-        process_screen->waitForStarted();
-        process_screen->write("exit\n");
+            process_screen->waitForStarted();
+            process_screen->write("exit\n");
+        }
+        else
+        {
+            // UI restrictions
+            ui->tableWidget->setEnabled(true);
+            ui->buttonBox->setEnabled(true);
+            ui->getScreenButton->setEnabled(true);
+
+            // Prepare a messagebox
+            QMessageBox msgBox(this->parentWidget());
+            QPixmap icon(":/Icons/screenshot.png");
+            msgBox.setIconPixmap(icon);
+            msgBox.setText("No name selected for the screenshot!");
+            msgBox.setInformativeText("You really need to input a name for your screenshot.");
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
+        }
     }
     else
     {
-        // UI restrictions
-        ui->tableWidget->setEnabled(true);
-        ui->buttonBox->setEnabled(true);
-        ui->getScreenButton->setEnabled(true);
-
         // Prepare a messagebox
         QMessageBox msgBox(this->parentWidget());
         QPixmap icon(":/Icons/screenshot.png");
         msgBox.setIconPixmap(icon);
-        msgBox.setText("No name selected for the screenshot!");
-        msgBox.setInformativeText("You really need to input a name for your screenshot.");
+        msgBox.setText("No connection!");
+        msgBox.setInformativeText("Check your phone connection and try again.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();

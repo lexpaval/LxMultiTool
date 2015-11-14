@@ -7,6 +7,7 @@
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QDir>
+#include "deviceconnection.h"
 
 namespace Ui {
 class DialogErase;

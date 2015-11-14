@@ -237,68 +237,9 @@ void DialogBackups::on_actionDelete_triggered()
 
 void DialogBackups::on_backupButton_clicked()
 {
-    QDir temp_path(QCoreApplication::applicationDirPath());
-
-#ifdef Q_OS_MACX
-    // Because apple likes it's application folders
-    temp_path.cdUp();
-    temp_path.cdUp();
-    temp_path.cdUp();
-#endif
-
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Select backup name and folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Data/Backup")), tr("Android Backup Files (*.ab)"));
-    if(fileName != "")
+    if (DeviceConnection::getConnection() == ADB)
     {
-        QProcess* process_backup = new QProcess(this);
 
-        connect( process_backup, SIGNAL(finished(int)), this, SLOT(processFinishedBackup(int)));
-
-        if(!fileName.contains(".ab"))
-        {
-            // Append the ab extension if it's not available - linux limitation
-            fileName = fileName+".ab";
-        }
-
-        // Prepare the file name for insertion in the process
-        fileName = fileName+"\"\n";
-
-        process_backup->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
-#ifdef Q_OS_WIN
-        // Windows code here
-        process_backup->start("cmd");
-        fileName = "adb.exe backup -apk -shared -all -f \""+QDir::toNativeSeparators(fileName);
-#elif defined(Q_OS_MACX)
-        // MAC code here
-        process_backup->start("sh");
-        fileName = "./adb_mac backup -apk -shared -all -f \""+fileName;
-#else
-        // Linux code here
-        process_backup->start("sh");
-        fileName = "./adb_linux backup -apk -shared -all -f \""+fileName;
-#endif
-        process_backup->write(fileName.toLatin1());
-        process_backup->write("exit\n");
-    }
-    else
-    {
-        // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap backup(":/Icons/backup.png");
-        msgBox.setIconPixmap(backup);
-        msgBox.setText("No backup name selected!");
-        msgBox.setInformativeText("You really need to put a name to your backup.");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        msgBox.exec();
-    }
-
-    qDebug() << fileName << " file_dialog";
-}
-
-void DialogBackups::on_restoreButton_clicked()
-{
-    if(ui->tableWidget->currentItem() != NULL)
-    {
         QDir temp_path(QCoreApplication::applicationDirPath());
 
 #ifdef Q_OS_MACX
@@ -308,39 +249,129 @@ void DialogBackups::on_restoreButton_clicked()
         temp_path.cdUp();
 #endif
 
-        QProcess* process_restore = new QProcess(this);
-        QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators("/Data/Backup/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
-        QString restore;
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Select backup name and folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Data/Backup")), tr("Android Backup Files (*.ab)"));
+        if(fileName != "")
+        {
+            QProcess* process_backup = new QProcess(this);
 
-        connect( process_restore, SIGNAL(finished(int)), this, SLOT(processFinishedRestore(int)));
+            connect( process_backup, SIGNAL(finished(int)), this, SLOT(processFinishedBackup(int)));
 
-        // Restrict from closing while flashing
-        *busy = true;
+            if(!fileName.contains(".ab"))
+            {
+                // Append the ab extension if it's not available - linux limitation
+                fileName = fileName+".ab";
+            }
 
-        process_restore->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+            // Prepare the file name for insertion in the process
+            fileName = fileName+"\"\n";
+
+            process_backup->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
-        // Windows code here
-        process_restore->start("cmd");
-        restore = "adb.exe restore \"" + temp_cmd;
+            // Windows code here
+            process_backup->start("cmd");
+            fileName = "adb.exe backup -apk -shared -all -f \""+QDir::toNativeSeparators(fileName);
 #elif defined(Q_OS_MACX)
-        // MAC code here
-        process_restore->start("sh");
-        restore = "./adb restore \"" + temp_cmd;
+            // MAC code here
+            process_backup->start("sh");
+            fileName = "./adb_mac backup -apk -shared -all -f \""+fileName;
 #else
-        // Linux code here
-        process_restore->start("sh");
-        restore = "./adb restore \"" + temp_cmd;
+            // Linux code here
+            process_backup->start("sh");
+            fileName = "./adb_linux backup -apk -shared -all -f \""+fileName;
 #endif
-        process_restore->waitForStarted();
-        qDebug() << restore.toLatin1();
-        process_restore->write(restore.toLatin1());
-        process_restore->write("exit\n");
+            process_backup->write(fileName.toLatin1());
+            process_backup->write("exit\n");
+        }
+        else
+        {
+            // Prepare a messagebox
+            QMessageBox msgBox(this);
+            QPixmap backup(":/Icons/backup.png");
+            msgBox.setIconPixmap(backup);
+            msgBox.setText("No backup name selected!");
+            msgBox.setInformativeText("You really need to put a name to your backup.");
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
+        }
 
-        // UI restrictions
-        ui->tableWidget->setEnabled(false);
-        ui->buttonBox_2->setEnabled(false);
-        ui->backupButton->setEnabled(false);
-        ui->restoreButton->setEnabled(false);
+        qDebug() << fileName << " file_dialog";
+    }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this);
+        QPixmap backup(":/Icons/backup.png");
+        msgBox.setIconPixmap(backup);
+        msgBox.setText("No connection!");
+        msgBox.setInformativeText("Check your phone connection and try again.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
+}
+
+void DialogBackups::on_restoreButton_clicked()
+{
+    if (DeviceConnection::getConnection() == ADB)
+    {
+        if(ui->tableWidget->currentItem() != NULL)
+        {
+            QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef Q_OS_MACX
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+#endif
+
+            QProcess* process_restore = new QProcess(this);
+            QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators("/Data/Backup/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString restore;
+
+            connect( process_restore, SIGNAL(finished(int)), this, SLOT(processFinishedRestore(int)));
+
+            // Restrict from closing while flashing
+            *busy = true;
+
+            process_restore->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+#ifdef Q_OS_WIN
+            // Windows code here
+            process_restore->start("cmd");
+            restore = "adb.exe restore \"" + temp_cmd;
+#elif defined(Q_OS_MACX)
+            // MAC code here
+            process_restore->start("sh");
+            restore = "./adb restore \"" + temp_cmd;
+#else
+            // Linux code here
+            process_restore->start("sh");
+            restore = "./adb restore \"" + temp_cmd;
+#endif
+            process_restore->waitForStarted();
+            qDebug() << restore.toLatin1();
+            process_restore->write(restore.toLatin1());
+            process_restore->write("exit\n");
+
+            // UI restrictions
+            ui->tableWidget->setEnabled(false);
+            ui->buttonBox_2->setEnabled(false);
+            ui->backupButton->setEnabled(false);
+            ui->restoreButton->setEnabled(false);
+        }
+    }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this);
+        QPixmap backup(":/Icons/restore.png");
+        msgBox.setIconPixmap(backup);
+        msgBox.setText("No connection!");
+        msgBox.setInformativeText("Check your phone connection and try again.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
     }
 }
 

@@ -156,52 +156,67 @@ void DialogKernel::processFinished(int exitCode)
 
 void DialogKernel::on_flashButton_clicked()
 {
-    if(ui->tableWidget->currentItem() != NULL)
+    if (DeviceConnection::getConnection() == FASTBOOT)
     {
-        QDir temp_path(QCoreApplication::applicationDirPath());
+        if(ui->tableWidget->currentItem() != NULL)
+        {
+            QDir temp_path(QCoreApplication::applicationDirPath());
 
 #ifdef Q_OS_MACX
-        // Because apple likes it's application folders
-        temp_path.cdUp();
-        temp_path.cdUp();
-        temp_path.cdUp();
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
 #endif
 
-        QProcess* process_flash = new QProcess(this);
-        QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators("/Data/Kernels/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
-        QString recovery;
+            QProcess* process_flash = new QProcess(this);
+            QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators("/Data/Kernels/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString recovery;
 
-        connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
-        connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
+            connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
+            connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
-        // Restrict from closing while flashing
-        *busy = true;
+            // Restrict from closing while flashing
+            *busy = true;
 
-        process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+            process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
-        // Windows code here
-        process_flash->start("cmd");
-        recovery = "fastboot.exe flash boot \"" + temp_cmd;
+            // Windows code here
+            process_flash->start("cmd");
+            recovery = "fastboot.exe flash boot \"" + temp_cmd;
 #elif defined(Q_OS_MACX)
-        // MAC code here
-        process_flash->start("sh");
-        recovery = "./fastboot_mac flash boot \"" + temp_cmd;
+            // MAC code here
+            process_flash->start("sh");
+            recovery = "./fastboot_mac flash boot \"" + temp_cmd;
 #else
-        // Linux code here
-        process_flash->start("sh");
-        recovery = "./fastboot_adb flash boot \"" + temp_cmd;
+            // Linux code here
+            process_flash->start("sh");
+            recovery = "./fastboot_adb flash boot \"" + temp_cmd;
 #endif
-        process_flash->waitForStarted();
-        qDebug() << recovery.toLatin1();
-        process_flash->write(recovery.toLatin1());
-        process_flash->write("exit\n");
+            process_flash->waitForStarted();
+            qDebug() << recovery.toLatin1();
+            process_flash->write(recovery.toLatin1());
+            process_flash->write("exit\n");
 
-        // UI restrictions
-        ui->tableWidget->setEnabled(false);
-        ui->buttonBox->setEnabled(false);
-        ui->flashButton->setEnabled(false);
-        ui->progressBar->setVisible(true);
-        ui->progressBar->setValue(0);
+            // UI restrictions
+            ui->tableWidget->setEnabled(false);
+            ui->buttonBox->setEnabled(false);
+            ui->flashButton->setEnabled(false);
+            ui->progressBar->setVisible(true);
+            ui->progressBar->setValue(0);
+        }
+    }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/kernel.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("No connection!");
+        msgBox.setInformativeText("Check your phone connection and try again.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
     }
 }
 
