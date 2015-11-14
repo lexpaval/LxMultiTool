@@ -44,7 +44,7 @@
          <bool>false</bool>
         </property>
         <attribute name="horizontalHeaderVisible">
-         <bool>true</bool>
+         <bool>false</bool>
         </attribute>
         <attribute name="verticalHeaderVisible">
          <bool>false</bool>
@@ -138,6 +138,36 @@
     </widget>
    </item>
   </layout>
+  <action name="actionRefresh">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/Icons/update.png</normaloff>:/Icons/update.png</iconset>
+   </property>
+   <property name="text">
+    <string>Refresh</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Get the files from the respective folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/Icons/delete.png</normaloff>:/Icons/delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove the selected item from the drive.</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="icons.qrc"/>
