@@ -167,7 +167,7 @@ void DialogLogging::on_getLogButton_clicked()
                 // Restrict from closing while flashing
                 *busy = true;
 
-                process_log->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
+                process_log->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
                 // Windows code here
                 process_log->start("cmd");

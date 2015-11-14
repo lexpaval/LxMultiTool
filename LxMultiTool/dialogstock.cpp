@@ -182,7 +182,7 @@ void DialogStock::on_flashButton_clicked()
 
             QDirIterator dirit(temp_folder,QDirIterator::Subdirectories);
 
-            process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
+            process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 
 #ifdef Q_OS_WIN
             // Windows code here

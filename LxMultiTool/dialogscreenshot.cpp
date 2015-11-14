@@ -188,7 +188,7 @@ void DialogScreenshot::on_getScreenButton_clicked()
             // Restrict from closing while flashing
             *busy = true;
 
-            process_screen->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
+            process_screen->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_screen->start("cmd");
