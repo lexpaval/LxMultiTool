@@ -103,8 +103,6 @@ void DialogKernel::processOutput()
     QProcess *p = dynamic_cast<QProcess *>( sender() );
     QString progress = p->readAllStandardOutput();
 
-    qDebug() <<  p->readAll() << "output";
-
     if(progress.contains("sending"))
         ui->progressBar->setValue(33);
 
