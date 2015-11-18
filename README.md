@@ -15,7 +15,7 @@ The features presented in this README are according to the version mentioned in 
   - Flash Recovery Menu (you can choose and add recoveries)
   - Flash Kernel (you can choose and add kernels)
   - Flash full Stock images (you can choose and add images)
-  - Erase partitions (you can choose which of the partitions)
+  - Erase (format) partitions (you can choose which of the partitions)
   - Reboot (you can choose again...)
   
 ##### Adb
@@ -26,15 +26,18 @@ The features presented in this README are according to the version mentioned in 
   - Logs (DMESG and Logcat)
   - Screenshots (you can directly take screenshots to your PC)
   - Reboot (lots of choices)
+  - Install .apk files
 
 ##### Tool specific
   - Check for updates
   - Go to xda-developers thread
   - Tool tips for all buttons
   - Context for refresh and delete on all menus
+  - Open tool-specific folder from all menus
+  - ADB & Fastboot error messages upon failing
   
 ### Version
-1.0.2
+1.1.0
 
 ### Tech
 
@@ -63,7 +66,6 @@ After that, you should be able to build, debug, edit and so on.
  - Properly handle fastboot and adb output text for more user friendliness
  - Add more Code Comments
  - Add messages when you want to save files with a name that already exists
- - Add APK Install functionality
  - Add online database to download stuff from (kernels, stock, recoveries)
  - Extend the file downloader to download directly from the tool
 
