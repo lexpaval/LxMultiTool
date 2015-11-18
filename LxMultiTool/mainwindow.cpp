@@ -45,7 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
     process_adb.waitForFinished(100); // Close this fast so we don't freeze the UI
 
     QString adb(process_adb.readAllStandardOutput());
-    qDebug() << adb;
 
     if(adb.contains("\tdevice"))
     {
@@ -75,7 +74,6 @@ MainWindow::MainWindow(QWidget *parent) :
     process_fastboot.waitForFinished(100); // Close this fast so we don't freeze the UI
 
     QString fastboot(process_fastboot.readAllStandardOutput());
-    qDebug() << fastboot;
 
     if(fastboot.contains("\tfastboot"))
     {
@@ -420,7 +418,7 @@ void MainWindow::checkOptions()
         ui->fasbootGroup->setEnabled(false);
     }
 
-#ifdef DEBUG
+#ifdef QT_DEBUG
     ui->normalRebootButton->setEnabled(true);
     ui->bootloaderRebootButton->setEnabled(true);
     ui->recoveryRebootButton->setEnabled(true);

@@ -24,9 +24,7 @@
 #include "aboutdialog.h"
 #include "version.h"
 
-//#define DEBUG
-
-#ifdef debug
+#ifdef QT_DEBUG
 #warning "YOU ARE IN DEBUG MODE"
 #endif
 

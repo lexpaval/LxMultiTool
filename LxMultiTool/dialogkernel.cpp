@@ -194,7 +194,6 @@ void DialogKernel::on_flashButton_clicked()
             recovery = "./fastboot_adb flash boot \"" + temp_cmd;
 #endif
             process_flash->waitForStarted();
-            qDebug() << recovery.toLatin1();
             process_flash->write(recovery.toLatin1());
             process_flash->write("exit\n");
 

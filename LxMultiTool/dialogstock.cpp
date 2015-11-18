@@ -172,8 +172,6 @@ void DialogStock::on_flashButton_clicked()
             QProcess* process_flash = new QProcess(this);
             QString temp_folder = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"/");
 
-            qDebug() << temp_folder;
-
             connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
             connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
@@ -198,8 +196,6 @@ void DialogStock::on_flashButton_clicked()
             while(dirit.hasNext())
             {
                 dirit.next();
-
-                qDebug() << "reached while" + dirit.fileName();
 
                 // We need the bootloader
                 if ((QFileInfo(dirit.filePath()).suffix() == "img") && (dirit.fileName().contains("bootloader")))

@@ -100,8 +100,6 @@ void DialogBackups::processFinishedBackup(int exitCode)
     error.remove("\n");
     error.remove("\r");
 
-    qDebug() <<  exitCode;
-
     if(exitCode != 0)
     {
         // Prepare a messagebox
@@ -144,8 +142,6 @@ void DialogBackups::processFinishedRestore(int exitCode)
     QString error(p->readAllStandardError());
     error.remove("\n");
     error.remove("\r");
-
-    qDebug() <<  exitCode;
 
     if(exitCode != 0)
     {
@@ -294,8 +290,6 @@ void DialogBackups::on_backupButton_clicked()
             msgBox.setDefaultButton(QMessageBox::Ok);
             msgBox.exec();
         }
-
-        qDebug() << fileName << " file_dialog";
     }
     else
     {
@@ -350,7 +344,6 @@ void DialogBackups::on_restoreButton_clicked()
             restore = "./adb restore \"" + temp_cmd;
 #endif
             process_restore->waitForStarted();
-            qDebug() << restore.toLatin1();
             process_restore->write(restore.toLatin1());
             process_restore->write("exit\n");
 

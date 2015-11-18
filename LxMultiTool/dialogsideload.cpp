@@ -204,7 +204,6 @@ void DialogSideload::on_sideloadButton_clicked()
             sideload = "./adb_linux sideload \""+temp_cmd;
 #endif
             process_flash->waitForStarted();
-            qDebug() << sideload.toLatin1();
             process_flash->write(sideload.toLatin1());
             process_flash->write("exit\n");
 

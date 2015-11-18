@@ -6,7 +6,6 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QCloseEvent>
-#include <QDebug>
 #include <QDesktopServices>
 #include <QFileDialog>
 #include "deviceconnection.h"
