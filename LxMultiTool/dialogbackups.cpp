@@ -378,3 +378,18 @@ void DialogBackups::closeEvent(QCloseEvent *event)
     else
         event->accept();
 }
+
+void DialogBackups::on_exploreButton_clicked()
+{
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef Q_OS_MACX
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Backup");
+    QDesktopServices::openUrl(QUrl("file:///" + path));
+}

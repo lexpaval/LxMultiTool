@@ -37,6 +37,8 @@ private slots:
 
     void on_restoreButton_clicked();
 
+    void on_exploreButton_clicked();
+
 private:
     Ui::DialogBackups *ui;
     bool *busy;
