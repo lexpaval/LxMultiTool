@@ -260,3 +260,8 @@ void DialogInstallApk::on_actionDelete_triggered()
         msgBox.exec();
     }
 }
+
+void DialogInstallApk::on_tableWidget_itemClicked()
+{
+    ui->installButton->setEnabled(true);
+}

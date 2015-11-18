@@ -32,6 +32,8 @@ private slots:
 
     void on_installButton_clicked();
 
+    void on_tableWidget_itemClicked();
+
 private:
     Ui::DialogInstallApk *ui;
     bool *busy;
