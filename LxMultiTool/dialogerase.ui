@@ -34,6 +34,9 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QRadioButton" name="boot_radioButton">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select this in order to erase (format) the boot (kernel) partition.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
          <string>Boot</string>
         </property>
@@ -41,6 +44,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="cache_radioButton">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select this to erase (format) the cache partition.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
          <string>Cache</string>
         </property>
@@ -48,6 +54,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="recovery_radioButton">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select this to erase (format) the recovery partition. &lt;/p&gt;&lt;p&gt;Note: You will have no recovery after doing this!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
          <string>Recovery</string>
         </property>
@@ -55,6 +64,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="system_radioButton">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select this in order to erase (format) the system partition.&lt;/p&gt;&lt;p&gt;Note: You will have no ROM on the device after doing this.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
          <string>System</string>
         </property>
@@ -62,6 +74,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="data_radioButton">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select this in order to erase (format) the Data partition.&lt;/p&gt;&lt;p&gt;Note: Formatting the Data partition, or User Data is commonly known as a factory reset, along with the Cache partition.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
          <string>User Data</string>
         </property>
@@ -72,6 +87,9 @@
    </item>
    <item row="1" column="0">
     <widget class="QPushButton" name="eraseButton">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start the erase (format) of the selected partition.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>Erase</string>
      </property>
@@ -91,6 +109,9 @@
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="focusPolicy">
       <enum>Qt::TabFocus</enum>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Close this window.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
