@@ -24,6 +24,9 @@ DialogStock::DialogStock(QWidget *parent) :
     // Enable the button upon selection only!
     ui->flashButton->setEnabled(false);
 
+    // Set our loading animation
+    ui->processLabel->setVisible(false);
+
     getFiles();
 
     // Let's check if we have something
@@ -122,6 +125,9 @@ void DialogStock::processFinished(int exitCode)
     error.remove("\n");
     error.remove("\r");
 
+    // Hide our loading animation
+    ui->processLabel->setVisible(false);
+
     if(exitCode != 0)
     {
         // Prepare a messagebox
@@ -160,6 +166,12 @@ void DialogStock::on_flashButton_clicked()
     {
         if(ui->tableWidget->currentItem() != NULL)
         {
+            // Show our loading animation
+            ui->processLabel->setVisible(true);
+            QMovie *movie = new QMovie(":/Others/loader.gif");
+            ui->processLabel->setMovie(movie);
+            movie->start();
+
             QDir temp_path(QCoreApplication::applicationDirPath());
 
 #ifdef Q_OS_MACX

@@ -62,7 +62,8 @@ FORMS    += mainwindow.ui \
     dialoginstallapk.ui
 
 RESOURCES += \
-    icons.qrc
+    icons.qrc \
+    others.qrc
 
 DISTFILES += \
     ../Icons/application.png
