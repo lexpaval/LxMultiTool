@@ -168,6 +168,10 @@ void DialogStock::on_flashButton_clicked()
             temp_path.cdUp();
             temp_path.cdUp();
 #endif
+            // Variables that hold the path to the images to be flashed
+            QString bootloader_path;
+            QString radio_path;
+            QString image_path;
 
             QProcess* process_flash = new QProcess(this);
             QString temp_folder = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"/");
@@ -200,64 +204,67 @@ void DialogStock::on_flashButton_clicked()
                 // We need the bootloader
                 if ((QFileInfo(dirit.filePath()).suffix() == "img") && (dirit.fileName().contains("bootloader")))
                 {
-#ifdef Q_OS_WIN
-                    // Windows code here
-                    process_flash->write("fastboot.exe flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
-                    process_flash->write("fastboot.exe reboot-bootloader\n");
-                    process_flash->write("ping -n 5 localhost >nul\n");
-#elif defined(Q_OS_MACX)
-                    // MAC code here
-                    process_flash->write("./fastboot_mac flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
-                    process_flash->write("./fastboot_mac reboot-bootloader\n");
-                    process_flash->write("sleep 5\n");
-#else
-                    // Linux code here
-                    process_flash->write("./fastboot_linux flash bootloader \""+dirit.filePath().toLatin1()+"\"\n");
-                    process_flash->write("./fastboot_linux reboot-bootloader\n");
-                    process_flash->write("sleep 5\n");
-#endif
+                    bootloader_path = dirit.filePath().toLatin1();
                 }
                 // We need the radio
                 if ((QFileInfo(dirit.filePath()).suffix() == "img") && (dirit.fileName().contains("radio")))
                 {
-#ifdef Q_OS_WIN
-                    // Windows code here
-                    process_flash->write("fastboot.exe flash radio \""+dirit.filePath().toLatin1()+"\"\n");
-                    process_flash->write("fastboot.exe reboot-bootloader\n");
-                    process_flash->write("ping -n 5 localhost >nul\n");
-#elif defined(Q_OS_MACX)
-                    // MAC code here
-                    process_flash->write("./fastboot_mac flash radio \""+dirit.filePath().toLatin1()+"\"\n");
-                    process_flash->write("./fastboot_mac reboot-bootloader\n");
-                    process_flash->write("sleep 5\n");
-#else
-                    // Linux code here
-                    process_flash->write("./fastboot_linux flash radio \""+dirit.filePath().toLatin1()+"\"\n");
-                    process_flash->write("./fastboot_linux reboot-bootloader\n");
-                    process_flash->write("sleep 5\n");
-#endif
+                    radio_path = dirit.filePath().toLatin1();
                 }
                 // We need the update zip
                 if ((QFileInfo(dirit.filePath()).suffix() == "zip") && (dirit.fileName().contains("image-")))
                 {
-#ifdef Q_OS_WIN
-                    // Windows code here
-                    process_flash->write("fastboot.exe -w update \""+dirit.filePath().toLatin1()+"\"\n");
-                    process_flash->write("fastboot.exe reboot-bootloader\n");
-                    process_flash->write("ping -n 5 localhost >nul\n");
-#elif defined(Q_OS_MACX)
-                    // MAC code here
-                    process_flash->write("./fastboot_mac -w update \""+dirit.filePath().toLatin1()+"\"\n");
-                    process_flash->write("./fastboot_mac reboot-bootloader\n");
-                    process_flash->write("sleep 5\n");
-#else
-                    // Linux code here
-                    process_flash->write("./fastboot_linux -w update \""+dirit.filePath().toLatin1()+"\"\n");
-                    process_flash->write("./fastboot_linux reboot-bootloader\n");
-                    process_flash->write("sleep 5\n");
-#endif
+                    image_path = dirit.filePath().toLatin1();
                 }
             }
+
+            // Bootloader flashing
+#ifdef Q_OS_WIN
+            // Windows code here
+            process_flash->write("fastboot.exe flash bootloader \""+bootloader_path+"\"\n");
+            process_flash->write("fastboot.exe reboot-bootloader\n");
+            process_flash->write("ping -n 5 localhost >nul\n");
+#elif defined(Q_OS_MACX)
+            // MAC code here
+            process_flash->write("./fastboot_mac flash bootloader \""+bootloader_path+"\"\n");
+            process_flash->write("./fastboot_mac reboot-bootloader\n");
+            process_flash->write("sleep 5\n");
+#else
+            // Linux code here
+            process_flash->write("./fastboot_linux flash bootloader \""+bootloader_path+"\"\n");
+            process_flash->write("./fastboot_linux reboot-bootloader\n");
+            process_flash->write("sleep 5\n");
+#endif
+
+            // Radio flashing
+#ifdef Q_OS_WIN
+            // Windows code here
+            process_flash->write("fastboot.exe flash radio \""+radio_path+"\"\n");
+            process_flash->write("fastboot.exe reboot-bootloader\n");
+            process_flash->write("ping -n 5 localhost >nul\n");
+#elif defined(Q_OS_MACX)
+            // MAC code here
+            process_flash->write("./fastboot_mac flash radio \""+radio_path+"\"\n");
+            process_flash->write("./fastboot_mac reboot-bootloader\n");
+            process_flash->write("sleep 5\n");
+#else
+            // Linux code here
+            process_flash->write("./fastboot_linux flash radio \""+radio_path+"\"\n");
+            process_flash->write("./fastboot_linux reboot-bootloader\n");
+            process_flash->write("sleep 5\n");
+#endif
+
+            // Update the rest
+#ifdef Q_OS_WIN
+            // Windows code here
+            process_flash->write("fastboot.exe -w update \""+image_path+"\"\n");
+#elif defined(Q_OS_MACX)
+            // MAC code here
+            process_flash->write("./fastboot_mac -w update \""+image_path+"\"\n");
+#else
+            // Linux code here
+            process_flash->write("./fastboot_linux -w update \""+image_path+"\"\n");
+#endif
 
             process_flash->waitForStarted();
             process_flash->write("exit\n");
