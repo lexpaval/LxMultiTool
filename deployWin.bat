@@ -1,0 +1,3 @@
+@echo off
+echo Copying QT libraries...
+windeployqt D:\Programming\QtCreator\LxMultiTool\build-LxMultiTool-Desktop_Qt_5_5_1_MinGW_32bit-Release\release\LxMultiTool.exe
