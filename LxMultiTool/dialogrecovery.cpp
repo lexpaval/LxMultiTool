@@ -24,6 +24,7 @@ DialogRecovery::DialogRecovery(QWidget *parent) :
     ui->progressBar->setVisible(false);
     // Enable the button upon selection only!
     ui->flashButton->setEnabled(false);
+    ui->bootButton->setEnabled(false);
 
     getFiles();
 
@@ -248,6 +249,7 @@ void DialogRecovery::on_exploreButton_clicked()
 void DialogRecovery::on_tableWidget_itemClicked()
 {
     ui->flashButton->setEnabled(true);
+    ui->bootButton->setEnabled(true);
 }
 
 void DialogRecovery::on_actionRefresh_triggered()
@@ -294,6 +296,70 @@ void DialogRecovery::on_actionDelete_triggered()
         msgBox.setIconPixmap(icon);
         msgBox.setText("Nothing selected!");
         msgBox.setInformativeText("You need to select something in order to delete...");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
+}
+
+void DialogRecovery::on_bootButton_clicked()
+{
+    if (DeviceConnection::getConnection() == FASTBOOT)
+    {
+        if(ui->tableWidget->currentItem() != NULL)
+        {
+            QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef Q_OS_MACX
+            // Because apple likes it's application folders
+            temp_path.cdUp();
+            temp_path.cdUp();
+            temp_path.cdUp();
+#endif
+
+            QProcess* process_boot = new QProcess(this);
+            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Recoveries/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString recovery;
+
+            connect( process_boot, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
+
+            // Restrict from closing while booting
+            *busy = true;
+
+            process_boot->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+#ifdef Q_OS_WIN
+            // Windows code here
+            process_boot->start("cmd");
+            recovery = "fastboot.exe -c \"lge.kcal=0|0|0|x\" boot \"" + temp_cmd;
+#elif defined(Q_OS_MACX)
+            // MAC code here
+            process_boot->start("sh");
+            recovery = "./fastboot_mac -c \"lge.kcal=0|0|0|x\" boot \"" + temp_cmd;
+#else
+            // Linux code here
+            process_boot->start("sh");
+            recovery = "./fastboot_linux -c \"lge.kcal=0|0|0|x\" boot \"" + temp_cmd;
+#endif
+            process_boot->waitForStarted();
+            process_boot->write(recovery.toLatin1());
+            process_boot->write("exit\n");
+
+            // UI restrictions
+            ui->tableWidget->setEnabled(false);
+            ui->buttonBox->setEnabled(false);
+            ui->flashButton->setEnabled(false);
+            ui->progressBar->setVisible(true);
+            ui->progressBar->setValue(0);
+        }
+    }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this->parentWidget());
+        QPixmap icon(":/Icons/recovery.png");
+        msgBox.setIconPixmap(icon);
+        msgBox.setText("No connection!");
+        msgBox.setInformativeText("Check your phone connection and try again.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();

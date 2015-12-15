@@ -36,6 +36,8 @@ private slots:
 
     void on_actionDelete_triggered();
 
+    void on_bootButton_clicked();
+
 private:
     Ui::DialogRecovery *ui;
     bool *busy;

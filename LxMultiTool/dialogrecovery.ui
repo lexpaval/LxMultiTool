@@ -130,10 +130,30 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="bootButton">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Boot into the selected recovery (you can keep the original/stock one but you can use the custom recovery features like backups).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Boot</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons.qrc">
+          <normaloff>:/Icons/kernel.png</normaloff>:/Icons/kernel.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>15</width>
+          <height>15</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="exploreButton">
         <property name="minimumSize">
          <size>
-          <width>100</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
@@ -142,6 +162,12 @@
         </property>
         <property name="text">
          <string>Open Folder</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>15</width>
+          <height>15</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -225,6 +251,7 @@
   <tabstop>buttonBox</tabstop>
   <tabstop>tableWidget</tabstop>
   <tabstop>flashButton</tabstop>
+  <tabstop>bootButton</tabstop>
   <tabstop>exploreButton</tabstop>
  </tabstops>
  <resources>
