@@ -23,7 +23,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     dialogrecovery.cpp \
     dialogsideload.cpp \
-    dialogkernel.cpp \
     aboutdialog.cpp \
     dialoglogging.cpp \
     dialogstock.cpp \
@@ -38,7 +37,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     dialogrecovery.h \
     dialogsideload.h \
-    dialogkernel.h \
     aboutdialog.h \
     dialoglogging.h \
     dialogstock.h \
@@ -54,7 +52,6 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     dialogrecovery.ui \
     dialogsideload.ui \
-    dialogkernel.ui \
     aboutdialog.ui \
     dialoglogging.ui \
     dialogstock.ui \
