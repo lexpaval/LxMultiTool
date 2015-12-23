@@ -152,6 +152,14 @@ void MainWindow::getDeviceName()
 
         ui->label_device->setText(deviceName);
     }
+    else if(ui->checkBox_Fastboot->checkState())
+    {
+        ui->label_device->setText("Fastboot Device");
+    }
+    else
+    {
+        ui->label_device->setText("None");
+    }
 }
 
 void MainWindow::on_UnlockButton_clicked()
@@ -738,31 +746,6 @@ void MainWindow::on_versionButton_clicked()
     }
 }
 
-void MainWindow::on_kernelButton_clicked()
-{
-    // Refresh before trying to do stuff
-    on_refreshButton_clicked();
-
-    // Check if we have fastboot connection
-    if(ui->checkBox_Fastboot->checkState())
-    {
-        DialogKernel* kernel_ui = new DialogKernel(this);
-        kernel_ui->exec();
-    }
-    else
-    {
-        // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap kernel(":/Icons/kernel.png");
-        msgBox.setIconPixmap(kernel);
-        msgBox.setText("You need to be in fastboot mode!");
-        msgBox.setInformativeText("Please refresh the connection before you try again.");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        msgBox.exec();
-    }
-}
-
 void MainWindow::on_actionGo_to_XDA_Thread_triggered()
 {
     QUrl link_to_xda("http://forum.xda-developers.com/nexus-6p/orig-development/tool-6p-multi-tool-v0-1-t3214015");
@@ -988,6 +971,31 @@ void MainWindow::on_installApkButton_clicked()
         QPixmap backup(":/Icons/application.png");
         msgBox.setIconPixmap(backup);
         msgBox.setText("You need to be in adb mode!");
+        msgBox.setInformativeText("Please refresh the connection before you try again.");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
+}
+
+void MainWindow::on_flashingButton_clicked()
+{
+    // Refresh before trying to do stuff
+    on_refreshButton_clicked();
+
+    // Check if we have fastboot connection
+    if(ui->checkBox_Fastboot->checkState())
+    {
+        DialogFlashing* flashing_ui = new DialogFlashing(this);
+        flashing_ui->exec();
+    }
+    else
+    {
+        // Prepare a messagebox
+        QMessageBox msgBox(this);
+        QPixmap backup(":/Icons/flashing.png");
+        msgBox.setIconPixmap(backup);
+        msgBox.setText("You need to be in fastboot mode!");
         msgBox.setInformativeText("Please refresh the connection before you try again.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);

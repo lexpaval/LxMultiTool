@@ -626,7 +626,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the recovery flashing menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the recovery flashing or booting menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="text">
           <string>Recovery</string>
@@ -644,7 +644,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="kernelButton">
+        <widget class="QPushButton" name="flashingButton">
          <property name="minimumSize">
           <size>
            <width>100</width>
@@ -652,14 +652,14 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the kernel flashing menu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the partition flashing menu (Note that the recovery can be flashed from here as well).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="text">
-          <string>Kernel</string>
+          <string>Flashing</string>
          </property>
          <property name="icon">
           <iconset resource="icons.qrc">
-           <normaloff>:/Icons/kernel.png</normaloff>:/Icons/kernel.png</iconset>
+           <normaloff>:/Icons/flash.png</normaloff>:/Icons/flash.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -857,7 +857,7 @@
   <tabstop>UnlockButton</tabstop>
   <tabstop>RelockButton</tabstop>
   <tabstop>RecoveryButton</tabstop>
-  <tabstop>kernelButton</tabstop>
+  <tabstop>flashingButton</tabstop>
   <tabstop>StockButton</tabstop>
   <tabstop>eraseButton</tabstop>
   <tabstop>rebootFastbootButton</tabstop>

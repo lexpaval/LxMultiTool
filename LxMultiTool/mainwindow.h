@@ -12,7 +12,7 @@
 #include <QNetworkAccessManager>
 #include "dialogrecovery.h"
 #include "dialogsideload.h"
-#include "dialogkernel.h"
+#include "dialogflashing.h"
 #include "dialoglogging.h"
 #include "dialogstock.h"
 #include "dialogscreenshot.h"
@@ -59,8 +59,6 @@ private slots:
 
     void on_versionButton_clicked();
 
-    void on_kernelButton_clicked();
-
     void on_actionGo_to_XDA_Thread_triggered();
 
     void on_actionCheck_for_updates_triggered();
@@ -78,6 +76,8 @@ private slots:
     void checkUpdate();
 
     void on_installApkButton_clicked();
+
+    void on_flashingButton_clicked();
 
 private:
     void checkOptions();

@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     filedownloader.cpp \
     dialogbackups.cpp \
     dialoginstallapk.cpp \
-    deviceconnection.cpp
+    deviceconnection.cpp \
+    dialogflashing.cpp
 
 HEADERS  += mainwindow.h \
     dialogrecovery.h \
@@ -47,7 +48,8 @@ HEADERS  += mainwindow.h \
     filedownloader.h \
     dialogbackups.h \
     dialoginstallapk.h \
-    deviceconnection.h
+    deviceconnection.h \
+    dialogflashing.h
 
 FORMS    += mainwindow.ui \
     dialogrecovery.ui \
@@ -59,7 +61,8 @@ FORMS    += mainwindow.ui \
     dialogscreenshot.ui \
     dialogerase.ui \
     dialogbackups.ui \
-    dialoginstallapk.ui
+    dialoginstallapk.ui \
+    dialogflashing.ui
 
 RESOURCES += \
     icons.qrc \
