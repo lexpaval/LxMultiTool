@@ -230,53 +230,61 @@ void DialogStock::on_flashButton_clicked()
                 }
             }
 
-            // Bootloader flashing
+            if (bootloader_path.toLatin1() != "")
+            {
+                // Bootloader flashing
 #ifdef Q_OS_WIN
-            // Windows code here
-            process_flash->write("fastboot.exe flash bootloader \""+bootloader_path.toLatin1()+"\"\n");
-            process_flash->write("fastboot.exe reboot-bootloader\n");
-            process_flash->write("ping -n 5 localhost >nul\n");
+                // Windows code here
+                process_flash->write("fastboot.exe flash bootloader \""+bootloader_path.toLatin1()+"\"\n");
+                process_flash->write("fastboot.exe reboot-bootloader\n");
+                process_flash->write("ping -n 5 localhost >nul\n");
 #elif defined(Q_OS_MACX)
-            // MAC code here
-            process_flash->write("./fastboot_mac flash bootloader \""+bootloader_path.toLatin1()+"\"\n");
-            process_flash->write("./fastboot_mac reboot-bootloader\n");
-            process_flash->write("sleep 5\n");
+                // MAC code here
+                process_flash->write("./fastboot_mac flash bootloader \""+bootloader_path.toLatin1()+"\"\n");
+                process_flash->write("./fastboot_mac reboot-bootloader\n");
+                process_flash->write("sleep 5\n");
 #else
-            // Linux code here
-            process_flash->write("./fastboot_linux flash bootloader \""+bootloader_path.toLatin1()+"\"\n");
-            process_flash->write("./fastboot_linux reboot-bootloader\n");
-            process_flash->write("sleep 5\n");
+                // Linux code here
+                process_flash->write("./fastboot_linux flash bootloader \""+bootloader_path.toLatin1()+"\"\n");
+                process_flash->write("./fastboot_linux reboot-bootloader\n");
+                process_flash->write("sleep 5\n");
 #endif
+            }
 
-            // Radio flashing
+            if (radio_path.toLatin1() != ""){
+                // Radio flashing
 #ifdef Q_OS_WIN
-            // Windows code here
-            process_flash->write("fastboot.exe flash radio \""+radio_path.toLatin1()+"\"\n");
-            process_flash->write("fastboot.exe reboot-bootloader\n");
-            process_flash->write("ping -n 5 localhost >nul\n");
+                // Windows code here
+                process_flash->write("fastboot.exe flash radio \""+radio_path.toLatin1()+"\"\n");
+                process_flash->write("fastboot.exe reboot-bootloader\n");
+                process_flash->write("ping -n 5 localhost >nul\n");
 #elif defined(Q_OS_MACX)
-            // MAC code here
-            process_flash->write("./fastboot_mac flash radio \""+radio_path.toLatin1()+"\"\n");
-            process_flash->write("./fastboot_mac reboot-bootloader\n");
-            process_flash->write("sleep 5\n");
+                // MAC code here
+                process_flash->write("./fastboot_mac flash radio \""+radio_path.toLatin1()+"\"\n");
+                process_flash->write("./fastboot_mac reboot-bootloader\n");
+                process_flash->write("sleep 5\n");
 #else
-            // Linux code here
-            process_flash->write("./fastboot_linux flash radio \""+radio_path.toLatin1()+"\"\n");
-            process_flash->write("./fastboot_linux reboot-bootloader\n");
-            process_flash->write("sleep 5\n");
+                // Linux code here
+                process_flash->write("./fastboot_linux flash radio \""+radio_path.toLatin1()+"\"\n");
+                process_flash->write("./fastboot_linux reboot-bootloader\n");
+                process_flash->write("sleep 5\n");
 #endif
+            }
 
-            // Update the rest
+            if(image_path.toLatin1() != "")
+            {
+                // Update the rest
 #ifdef Q_OS_WIN
-            // Windows code here
-            process_flash->write("fastboot.exe -w update \""+image_path.toLatin1()+"\"\n");
+                // Windows code here
+                process_flash->write("fastboot.exe -w update \""+image_path.toLatin1()+"\"\n");
 #elif defined(Q_OS_MACX)
-            // MAC code here
-            process_flash->write("./fastboot_mac -w update \""+image_path.toLatin1()+"\"\n");
+                // MAC code here
+                process_flash->write("./fastboot_mac -w update \""+image_path.toLatin1()+"\"\n");
 #else
-            // Linux code here
-            process_flash->write("./fastboot_linux -w update \""+image_path.toLatin1()+"\"\n");
+                // Linux code here
+                process_flash->write("./fastboot_linux -w update \""+image_path.toLatin1()+"\"\n");
 #endif
+            }
 
             process_flash->waitForStarted();
             process_flash->write("exit\n");
