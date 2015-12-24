@@ -107,40 +107,6 @@ void DialogFlashing::on_actionRefresh_triggered()
 void DialogFlashing::on_tableWidget_itemClicked()
 {
     ui->flashButton->setEnabled(true);
-
-    // Automatically propose partition flashing based on the naming of the selected file
-    if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("bootloader"))
-    {
-        ui->bootloaderRadio->setChecked(true);
-    }
-    else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("radio"))
-    {
-        ui->radioRadio->setChecked(true);
-    }
-    else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("recovery"))
-    {
-        ui->recoveryRadio->setChecked(true);
-    }
-    else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("system"))
-    {
-        ui->systemRadio->setChecked(true);
-    }
-    else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("userdata"))
-    {
-        ui->userdataRadio->setChecked(true);
-    }
-    else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("kernel") || ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("boot"))
-    {
-        ui->kernelRadio->setChecked(true);
-    }
-    else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("vendor"))
-    {
-        ui->vendorRadio->setChecked(true);
-    }
-    else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("cache"))
-    {
-        ui->cacheRadio->setChecked(true);
-    }
 }
 
 void DialogFlashing::closeEvent(QCloseEvent *event)
@@ -745,4 +711,44 @@ void DialogFlashing::on_exploreButton_clicked()
 
     QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Flashable");
     QDesktopServices::openUrl(QUrl("file:///" + path));
+}
+
+void DialogFlashing::on_tableWidget_currentItemChanged()
+{
+    if(ui->tableWidget->currentItem() != NULL)
+    {
+        // Automatically propose partition flashing based on the naming of the selected file
+        if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("bootloader"))
+        {
+            ui->bootloaderRadio->setChecked(true);
+        }
+        else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("radio"))
+        {
+            ui->radioRadio->setChecked(true);
+        }
+        else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("recovery"))
+        {
+            ui->recoveryRadio->setChecked(true);
+        }
+        else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("system"))
+        {
+            ui->systemRadio->setChecked(true);
+        }
+        else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("userdata"))
+        {
+            ui->userdataRadio->setChecked(true);
+        }
+        else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("kernel") || ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("boot"))
+        {
+            ui->kernelRadio->setChecked(true);
+        }
+        else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("vendor"))
+        {
+            ui->vendorRadio->setChecked(true);
+        }
+        else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("cache"))
+        {
+            ui->cacheRadio->setChecked(true);
+        }
+    }
 }

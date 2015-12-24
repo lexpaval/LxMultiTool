@@ -36,6 +36,8 @@ private slots:
 
     void processFinished(int exitCode);
 
+    void on_tableWidget_currentItemChanged();
+
 private:
     Ui::DialogFlashing *ui;
     bool *busy;
