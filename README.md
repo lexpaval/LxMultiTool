@@ -13,7 +13,8 @@ The features presented in this README are according to the version mentioned in 
 ##### Fastboot
   - Unlock/Lock Bootloader
   - Flash Recovery Menu (you can choose and add recoveries)
-  - Flash Kernel (you can choose and add kernels)
+  - Boot Recovery (From Recovery menu)
+  - Flash any partition (you can choose what partition and add images)
   - Flash full Stock images (you can choose and add images)
   - Erase (format) partitions (you can choose which of the partitions)
   - Reboot (you can choose again...)
@@ -35,9 +36,10 @@ The features presented in this README are according to the version mentioned in 
   - Context for refresh and delete on all menus
   - Open tool-specific folder from all menus
   - ADB & Fastboot error messages upon failing
+  - Progress animations
   
 ### Version
-1.1.0
+1.2.0
 
 ### Tech
 
