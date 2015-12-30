@@ -266,23 +266,24 @@ void DialogFlashing::on_flashButton_clicked()
                 if(accepted)
                 {
                     // start the flashing
-                    QString flash_cmd;
                     process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
                     // Windows code here
                     process_flash->start("cmd");
-                    flash_cmd = "fastboot.exe flash bootloader \"" + temp_cmd;
+                    process_flash->write("fastboot.exe flash bootloader \"" + temp_cmd.toLatin1());
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
 #elif defined(Q_OS_MACX)
                     // MAC code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_mac flash bootloader \"" + temp_cmd;
+                    process_flash->write("./fastboot_mac flash bootloader \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
 #else
                     // Linux code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_linux flash bootloader \"" + temp_cmd;
+                    process_flash->write("./fastboot_linux flash bootloader \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
 #endif
                     process_flash->waitForStarted();
-                    process_flash->write(flash_cmd.toLatin1());
                     process_flash->write("exit\n");
 
                     // UI restrictions
@@ -320,23 +321,24 @@ void DialogFlashing::on_flashButton_clicked()
                 if(accepted)
                 {
                     // start the flashing
-                    QString flash_cmd;
                     process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
                     // Windows code here
                     process_flash->start("cmd");
-                    flash_cmd = "fastboot.exe flash radio \"" + temp_cmd;
+                    process_flash->write("fastboot.exe flash radio \"" + temp_cmd.toLatin1());
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
 #elif defined(Q_OS_MACX)
                     // MAC code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_mac flash radio \"" + temp_cmd;
+                    process_flash->write("./fastboot_mac flash radio \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
 #else
                     // Linux code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_linux flash radio \"" + temp_cmd;
+                    process_flash->write("./fastboot_linux flash radio \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
 #endif
                     process_flash->waitForStarted();
-                    process_flash->write(flash_cmd.toLatin1());
                     process_flash->write("exit\n");
 
                     // UI restrictions
@@ -374,23 +376,24 @@ void DialogFlashing::on_flashButton_clicked()
                 if(accepted)
                 {
                     // start the flashing
-                    QString flash_cmd;
                     process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
                     // Windows code here
                     process_flash->start("cmd");
-                    flash_cmd = "fastboot.exe flash recovery \"" + temp_cmd;
+                    process_flash->write("fastboot.exe flash recovery \"" + temp_cmd.toLatin1());
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
 #elif defined(Q_OS_MACX)
                     // MAC code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_mac flash recovery \"" + temp_cmd;
+                    process_flash->write("./fastboot_mac flash recovery \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
 #else
                     // Linux code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_linux flash recovery \"" + temp_cmd;
+                    process_flash->write("./fastboot_linux flash recovery \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
 #endif
                     process_flash->waitForStarted();
-                    process_flash->write(flash_cmd.toLatin1());
                     process_flash->write("exit\n");
 
                     // UI restrictions
@@ -428,23 +431,24 @@ void DialogFlashing::on_flashButton_clicked()
                 if(accepted)
                 {
                     // start the flashing
-                    QString flash_cmd;
                     process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
                     // Windows code here
                     process_flash->start("cmd");
-                    flash_cmd = "fastboot.exe flash system \"" + temp_cmd;
+                    process_flash->write("fastboot.exe flash system \"" + temp_cmd.toLatin1());
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
 #elif defined(Q_OS_MACX)
                     // MAC code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_mac flash system \"" + temp_cmd;
+                    process_flash->write("./fastboot_mac flash system \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
 #else
                     // Linux code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_linux flash system \"" + temp_cmd;
+                    process_flash->write("./fastboot_linux flash system \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
 #endif
                     process_flash->waitForStarted();
-                    process_flash->write(flash_cmd.toLatin1());
                     process_flash->write("exit\n");
 
                     // UI restrictions
@@ -482,23 +486,24 @@ void DialogFlashing::on_flashButton_clicked()
                 if(accepted)
                 {
                     // start the flashing
-                    QString flash_cmd;
                     process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
                     // Windows code here
                     process_flash->start("cmd");
-                    flash_cmd = "fastboot.exe flash userdata \"" + temp_cmd;
+                    process_flash->write("fastboot.exe flash userdata \"" + temp_cmd.toLatin1());
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
 #elif defined(Q_OS_MACX)
                     // MAC code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_mac flash userdata \"" + temp_cmd;
+                    process_flash->write("./fastboot_mac flash userdata \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
 #else
                     // Linux code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_linux flash userdata \"" + temp_cmd;
+                    process_flash->write("./fastboot_linux flash userdata \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
 #endif
                     process_flash->waitForStarted();
-                    process_flash->write(flash_cmd.toLatin1());
                     process_flash->write("exit\n");
 
                     // UI restrictions
@@ -536,23 +541,24 @@ void DialogFlashing::on_flashButton_clicked()
                 if(accepted)
                 {
                     // start the flashing
-                    QString flash_cmd;
                     process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
                     // Windows code here
                     process_flash->start("cmd");
-                    flash_cmd = "fastboot.exe flash boot \"" + temp_cmd;
+                    process_flash->write("fastboot.exe flash boot \"" + temp_cmd.toLatin1());
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
 #elif defined(Q_OS_MACX)
                     // MAC code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_mac flash boot \"" + temp_cmd;
+                    process_flash->write("./fastboot_mac flash boot \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
 #else
                     // Linux code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_linux flash boot \"" + temp_cmd;
+                    process_flash->write("./fastboot_linux flash boot \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
 #endif
                     process_flash->waitForStarted();
-                    process_flash->write(flash_cmd.toLatin1());
                     process_flash->write("exit\n");
 
                     // UI restrictions
@@ -590,23 +596,24 @@ void DialogFlashing::on_flashButton_clicked()
                 if(accepted)
                 {
                     // start the flashing
-                    QString flash_cmd;
                     process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
                     // Windows code here
                     process_flash->start("cmd");
-                    flash_cmd = "fastboot.exe flash vendor \"" + temp_cmd;
+                    process_flash->write("fastboot.exe flash vendor \"" + temp_cmd.toLatin1());
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
 #elif defined(Q_OS_MACX)
                     // MAC code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_mac flash vendor \"" + temp_cmd;
+                    process_flash->write("./fastboot_mac flash vendor \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
 #else
                     // Linux code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_linux flash vendor \"" + temp_cmd;
+                    process_flash->write("./fastboot_linux flash vendor \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
 #endif
                     process_flash->waitForStarted();
-                    process_flash->write(flash_cmd.toLatin1());
                     process_flash->write("exit\n");
 
                     // UI restrictions
@@ -644,23 +651,24 @@ void DialogFlashing::on_flashButton_clicked()
                 if(accepted)
                 {
                     // start the flashing
-                    QString flash_cmd;
                     process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
                     // Windows code here
                     process_flash->start("cmd");
-                    flash_cmd = "fastboot.exe flash cache \"" + temp_cmd;
+                    process_flash->write("fastboot.exe flash cache \"" + temp_cmd.toLatin1());
+                    process_flash->write("fastboot.exe reboot-bootloader\n");
 #elif defined(Q_OS_MACX)
                     // MAC code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_mac flash cache \"" + temp_cmd;
+                    process_flash->write("./fastboot_mac flash cache \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_mac reboot-bootloader\n");
 #else
                     // Linux code here
                     process_flash->start("sh");
-                    flash_cmd = "./fastboot_linux flash cache \"" + temp_cmd;
+                    process_flash->write("./fastboot_linux flash cache \"" + temp_cmd.toLatin1());
+                    process_flash->write("./fastboot_linux reboot-bootloader\n");
 #endif
                     process_flash->waitForStarted();
-                    process_flash->write(flash_cmd.toLatin1());
                     process_flash->write("exit\n");
 
                     // UI restrictions
