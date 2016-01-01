@@ -1029,7 +1029,7 @@ void MainWindow::on_actionCMD_triggered()
     QProcess::startDetached("sh");
 #else
     // Linux code here
-    QProcess::startDetached("sh");
+    QProcess::startDetached("gnome-terminal");
 #endif
 
     // Set our current path back
