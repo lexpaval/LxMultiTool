@@ -80,6 +80,8 @@ private slots:
 
     void on_flashingButton_clicked();
 
+    void on_actionCMD_triggered();
+
 private:
     void checkOptions();
     void getDeviceName();

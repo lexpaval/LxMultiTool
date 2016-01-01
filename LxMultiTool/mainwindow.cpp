@@ -1006,3 +1006,29 @@ void MainWindow::on_flashingButton_clicked()
         msgBox.exec();
     }
 }
+
+void MainWindow::on_actionCMD_triggered()
+{
+    QProcess process;
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef Q_OS_MACX
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+
+#ifdef Q_OS_WIN
+    // Windows code here
+    process.startDetached("cmd");
+#elif defined(Q_OS_MACX)
+    // MAC code here
+    process.startDetached("sh");
+#else
+    // Linux code here
+    process.startDetached("sh");
+#endif
+}

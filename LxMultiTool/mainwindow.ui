@@ -817,8 +817,10 @@
     <property name="title">
      <string>?</string>
     </property>
+    <addaction name="actionCMD"/>
     <addaction name="actionGo_to_XDA_Thread"/>
     <addaction name="actionCheck_for_updates"/>
+    <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menu"/>
@@ -849,6 +851,18 @@
    </property>
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionCMD">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/Icons/cmd.png</normaloff>:/Icons/cmd.png</iconset>
+   </property>
+   <property name="text">
+    <string>Terminal</string>
+   </property>
+   <property name="toolTip">
+    <string>Open the terminal to manually input commands.</string>
    </property>
   </action>
  </widget>

@@ -21,5 +21,6 @@
         <file>../Icons/delete.png</file>
         <file>../Icons/application.png</file>
         <file>../Icons/flash.png</file>
+        <file>../Icons/cmd.png</file>
     </qresource>
 </RCC>
