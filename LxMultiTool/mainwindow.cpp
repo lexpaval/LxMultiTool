@@ -1026,7 +1026,7 @@ void MainWindow::on_actionCMD_triggered()
     QProcess::startDetached("cmd");
 #elif defined(Q_OS_MACX)
     // MAC code here
-    QProcess::startDetached("sh");
+    QProcess::startDetached("open -a Terminal .");
 #else
     // Linux code here
     QProcess::startDetached("gnome-terminal");
