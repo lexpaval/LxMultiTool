@@ -1009,7 +1009,6 @@ void MainWindow::on_flashingButton_clicked()
 
 void MainWindow::on_actionCMD_triggered()
 {
-    QProcess process;
     QDir temp_path(QCoreApplication::applicationDirPath());
 
 #ifdef Q_OS_MACX
@@ -1019,16 +1018,20 @@ void MainWindow::on_actionCMD_triggered()
     temp_path.cdUp();
 #endif
 
-    process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+    // Set our current path to where we want to start our terminal
+    QDir::setCurrent(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
 
 #ifdef Q_OS_WIN
     // Windows code here
-    process.startDetached("cmd");
+    QProcess::startDetached("cmd");
 #elif defined(Q_OS_MACX)
     // MAC code here
-    process.startDetached("sh");
+    QProcess::startDetached("sh");
 #else
     // Linux code here
-    process.startDetached("sh");
+    QProcess::startDetached("sh");
 #endif
+
+    // Set our current path back
+    QDir::setCurrent(temp_path.absolutePath());
 }
