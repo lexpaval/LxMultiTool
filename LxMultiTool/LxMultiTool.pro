@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     dialogbackups.cpp \
     dialoginstallapk.cpp \
     deviceconnection.cpp \
-    dialogflashing.cpp
+    dialogflashing.cpp \
+    devicepackage.cpp
 
 HEADERS  += mainwindow.h \
     dialogrecovery.h \
@@ -47,7 +48,8 @@ HEADERS  += mainwindow.h \
     dialogbackups.h \
     dialoginstallapk.h \
     deviceconnection.h \
-    dialogflashing.h
+    dialogflashing.h \
+    devicepackage.h
 
 FORMS    += mainwindow.ui \
     dialogrecovery.ui \

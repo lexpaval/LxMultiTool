@@ -7,11 +7,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // No resizing for now
-    this->statusBar()->setSizeGripEnabled(false);
+    // Parse the device package file at the start
+    DevicePackage::parseDevicePackage();
+
+    // Specify our device package
+    ui->statusBar->addPermanentWidget(new QLabel(QString("Package: "+DevicePackage::getDevicePackage().toLatin1())));
 
     // Set our version in the status bar
-    ui->statusBar->addPermanentWidget(new QLabel(QString("Version v%1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_PATCH)));
+    ui->statusBar->addPermanentWidget(new QLabel(QString("Version: %1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_PATCH)));
 
     QDir temp_path(QCoreApplication::applicationDirPath());
 
@@ -197,22 +200,22 @@ void MainWindow::on_UnlockButton_clicked()
 #ifdef Q_OS_WIN
             // Windows code here
             process.start("cmd");
-            process.write("fastboot.exe flashing unlock\n");
+            process.write("fastboot.exe "+DevicePackage::getUnlockCommand().toLatin1()+"\n");
 #elif defined(Q_OS_MACX)
             // MAC code here
             process.start("sh");
-            process.write("./fastboot_mac flashing unlock\n");
+            process.write("./fastboot_mac "+DevicePackage::getUnlockCommand().toLatin1()+"\n");
 #else
             // Linux code here
             process.start("sh");
-            process.write("./fastboot_linux flashing unlock\n");
+            process.write("./fastboot_linux "+DevicePackage::getUnlockCommand().toLatin1()+"\n");
 #endif
 
             process.write("exit\n");
             process.waitForFinished(); // sets current thread to sleep and waits for process end
-            //QString output(process.readAllStandardOutput());
+
             ui->statusBar->clearMessage();
-            ui->statusBar->showMessage("Unlocking command performed");
+            ui->statusBar->showMessage("Unlocking command performed.");
         }
     }
     else
@@ -260,21 +263,22 @@ void MainWindow::on_RelockButton_clicked()
 #ifdef Q_OS_WIN
             // Windows code here
             process.start("cmd");
-            process.write("fastboot.exe flashing lock\n");
+            process.write("fastboot.exe "+DevicePackage::getLockCommand().toLatin1()+"\n");
 #elif defined(Q_OS_MACX)
             // MAC code here
             process.start("sh");
-            process.write("./fastboot_mac flashing lock\n");
+            process.write("./fastboot_mac "+DevicePackage::getLockCommand().toLatin1()+"\n");
 #else
             // Linux code here
             process.start("sh");
-            process.write("./fastboot_linux flashing lock\n");
+            process.write("./fastboot_linux "+DevicePackage::getLockCommand().toLatin1()+"\n");
 #endif
 
             process.write("exit\n");
             process.waitForFinished(); // sets current thread to sleep and waits for process end
+
             ui->statusBar->clearMessage();
-            ui->statusBar->showMessage("Reloking command performed.");
+            ui->statusBar->showMessage("Locking command performed.");
         }
     }
     else
@@ -748,7 +752,7 @@ void MainWindow::on_versionButton_clicked()
 
 void MainWindow::on_actionGo_to_XDA_Thread_triggered()
 {
-    QUrl link_to_xda("http://forum.xda-developers.com/nexus-6p/orig-development/tool-6p-multi-tool-v0-1-t3214015");
+    QUrl link_to_xda(DevicePackage::getXdaLink().toLatin1());
     QDesktopServices::openUrl (link_to_xda);
 }
 
@@ -828,7 +832,7 @@ void MainWindow::checkUpdate()
 
         if (exec == QMessageBox::Yes)
         {
-            QUrl link_to_download("https://www.androidfilehost.com/?w=files&flid=43243");
+            QUrl link_to_download(DevicePackage::getDownloadLink().toLatin1());
             QDesktopServices::openUrl (link_to_download);
         }
     }
@@ -838,7 +842,7 @@ void MainWindow::checkUpdate()
         QMessageBox msgBox(this);
         QPixmap unlock(":/Icons/updates.png");
         msgBox.setIconPixmap(unlock);
-        msgBox.setText("Nothing new!");
+        msgBox.setText("You are up to date!");
         msgBox.setInformativeText("Nothing new under the sun, check later maybe.");
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
