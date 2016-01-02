@@ -46,7 +46,7 @@ The features presented in this README are according to the version mentioned in 
 ### Supported devices
  - Huawei Nexus 6P
  - LG Nexus 5X
- - Motorola Nexus 6P
+ - Motorola Nexus 6
  - LG Nexus 5
 
 ### Tech
