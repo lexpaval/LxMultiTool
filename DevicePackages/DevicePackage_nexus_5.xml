@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <device_package>
 	<device>LG Nexus 5</device>
-	<downloads_link></downloads_link>
-	<xda_link></xda_link>
+	<downloads_link>https://www.androidfilehost.com/?w=files&amp;flid=46714</downloads_link>
+	<xda_link>http://forum.xda-developers.com/google-nexus-5/orig-development/tool-lx-multi-tool-v1-3-0-t3283924</xda_link>
 	<unlock>oem unlock</unlock>
 	<lock>oem lock</lock>
 </device_package>

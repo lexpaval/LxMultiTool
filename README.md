@@ -1,7 +1,7 @@
 ![logo](https://raw.githubusercontent.com/lexmazter/LxMultiTool/master/Icons/android.png "Lx Multi Tool Logo") 
 # Lx Multi Tool
 
-Lx Multi Tool is a tool inittially created for Nexus 6P but designed to be modular, easy to modify and port to other device and to be trully cross-platform.
+Lx Multi Tool is a tool inittially created for Huawei Nexus 6P but designed to be modular, easy to modify and port to other device and to be trully cross-platform.
 
 This tool wants to stand out from the rest of the tools out there by providing a intuitive UI that uses most of the ADB and Fastboot commands.
 As a bonus, this tool also checks for updates.
@@ -11,35 +11,43 @@ The UI has been carefully tested and designed in mind with 3 operating systems (
 The features presented in this README are according to the version mentioned in the Version chapter.
 
 ##### Fastboot
-  - Unlock/Lock Bootloader
-  - Flash Recovery Menu (you can choose and add recoveries)
-  - Boot Recovery (From Recovery menu)
-  - Flash any partition (you can choose what partition and add images)
-  - Flash full Stock images (you can choose and add images)
-  - Erase (format) partitions (you can choose which of the partitions)
-  - Reboot (you can choose again...)
+ - Unlock/Lock Bootloader
+ - Flash Recovery Menu (you can choose and add recoveries)
+ - Boot Recovery (From Recovery menu)
+ - Flash any partition (you can choose what partition and add images)
+ - Flash full Stock images (you can choose and add images)
+ - Erase (format) partitions (you can choose which of the partitions)
+ - Reboot (you can choose again...)
   
 ##### Adb
-  - Sideload .zip files (you can choose and add .zip files)
-  - Backup (you can choose the name and place for your backup)
-  - Restore (you can choose your backup)
-  - Version (it just shows the version of your adb binaries)
-  - Logs (DMESG and Logcat)
-  - Screenshots (you can directly take screenshots to your PC)
-  - Reboot (lots of choices)
-  - Install .apk files
+ - Sideload .zip files (you can choose and add .zip files)
+ - Backup (you can choose the name and place for your backup)
+ - Restore (you can choose your backup)
+ - Version (it just shows the version of your adb binaries)
+ - Logs (DMESG and Logcat)
+ - Screenshots (you can directly take screenshots to your PC)
+ - Reboot (lots of choices)
+ - Install .apk files
 
 ##### Tool specific
-  - Check for updates
-  - Go to xda-developers thread
-  - Tool tips for all buttons
-  - Context for refresh and delete on all menus
-  - Open tool-specific folder from all menus
-  - ADB & Fastboot error messages upon failing
-  - Progress animations
+ - Check for updates
+ - Go to xda-developers thread
+ - Tool tips for all buttons
+ - Context for refresh and delete on all menus
+ - Open tool-specific folder from all menus
+ - ADB & Fastboot error messages upon failing
+ - Progress animations
+ - Open a Terminal/CMD session for manual adb/fastboot commands input
+ - Device Packages - Consists of an .xml config file
   
 ### Version
-1.2.0
+1.3.0
+
+### Supported devices
+ - Huawei Nexus 6P
+ - LG Nexus 5X
+ - Motorola Nexus 6P
+ - LG Nexus 5
 
 ### Tech
 
@@ -63,8 +71,17 @@ All you need to do is download the [Qt IDE](http://www.qt.io/download-open-sourc
 
 After that, you should be able to build, debug, edit and so on.
 
+### Porting
+
+With the introduction of DevicePackages, now you can port any version to your own device.
+So far, the following can be changed via DevicePackage:
+ - Bootloader unlock/lock command.
+ - XDA Thread link.
+ - Updates download folder link.
+
 ### Todos
 
+ - Extend the DevicePackage functionality to support more devices
  - Properly handle fastboot and adb output text for more user friendliness
  - Add more Code Comments
  - Add messages when you want to save files with a name that already exists
