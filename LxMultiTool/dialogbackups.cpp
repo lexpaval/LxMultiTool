@@ -20,6 +20,9 @@ DialogBackups::DialogBackups(QWidget *parent) :
     ui->tableWidget->insertAction(NULL,ui->actionDelete);
     ui->tableWidget->insertAction(ui->actionDelete,ui->actionRefresh);
 
+    // Set our loading animation
+    ui->progressLabel->setVisible(false);
+
     getFiles();
 
     // Let's check if we have something
@@ -100,6 +103,9 @@ void DialogBackups::processFinishedBackup(int exitCode)
     error.remove("\n");
     error.remove("\r");
 
+    // Hide our loading animation
+    ui->progressLabel->setVisible(false);
+
     if(exitCode != 0)
     {
         // Prepare a messagebox
@@ -142,6 +148,9 @@ void DialogBackups::processFinishedRestore(int exitCode)
     QString error(p->readAllStandardError());
     error.remove("\n");
     error.remove("\r");
+
+    // Hide our loading animation
+    ui->progressLabel->setVisible(false);
 
     if(exitCode != 0)
     {
@@ -211,8 +220,8 @@ void DialogBackups::on_actionDelete_triggered()
             temp_path.cdUp();
 #endif
 
-            QDir backup_dir(temp_path.absolutePath()+"/Data/Backup/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
-            backup_dir.removeRecursively();
+            QFile file(temp_path.absolutePath()+"/Data/Backup/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
+            file.remove();
 
             getFiles();
         }
@@ -235,8 +244,13 @@ void DialogBackups::on_backupButton_clicked()
 {
     if (DeviceConnection::getConnection() == ADB)
     {
-
         QDir temp_path(QCoreApplication::applicationDirPath());
+
+        // Show our loading animation
+        ui->progressLabel->setVisible(true);
+        QMovie *movie = new QMovie(":/Others/loader.gif");
+        ui->progressLabel->setMovie(movie);
+        movie->start();
 
 #ifdef Q_OS_MACX
         // Because apple likes it's application folders
@@ -277,6 +291,12 @@ void DialogBackups::on_backupButton_clicked()
 #endif
             process_backup->write(fileName.toLatin1());
             process_backup->write("exit\n");
+
+            // UI restrictions
+            ui->tableWidget->setEnabled(false);
+            ui->buttonBox_2->setEnabled(false);
+            ui->backupButton->setEnabled(false);
+            ui->restoreButton->setEnabled(false);
         }
         else
         {
@@ -311,6 +331,12 @@ void DialogBackups::on_restoreButton_clicked()
     {
         if(ui->tableWidget->currentItem() != NULL)
         {
+            // Show our loading animation
+            ui->progressLabel->setVisible(true);
+            QMovie *movie = new QMovie(":/Others/loader.gif");
+            ui->progressLabel->setMovie(movie);
+            movie->start();
+
             QDir temp_path(QCoreApplication::applicationDirPath());
 
 #ifdef Q_OS_MACX

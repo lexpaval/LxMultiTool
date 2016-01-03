@@ -8,6 +8,7 @@
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QFileDialog>
+#include <QMovie>
 #include "deviceconnection.h"
 
 namespace Ui {
