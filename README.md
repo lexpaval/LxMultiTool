@@ -41,7 +41,7 @@ The features presented in this README are according to the version mentioned in 
  - Device Packages - Consists of an .xml config file
   
 ### Version
-1.3.0
+1.3.1
 
 ### Supported devices
  - Huawei Nexus 6P
