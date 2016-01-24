@@ -87,6 +87,7 @@ So far, the following can be changed via DevicePackage:
  - Add messages when you want to save files with a name that already exists
  - Add online database to download stuff from (kernels, stock, recoveries)
  - Extend the file downloader to download directly from the tool
+ - Fix Sideload (recovery detection and actual sideload flashing)
 
 License
 ----
