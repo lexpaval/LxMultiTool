@@ -367,6 +367,7 @@ void MainWindow::checkOptions(int connection)
         ui->loggingButton->setEnabled(true);
         ui->installApkButton->setEnabled(true);
         ui->BackupButton->setEnabled(true);
+        ui->rebootAdbButton->setEnabled(true);
         break;
 
     case ADB_RECOVERY:
@@ -383,6 +384,7 @@ void MainWindow::checkOptions(int connection)
         ui->loggingButton->setEnabled(false);
         ui->installApkButton->setEnabled(false);
         ui->BackupButton->setEnabled(false);
+        ui->rebootAdbButton->setEnabled(true);
         break;
 
     case ADB_SIDELOAD:
@@ -391,14 +393,15 @@ void MainWindow::checkOptions(int connection)
         ui->checkBox_Fastboot->setChecked(false);
         ui->adbGroup->setEnabled(true);
         ui->fasbootGroup->setEnabled(false);
-        ui->normalRebootButton->setEnabled(true);
-        ui->bootloaderRebootButton->setEnabled(true);
-        ui->recoveryRebootButton->setEnabled(true);
+        ui->normalRebootButton->setEnabled(false);
+        ui->bootloaderRebootButton->setEnabled(false);
+        ui->recoveryRebootButton->setEnabled(false);
         ui->SideloadButton->setEnabled(true);
         ui->screenshotButton->setEnabled(false);
         ui->loggingButton->setEnabled(false);
         ui->installApkButton->setEnabled(false);
         ui->BackupButton->setEnabled(false);
+        ui->rebootAdbButton->setEnabled(false);
     break;
 
     case FASTBOOT:

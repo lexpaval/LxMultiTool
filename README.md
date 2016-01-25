@@ -39,9 +39,10 @@ The features presented in this README are according to the version mentioned in 
  - Progress animations
  - Open a Terminal/CMD session for manual adb/fastboot commands input
  - Device Packages - Consists of an .xml config file
+ - Support for Recovery reboot commands.
   
 ### Version
-1.3.1
+1.3.2
 
 ### Supported devices
  - Huawei Nexus 6P
@@ -87,7 +88,6 @@ So far, the following can be changed via DevicePackage:
  - Add messages when you want to save files with a name that already exists
  - Add online database to download stuff from (kernels, stock, recoveries)
  - Extend the file downloader to download directly from the tool
- - Fix Sideload (recovery detection and actual sideload flashing)
 
 License
 ----
