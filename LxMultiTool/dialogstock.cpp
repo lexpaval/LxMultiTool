@@ -331,7 +331,7 @@ void DialogStock::on_exploreButton_clicked()
     temp_path.cdUp();
 #endif
 
-    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"+ui->tableWidget->currentItem()->text());
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/");
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 
