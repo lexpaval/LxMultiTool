@@ -157,7 +157,7 @@ void DialogRecovery::processFinished(int exitCode)
 
 void DialogRecovery::on_flashButton_clicked()
 {
-    if (DeviceConnection::getConnection() == FASTBOOT)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == FASTBOOT)
     {
         if(ui->tableWidget->currentItem() != NULL)
         {
@@ -304,7 +304,7 @@ void DialogRecovery::on_actionDelete_triggered()
 
 void DialogRecovery::on_bootButton_clicked()
 {
-    if (DeviceConnection::getConnection() == FASTBOOT)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == FASTBOOT)
     {
         if(ui->tableWidget->currentItem() != NULL)
         {

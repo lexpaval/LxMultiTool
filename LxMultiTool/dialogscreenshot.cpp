@@ -152,7 +152,7 @@ void DialogScreenshot::closeEvent(QCloseEvent *event)
 
 void DialogScreenshot::on_getScreenButton_clicked()
 {
-    if (DeviceConnection::getConnection() == ADB)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == ADB)
     {
         QDir temp_path(QCoreApplication::applicationDirPath());
 

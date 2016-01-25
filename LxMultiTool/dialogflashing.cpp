@@ -210,7 +210,7 @@ void DialogFlashing::processFinished(int exitCode)
 
 void DialogFlashing::on_flashButton_clicked()
 {
-    if (DeviceConnection::getConnection() == FASTBOOT)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == FASTBOOT)
     {
         if(ui->tableWidget->currentItem() != NULL)
         {

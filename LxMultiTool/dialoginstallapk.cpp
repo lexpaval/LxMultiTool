@@ -125,7 +125,7 @@ void DialogInstallApk::processFinished(int exitCode)
 
 void DialogInstallApk::on_installButton_clicked()
 {
-    if (DeviceConnection::getConnection() == ADB)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == ADB)
     {
         if(ui->tableWidget->currentItem() != NULL)
         {

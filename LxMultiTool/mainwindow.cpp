@@ -16,79 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Set our version in the status bar
     ui->statusBar->addPermanentWidget(new QLabel(QString("Version: %1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_PATCH)));
 
-    QDir temp_path(QCoreApplication::applicationDirPath());
-
-#ifdef Q_OS_MACX
-    // Because apple likes it's application folders
-    temp_path.cdUp();
-    temp_path.cdUp();
-    temp_path.cdUp();
-#endif
-
-    QProcess process_adb;
-    QProcess process_fastboot;
-
-    // We just want to start the adb daemon and check for connection while at it
-    process_adb.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
-#ifdef Q_OS_WIN
-    // Windows code here
-    process_adb.start("cmd");
-    process_adb.write("adb.exe devices\n");
-#elif defined(Q_OS_MACX)
-    // MAC code here
-    process_adb.start("sh");
-    process_adb.write("./adb_mac devices\n");
-#else
-    // Linux code here
-    process_adb.start("sh");
-    process_adb.write("./adb_linux devices\n");
-#endif
-
-    process_adb.write("exit\n");
-    process_adb.waitForFinished(100); // Close this fast so we don't freeze the UI
-
-    QString adb(process_adb.readAllStandardOutput());
-
-    if(adb.contains("\tdevice"))
-    {
-        ui->checkBox_ADB->setChecked(true);
-    }
-    else
-    {
-        ui->checkBox_ADB->setChecked(false);
-    }
-
-    process_fastboot.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
-#ifdef Q_OS_WIN
-    // Windows code here
-    process_fastboot.start("cmd");
-    process_fastboot.write("fastboot.exe devices\n");
-#elif defined(Q_OS_MACX)
-    // MAC code here
-    process_fastboot.start("sh");
-    process_fastboot.write("./fastboot_mac devices\n");
-#else
-    // Linux code here
-    process_fastboot.start("sh");
-    process_fastboot.write("./fastboot_linux devices\n");
-#endif
-
-    process_fastboot.write("exit\n");
-    process_fastboot.waitForFinished(100); // Close this fast so we don't freeze the UI
-
-    QString fastboot(process_fastboot.readAllStandardOutput());
-
-    if(fastboot.contains("\tfastboot"))
-    {
-        ui->checkBox_Fastboot->setChecked(true);
-    }
-    else
-    {
-        ui->checkBox_Fastboot->setChecked(false);
-    }
-
     // Check our reboot options
-    checkOptions();
+    checkOptions(DeviceConnection::getConnection(FAST_TIMEOUT));
 
     // Get the name of the device
     getDeviceName();
@@ -101,7 +30,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::getDeviceName()
 {
-    if(ui->checkBox_ADB->checkState())
+    int connection = DeviceConnection::getConnection(DEFAULT_TIMEOUT);
+
+    if(connection == ADB)
     {
         QProcess process;
         QDir temp_path(QCoreApplication::applicationDirPath());
@@ -155,7 +86,15 @@ void MainWindow::getDeviceName()
 
         ui->label_device->setText(deviceName);
     }
-    else if(ui->checkBox_Fastboot->checkState())
+    else if(connection == ADB_RECOVERY)
+    {
+        ui->label_device->setText("Recovery Device");
+    }
+    else if(connection == ADB_SIDELOAD)
+    {
+        ui->label_device->setText("Sideload Device");
+    }
+    else if(connection == FASTBOOT)
     {
         ui->label_device->setText("Fastboot Device");
     }
@@ -319,11 +258,21 @@ void MainWindow::on_RecoveryButton_clicked()
 void MainWindow::on_refreshButton_clicked()
 {
     // Check our device connection
-    int connection = DeviceConnection::getConnection();
+    int connection = DeviceConnection::getConnection(DEFAULT_TIMEOUT);
 
     switch(connection)
     {
     case ADB:
+        ui->checkBox_ADB->setChecked(true);
+        ui->checkBox_Fastboot->setChecked(false);
+        break;
+
+    case ADB_RECOVERY:
+        ui->checkBox_ADB->setChecked(true);
+        ui->checkBox_Fastboot->setChecked(false);
+        break;
+
+    case ADB_SIDELOAD:
         ui->checkBox_ADB->setChecked(true);
         ui->checkBox_Fastboot->setChecked(false);
         break;
@@ -341,7 +290,7 @@ void MainWindow::on_refreshButton_clicked()
     }
 
     // Check again our reboot options
-    checkOptions();
+    checkOptions(connection);
 
     // Get the name of the device
     getDeviceName();
@@ -400,34 +349,80 @@ void MainWindow::on_BackupButton_clicked()
     }
 }
 
-void MainWindow::checkOptions()
+void MainWindow::checkOptions(int connection)
 {
-    // Enable ADB only commands
-    if(ui->checkBox_ADB->checkState())
+    switch(connection)
     {
+    case ADB:
+        // Enable ADB only commands
+        ui->checkBox_ADB->setChecked(true);
+        ui->checkBox_Fastboot->setChecked(false);
         ui->normalRebootButton->setEnabled(true);
         ui->bootloaderRebootButton->setEnabled(true);
         ui->recoveryRebootButton->setEnabled(true);
         ui->adbGroup->setEnabled(true);
         ui->fasbootGroup->setEnabled(false);
-    }
-    // Enable fastboot only commands
-    else if (ui->checkBox_Fastboot->checkState())
-    {
+        ui->SideloadButton->setEnabled(false);
+        ui->screenshotButton->setEnabled(true);
+        ui->loggingButton->setEnabled(true);
+        ui->installApkButton->setEnabled(true);
+        ui->BackupButton->setEnabled(true);
+        break;
+
+    case ADB_RECOVERY:
+        // Enable ADB only commands from recovery
+        ui->checkBox_ADB->setChecked(true);
+        ui->checkBox_Fastboot->setChecked(false);
+        ui->adbGroup->setEnabled(true);
+        ui->fasbootGroup->setEnabled(false);
+        ui->normalRebootButton->setEnabled(true);
+        ui->bootloaderRebootButton->setEnabled(true);
+        ui->recoveryRebootButton->setEnabled(true);
+        ui->SideloadButton->setEnabled(false);
+        ui->screenshotButton->setEnabled(false);
+        ui->loggingButton->setEnabled(false);
+        ui->installApkButton->setEnabled(false);
+        ui->BackupButton->setEnabled(false);
+        break;
+
+    case ADB_SIDELOAD:
+        // Enable ADB only commands for sideload
+        ui->checkBox_ADB->setChecked(true);
+        ui->checkBox_Fastboot->setChecked(false);
+        ui->adbGroup->setEnabled(true);
+        ui->fasbootGroup->setEnabled(false);
+        ui->normalRebootButton->setEnabled(true);
+        ui->bootloaderRebootButton->setEnabled(true);
+        ui->recoveryRebootButton->setEnabled(true);
+        ui->SideloadButton->setEnabled(true);
+        ui->screenshotButton->setEnabled(false);
+        ui->loggingButton->setEnabled(false);
+        ui->installApkButton->setEnabled(false);
+        ui->BackupButton->setEnabled(false);
+    break;
+
+    case FASTBOOT:
+        // Enable fastboot only commands
+        ui->checkBox_ADB->setChecked(false);
+        ui->checkBox_Fastboot->setChecked(true);
         ui->normalRebootButton->setEnabled(true);
         ui->bootloaderRebootButton->setEnabled(true);
         ui->recoveryRebootButton->setEnabled(false);
         ui->adbGroup->setEnabled(false);
         ui->fasbootGroup->setEnabled(true);
-    }
-    // Disable ALL!!!
-    else
-    {
+        ui->SideloadButton->setEnabled(false);
+        break;
+
+    default:
+        // Disable ALL!!!
+        ui->checkBox_ADB->setChecked(false);
+        ui->checkBox_Fastboot->setChecked(false);
         ui->normalRebootButton->setEnabled(false);
         ui->bootloaderRebootButton->setEnabled(false);
         ui->recoveryRebootButton->setEnabled(false);
         ui->adbGroup->setEnabled(false);
         ui->fasbootGroup->setEnabled(false);
+        break;
     }
 
 #ifdef QT_DEBUG
@@ -544,7 +539,7 @@ void MainWindow::on_rebootFastbootButton_clicked()
 
     // Disable stuff after commands
     ui->checkBox_Fastboot->setChecked(false);
-    checkOptions();
+    checkOptions(DeviceConnection::getConnection(DEFAULT_TIMEOUT));
 }
 
 void MainWindow::on_rebootAdbButton_clicked()
@@ -685,7 +680,7 @@ void MainWindow::on_rebootAdbButton_clicked()
 
     // Disable stuff after commands
     ui->checkBox_ADB->setChecked(false);
-    checkOptions();
+    checkOptions(DeviceConnection::getConnection(DEFAULT_TIMEOUT));
 }
 
 void MainWindow::on_versionButton_clicked()

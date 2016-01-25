@@ -242,7 +242,7 @@ void DialogBackups::on_actionDelete_triggered()
 
 void DialogBackups::on_backupButton_clicked()
 {
-    if (DeviceConnection::getConnection() == ADB)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == ADB)
     {
         QDir temp_path(QCoreApplication::applicationDirPath());
 
@@ -327,7 +327,7 @@ void DialogBackups::on_backupButton_clicked()
 
 void DialogBackups::on_restoreButton_clicked()
 {
-    if (DeviceConnection::getConnection() == ADB)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == ADB)
     {
         if(ui->tableWidget->currentItem() != NULL)
         {

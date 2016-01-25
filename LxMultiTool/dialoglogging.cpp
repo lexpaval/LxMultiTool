@@ -126,7 +126,7 @@ void DialogLogging::processFinished(int exitCode)
 
 void DialogLogging::on_getLogButton_clicked()
 {
-    if (DeviceConnection::getConnection() == ADB)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == ADB)
     {
         if(ui->radioLogcat->isChecked())
         {

@@ -16,7 +16,7 @@ DialogErase::~DialogErase()
 
 void DialogErase::on_eraseButton_clicked()
 {
-    if (DeviceConnection::getConnection() == FASTBOOT)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == FASTBOOT)
     {
         // Prepare a messagebox
         QMessageBox msgBox(this->parentWidget());

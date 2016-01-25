@@ -1,6 +1,6 @@
 #include "deviceconnection.h"
 
-int DeviceConnection::getConnection()
+int DeviceConnection::getConnection(int timeout)
 {
     int connection = NONE;
     QProcess process_adb;
@@ -31,13 +31,21 @@ int DeviceConnection::getConnection()
 #endif
 
     process_adb.write("exit\n");
-    process_adb.waitForFinished(); // sets current thread to sleep and waits for process end
+    process_adb.waitForFinished(timeout); // sets current thread to sleep and waits for process end
 
     QString adb(process_adb.readAllStandardOutput());
 
     if(adb.contains("\tdevice"))
     {
         connection = ADB;
+    }
+    else if (adb.contains("\trecovery"))
+    {
+        connection = ADB_RECOVERY;
+    }
+    else if (adb.contains("\tsideload"))
+    {
+        connection = ADB_SIDELOAD;
     }
     else
     {
@@ -59,7 +67,7 @@ int DeviceConnection::getConnection()
 #endif
 
         process_fastboot.write("exit\n");
-        process_fastboot.waitForFinished();
+        process_fastboot.waitForFinished(timeout);
 
         QString fastboot(process_fastboot.readAllStandardOutput());
 

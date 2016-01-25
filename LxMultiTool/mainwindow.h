@@ -83,7 +83,7 @@ private slots:
     void on_actionCMD_triggered();
 
 private:
-    void checkOptions();
+    void checkOptions(int connection);
     void getDeviceName();
     Ui::MainWindow *ui;
     FileDownloader* mgr;

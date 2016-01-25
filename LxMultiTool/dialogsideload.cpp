@@ -132,6 +132,8 @@ void DialogSideload::processFinished(int exitCode)
 
     if(exitCode != 0)
     {
+        ui->progressBar->setVisible(false);
+
         // Prepare a messagebox
         QMessageBox msgBox(this->parentWidget());
         QPixmap recovery(":/Icons/sideload_2.png");
@@ -144,6 +146,8 @@ void DialogSideload::processFinished(int exitCode)
     }
     else
     {
+        ui->progressBar->setValue(100);
+
         // Prepare a messagebox
         QMessageBox msgBox(this->parentWidget());
         QPixmap recovery(":/Icons/sideload_2.png");
@@ -157,7 +161,7 @@ void DialogSideload::processFinished(int exitCode)
 
     *busy = false;
 
-    ui->progressBar->setValue(100);
+    ui->progressBar->setVisible(false);
     ui->tableWidget->setEnabled(true);
     ui->buttonBox->setEnabled(true);
     ui->sideloadButton->setEnabled(true);
@@ -166,7 +170,7 @@ void DialogSideload::processFinished(int exitCode)
 
 void DialogSideload::on_sideloadButton_clicked()
 {
-    if (DeviceConnection::getConnection() == ADB)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == ADB_SIDELOAD)
     {
         if(ui->tableWidget->currentItem() != NULL)
         {
@@ -180,7 +184,7 @@ void DialogSideload::on_sideloadButton_clicked()
 #endif
 
             QProcess* process_flash = new QProcess(this);
-            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+"/Sideload")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+"/Sideload/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
             QString sideload;
 
             connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));

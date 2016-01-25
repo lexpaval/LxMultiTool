@@ -162,7 +162,7 @@ void DialogStock::processFinished(int exitCode)
 
 void DialogStock::on_flashButton_clicked()
 {
-    if (DeviceConnection::getConnection() == FASTBOOT)
+    if (DeviceConnection::getConnection(DEFAULT_TIMEOUT) == FASTBOOT)
     {
         if(ui->tableWidget->currentItem() != NULL)
         {
