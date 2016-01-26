@@ -83,6 +83,7 @@ private slots:
     void on_actionCMD_triggered();
 
 private:
+    void closeEvent(QCloseEvent *event);
     void checkOptions(int connection);
     void getDeviceName();
     Ui::MainWindow *ui;

@@ -402,7 +402,7 @@ void MainWindow::checkOptions(int connection)
         ui->installApkButton->setEnabled(false);
         ui->BackupButton->setEnabled(false);
         ui->rebootAdbButton->setEnabled(false);
-    break;
+        break;
 
     case FASTBOOT:
         // Enable fastboot only commands
@@ -1032,4 +1032,37 @@ void MainWindow::on_actionCMD_triggered()
 
     // Set our current path back
     QDir::setCurrent(temp_path.absolutePath());
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    QProcess process;
+    QDir temp_path(QCoreApplication::applicationDirPath());
+
+#ifdef Q_OS_MACX
+    // Because apple likes it's application folders
+    temp_path.cdUp();
+    temp_path.cdUp();
+    temp_path.cdUp();
+#endif
+
+    process.setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
+#ifdef Q_OS_WIN
+    // Windows code here
+    process.start("cmd");
+    process.write("adb.exe kill-server\n");
+#elif defined(Q_OS_MACX)
+    // MAC code here
+    process.start("sh");
+    process.write("./adb_mac kill-server\n");
+#else
+    // Linux code here
+    process.start("sh");
+    process.write("./adb_linux kill-server\n");
+#endif
+
+    process.write("exit\n");
+    process.waitForFinished(); // sets current thread to sleep and waits for process end
+
+    event->accept();
 }
