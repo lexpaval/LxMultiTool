@@ -274,16 +274,32 @@ void DialogStock::on_flashButton_clicked()
             if(image_path.toLatin1() != "")
             {
                 // Update the rest
+                if(ui->wipeCheckBox->isChecked())
+                {
 #ifdef Q_OS_WIN
-                // Windows code here
-                process_flash->write("fastboot.exe -w update \""+image_path.toLatin1()+"\"\n");
+                    // Windows code here
+                    process_flash->write("fastboot.exe -w update \""+image_path.toLatin1()+"\"\n");
 #elif defined(Q_OS_MACX)
-                // MAC code here
-                process_flash->write("./fastboot_mac -w update \""+image_path.toLatin1()+"\"\n");
+                    // MAC code here
+                    process_flash->write("./fastboot_mac -w update \""+image_path.toLatin1()+"\"\n");
 #else
-                // Linux code here
-                process_flash->write("./fastboot_linux -w update \""+image_path.toLatin1()+"\"\n");
+                    // Linux code here
+                    process_flash->write("./fastboot_linux -w update \""+image_path.toLatin1()+"\"\n");
 #endif
+                }
+                else
+                {
+#ifdef Q_OS_WIN
+                    // Windows code here
+                    process_flash->write("fastboot.exe update \""+image_path.toLatin1()+"\"\n");
+#elif defined(Q_OS_MACX)
+                    // MAC code here
+                    process_flash->write("./fastboot_mac update \""+image_path.toLatin1()+"\"\n");
+#else
+                    // Linux code here
+                    process_flash->write("./fastboot_linux update \""+image_path.toLatin1()+"\"\n");
+#endif
+                }
             }
 
             process_flash->waitForStarted();
