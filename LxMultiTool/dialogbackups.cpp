@@ -363,11 +363,11 @@ void DialogBackups::on_restoreButton_clicked()
 #elif defined(Q_OS_MACX)
             // MAC code here
             process_restore->start("sh");
-            restore = "./adb restore \"" + temp_cmd;
+            restore = "./adb_mac restore \"" + temp_cmd;
 #else
             // Linux code here
             process_restore->start("sh");
-            restore = "./adb restore \"" + temp_cmd;
+            restore = "./adb_linux restore \"" + temp_cmd;
 #endif
             process_restore->waitForStarted();
             process_restore->write(restore.toLatin1());
