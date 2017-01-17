@@ -95,8 +95,8 @@
     <widget class="QFrame" name="frame">
      <property name="maximumSize">
       <size>
-       <width>307</width>
-       <height>44</height>
+       <width>16777215</width>
+       <height>16777215</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">

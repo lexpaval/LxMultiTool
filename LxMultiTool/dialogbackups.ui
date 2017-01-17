@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>300</height>
+    <width>631</width>
+    <height>393</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -63,7 +63,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="progressLabel">
      <property name="text">
-      <string>         </string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -73,7 +73,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Expanding</enum>
+      <enum>QSizePolicy::Preferred</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -85,15 +85,27 @@
    </item>
    <item row="1" column="2">
     <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>339</width>
-       <height>44</height>
+       <width>16777215</width>
+       <height>16777215</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="backupButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Create a backup with a selected name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
@@ -114,6 +126,18 @@
       </item>
       <item>
        <widget class="QPushButton" name="restoreButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restore the selected backup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
@@ -134,6 +158,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="exploreButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open the folder containing the backups.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
@@ -145,7 +175,7 @@
       <item>
        <widget class="QDialogButtonBox" name="buttonBox_2">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
