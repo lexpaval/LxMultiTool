@@ -1,3 +1,3 @@
 @echo off
 echo Copying QT libraries...
-windeployqt D:\Programming\QtCreator\LxMultiTool\build-LxMultiTool-Desktop_Qt_5_5_1_MinGW_32bit-Release\release\LxMultiTool.exe
+C:\Qt\5.8\mingw53_32\bin\windeployqt D:\Programming\QtCreator\LxMultiTool\build-LxMultiTool-Desktop_Qt_5_8_0_MinGW_32bit-Release\release\LxMultiTool.exe
