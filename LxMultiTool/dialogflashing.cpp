@@ -733,7 +733,7 @@ void DialogFlashing::on_tableWidget_currentItemChanged()
         {
             ui->radioRadio->setChecked(true);
         }
-        else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("recovery"))
+        else if(ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("recovery") || ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text().contains("twrp"))
         {
             ui->recoveryRadio->setChecked(true);
         }
