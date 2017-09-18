@@ -86,6 +86,7 @@ private:
     void closeEvent(QCloseEvent *event);
     void checkOptions(int connection);
     void getDeviceName();
+    void parseDeviceOptions();
     Ui::MainWindow *ui;
     FileDownloader* mgr;
 };

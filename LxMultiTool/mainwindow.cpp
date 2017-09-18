@@ -10,8 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // Parse the device package file at the start
     DevicePackage::parseDevicePackage();
 
+    // Check the options according to our device package
+    parseDeviceOptions();
+
     // Specify our device package
-    ui->statusBar->addPermanentWidget(new QLabel(QString("Package: "+DevicePackage::getDevicePackage().toLatin1())));
+    ui->statusBar->addPermanentWidget(new QLabel(QString("Package: "+DevicePackage::getDeviceName().toLatin1())));
 
     // Set our version in the status bar
     ui->statusBar->addPermanentWidget(new QLabel(QString("Version: %1.%2.%3").arg(VERSION_MAJOR).arg(VERSION_MINOR).arg(VERSION_PATCH)));
@@ -104,6 +107,30 @@ void MainWindow::getDeviceName()
     }
 }
 
+void MainWindow::parseDeviceOptions()
+{
+    int option = DevicePackage::getOptions().toInt();
+
+    switch(option)
+    {
+    case 0: // Not used
+        break;
+
+    case 1: // Default Nexus features
+        break;
+
+    case 2: // No lock/relock or return to stock
+        ui->StockButton->setVisible(false);
+        ui->UnlockButton->setVisible(false);
+        ui->RelockButton->setVisible(false);
+        break;
+
+    default:
+        break;
+
+    }
+}
+
 void MainWindow::on_UnlockButton_clicked()
 {
     // Refresh before trying to do stuff
@@ -139,15 +166,15 @@ void MainWindow::on_UnlockButton_clicked()
 #ifdef Q_OS_WIN
             // Windows code here
             process.start("cmd");
-            process.write("fastboot.exe "+DevicePackage::getUnlockCommand().toLatin1()+"\n");
+            process.write("fastboot.exe "+DevicePackage::getUnlockCmd().toLatin1()+"\n");
 #elif defined(Q_OS_MACX)
             // MAC code here
             process.start("sh");
-            process.write("./fastboot_mac "+DevicePackage::getUnlockCommand().toLatin1()+"\n");
+            process.write("./fastboot_mac "+DevicePackage::getUnlockCmd().toLatin1()+"\n");
 #else
             // Linux code here
             process.start("sh");
-            process.write("./fastboot_linux "+DevicePackage::getUnlockCommand().toLatin1()+"\n");
+            process.write("./fastboot_linux "+DevicePackage::getUnlockCmd().toLatin1()+"\n");
 #endif
 
             process.write("exit\n");
@@ -202,15 +229,15 @@ void MainWindow::on_RelockButton_clicked()
 #ifdef Q_OS_WIN
             // Windows code here
             process.start("cmd");
-            process.write("fastboot.exe "+DevicePackage::getLockCommand().toLatin1()+"\n");
+            process.write("fastboot.exe "+DevicePackage::getLockCmd().toLatin1()+"\n");
 #elif defined(Q_OS_MACX)
             // MAC code here
             process.start("sh");
-            process.write("./fastboot_mac "+DevicePackage::getLockCommand().toLatin1()+"\n");
+            process.write("./fastboot_mac "+DevicePackage::getLockCmd().toLatin1()+"\n");
 #else
             // Linux code here
             process.start("sh");
-            process.write("./fastboot_linux "+DevicePackage::getLockCommand().toLatin1()+"\n");
+            process.write("./fastboot_linux "+DevicePackage::getLockCmd().toLatin1()+"\n");
 #endif
 
             process.write("exit\n");
@@ -751,12 +778,20 @@ void MainWindow::on_versionButton_clicked()
 void MainWindow::on_actionGo_to_XDA_Thread_triggered()
 {
     QUrl link_to_xda(DevicePackage::getXdaLink().toLatin1());
-    QDesktopServices::openUrl (link_to_xda);
+
+    if(!link_to_xda.isEmpty())
+    {
+        QDesktopServices::openUrl (link_to_xda);
+    }
+    else
+    {
+        QMessageBox::critical(0, "Thread link not found!", "The link for the thread has not been found, please check your device package!");
+    }
 }
 
 void MainWindow::on_actionCheck_for_updates_triggered()
 {
-    QUrl version("https://raw.githubusercontent.com/lexmazter/AndroidMultiTool/master/version.txt");
+    QUrl version(DevicePackage::getVersionLink());
 
     mgr = new FileDownloader(version, this);
     mgr->downloadedData();
@@ -775,76 +810,84 @@ void MainWindow::checkUpdate()
     temp_path.cdUp();
 #endif
 
-    QFile file(temp_path.absolutePath()+"/version.txt");
-
-    // Open the file to write the data to it
-    file.open(QFile::WriteOnly);
-    file.write(mgr->downloadedData());
-    file.close();
-
-    // Open the temporary version file
-    if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(this, "Error", file.errorString());
-    }
-
-    QString output = file.readLine();
-
-    // Here we parse the version file
-    QRegularExpression rxlen("(?<major>\\d).(?<minor>\\d).(?<patch>\\d)");
-    QRegularExpressionMatch match = rxlen.match(output);
-    bool newVersion = false;
-    int newVerMajor = QString(match.captured("major")).toInt();
-    int newVerMinor = QString(match.captured("minor")).toInt();
-    int newVerPatch = QString(match.captured("patch")).toInt();
-
-    if(match.hasMatch())
+    if(!mgr->downloadedData().isEmpty())
     {
-        if (newVerPatch > VERSION_PATCH)
-        {
-            newVersion = true;
-        }
-        else if (newVerMinor > VERSION_MINOR)
-        {
-            newVersion = true;
-        }
-        else if (newVerMajor > VERSION_MAJOR)
-        {
-            newVersion = true;
-        }
-    }
 
-    // It was temporary so delete it at this point
-    file.remove();
+        QFile file(temp_path.absolutePath()+"/version.txt");
 
-    if(newVersion)
-    {
-        // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap unlock(":/Icons/updates.png");
-        msgBox.setIconPixmap(unlock);
-        msgBox.setText("A new version has been found!");
-        msgBox.setInformativeText(QString("Would you like to open the link for version %1.%2.%3").arg(newVerMajor).arg(newVerMinor).arg(newVerPatch));
-        msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
-        msgBox.setDefaultButton(QMessageBox::Yes);
-        int exec = msgBox.exec();
+        // Open the file to write the data to it
+        file.open(QFile::WriteOnly);
+        file.write(mgr->downloadedData());
+        file.close();
 
-        if (exec == QMessageBox::Yes)
+        // Open the temporary version file
+        if(!file.open(QIODevice::ReadOnly)) {
+            QMessageBox::information(this, "Error", file.errorString());
+        }
+
+        QString output = file.readLine();
+
+        // Here we parse the version file
+        QRegularExpression rxlen("(?<major>\\d).(?<minor>\\d).(?<patch>\\d)");
+        QRegularExpressionMatch match = rxlen.match(output);
+        bool newVersion = false;
+        int newVerMajor = QString(match.captured("major")).toInt();
+        int newVerMinor = QString(match.captured("minor")).toInt();
+        int newVerPatch = QString(match.captured("patch")).toInt();
+
+        if(match.hasMatch())
         {
-            QUrl link_to_download(DevicePackage::getDownloadLink().toLatin1());
-            QDesktopServices::openUrl (link_to_download);
+            if (newVerPatch > VERSION_PATCH)
+            {
+                newVersion = true;
+            }
+            else if (newVerMinor > VERSION_MINOR)
+            {
+                newVersion = true;
+            }
+            else if (newVerMajor > VERSION_MAJOR)
+            {
+                newVersion = true;
+            }
+        }
+
+        // It was temporary so delete it at this point
+        file.remove();
+
+        if(newVersion)
+        {
+            // Prepare a messagebox
+            QMessageBox msgBox(this);
+            QPixmap unlock(":/Icons/updates.png");
+            msgBox.setIconPixmap(unlock);
+            msgBox.setText("A new version has been found!");
+            msgBox.setInformativeText(QString("Would you like to open the link for version %1.%2.%3").arg(newVerMajor).arg(newVerMinor).arg(newVerPatch));
+            msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::Yes);
+            int exec = msgBox.exec();
+
+            if (exec == QMessageBox::Yes)
+            {
+                QUrl link_to_download(DevicePackage::getDownloadLink().toLatin1());
+                QDesktopServices::openUrl (link_to_download);
+            }
+        }
+        else
+        {
+            // Prepare a messagebox
+            QMessageBox msgBox(this);
+            QPixmap unlock(":/Icons/updates.png");
+            msgBox.setIconPixmap(unlock);
+            msgBox.setText("You are up to date!");
+            msgBox.setInformativeText("Nothing new under the sun, check later maybe.");
+            msgBox.setStandardButtons(QMessageBox::Ok);
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
         }
     }
     else
     {
-        // Prepare a messagebox
-        QMessageBox msgBox(this);
-        QPixmap unlock(":/Icons/updates.png");
-        msgBox.setIconPixmap(unlock);
-        msgBox.setText("You are up to date!");
-        msgBox.setInformativeText("Nothing new under the sun, check later maybe.");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setDefaultButton(QMessageBox::Ok);
-        msgBox.exec();
+        QMessageBox::critical(0, "Version check error!", "Unable to check for updates, please check your device package!");
     }
 }
 

@@ -1,11 +1,48 @@
 #include "devicepackage.h"
 
 // Define our static variables
-QString DevicePackage::deviceName;
-QString DevicePackage::download_link;
-QString DevicePackage::xda_link;
-QString DevicePackage::unlock_cmd;
-QString DevicePackage::lock_cmd;
+QString DevicePackage::deviceName   = "None";
+QString DevicePackage::options      = "2";
+QString DevicePackage::downloadLink;
+QString DevicePackage::xdaLink;
+QString DevicePackage::versionLink;
+QString DevicePackage::unlockCmd;
+QString DevicePackage::lockCmd;
+
+QString DevicePackage::getDeviceName()
+{
+    return deviceName;
+}
+
+QString DevicePackage::getDownloadLink()
+{
+    return downloadLink;
+}
+
+QString DevicePackage::getXdaLink()
+{
+    return xdaLink;
+}
+
+QString DevicePackage::getVersionLink()
+{
+    return versionLink;
+}
+
+QString DevicePackage::getUnlockCmd()
+{
+    return unlockCmd;
+}
+
+QString DevicePackage::getLockCmd()
+{
+    return lockCmd;
+}
+
+QString DevicePackage::getOptions()
+{
+    return options;
+}
 
 void DevicePackage::parseDevicePackage()
 {
@@ -20,71 +57,45 @@ void DevicePackage::parseDevicePackage()
 
     QFile file(temp_path.absolutePath()+"/Data/DevicePackage.xml");
 
-    // Open the temporary version file
-    if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::critical(0, "File Error", file.errorString());
+    // Open the temporary version file if possible
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::critical(0, "Device package file Error", file.errorString());
     }
+    else
+    {
+        // Read the file as XML format
+        QXmlStreamReader xml(&file);
 
-    // Read the file as XML format
-    QXmlStreamReader xml(&file);
+        // Start parsing the XML
+        while (!xml.atEnd()) {
+            xml.readNext();
 
-    // Start parsing the XML
-    while (!xml.atEnd()) {
-        xml.readNext();
+            // We store all the stuff in variables
+            if (xml.name() == "device")
+                DevicePackage::deviceName = xml.readElementText();
+            else if (xml.name() == "options")
+                DevicePackage::options = xml.readElementText();
+            else if (xml.name() == "downloads_link")
+                DevicePackage::downloadLink = xml.readElementText();
+            else if (xml.name() == "xda_link")
+                DevicePackage::xdaLink = xml.readElementText();
+            else if (xml.name() == "version_link")
+                DevicePackage::versionLink = xml.readElementText();
+            else if (xml.name() == "unlock")
+                DevicePackage::unlockCmd = xml.readElementText();
+            else if (xml.name() == "lock")
+                DevicePackage::lockCmd = xml.readElementText();
 
-        // We store all the stuff in variables
-        if(xml.name() == "device")
-        {
-            deviceName = xml.readElementText();
         }
-        else if (xml.name() == "downloads_link")
+        if (xml.hasError())
         {
-            download_link = xml.readElementText();
+            QMessageBox::critical(0, "XML Error", xml.errorString());
         }
-        else if (xml.name() == "xda_link")
-        {
-            xda_link = xml.readElementText();
-        }
-        else if (xml.name() == "unlock")
-        {
-            unlock_cmd = xml.readElementText();
-        }
-        else if (xml.name() == "lock")
-        {
-            lock_cmd = xml.readElementText();
-        }
+
+        // Close the reader
+        xml.clear();
+        // Close the file
+        file.close();
     }
-    if (xml.hasError()) {
-        QMessageBox::critical(0, "XML Error", xml.errorString());
-    }
-
-    // Close the reader
-    xml.clear();
-    // Close the file
-    file.close();
-}
-
-QString DevicePackage::getDevicePackage()
-{
-    return deviceName;
-}
-
-QString DevicePackage::getDownloadLink()
-{
-    return download_link;
-}
-
-QString DevicePackage::getXdaLink()
-{
-    return xda_link;
-}
-
-QString DevicePackage::getUnlockCommand()
-{
-    return unlock_cmd;
-}
-
-QString DevicePackage::getLockCommand()
-{
-    return lock_cmd;
 }

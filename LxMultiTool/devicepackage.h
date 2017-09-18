@@ -11,17 +11,21 @@ class DevicePackage
 {
 private:
     static QString deviceName;
-    static QString download_link;
-    static QString xda_link;
-    static QString unlock_cmd;
-    static QString lock_cmd;
+    static QString options;
+    static QString downloadLink;
+    static QString xdaLink;
+    static QString versionLink;
+    static QString unlockCmd;
+    static QString lockCmd;
 public:
     static void parseDevicePackage();
-    static QString getDevicePackage();
+    static QString getDeviceName();
     static QString getDownloadLink();
     static QString getXdaLink();
-    static QString getUnlockCommand();
-    static QString getLockCommand();
+    static QString getVersionLink();
+    static QString getUnlockCmd();
+    static QString getLockCmd();
+    static QString getOptions();
 };
 
 #endif // DEVICEPACKAGE_H

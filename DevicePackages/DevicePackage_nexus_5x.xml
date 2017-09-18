@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <device_package>
+	<!-- The device name is only displayed as an information -->
 	<device>LG Nexus 5X</device>
+	<!--
+	Available options:
+		1 - Nexus devices (all options)
+		2 - Other devices (no bootloader lock/unlock, no return to stock)
+	-->
+	<options>1</options>
+	<!-- This link will be used in case of a new available update -->
 	<downloads_link>https://www.androidfilehost.com/?w=files&amp;flid=46694</downloads_link>
+	<!-- This link is used for a quick-jump to the xda thread -->
 	<xda_link>http://forum.xda-developers.com/nexus-5x/development/tool-5x-multi-tool-v0-1-t3216388</xda_link>
+	<!-- This link is used in order to check for a new version -->
+	<version_link>https://raw.githubusercontent.com/lexmazter/LxMultiTool/master/version.txt</version_link>
+	<!-- This command is used for unlocking the bootloader (leave empty if not applicabble) -->
 	<unlock>oem unlock</unlock>
+	<!-- This command is used for locking the bootloader (leave empty if not applicabble) -->
 	<lock>oem lock</lock>
 </device_package>
