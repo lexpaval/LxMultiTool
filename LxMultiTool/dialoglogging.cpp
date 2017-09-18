@@ -1,12 +1,12 @@
 #include "dialoglogging.h"
 #include "ui_dialoglogging.h"
+#include <paths.h>
 
 DialogLogging::DialogLogging(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogLogging)
 {
     ui->setupUi(this);
-    busy = new bool(false);
 
     // Configure the table
     ui->tableWidget->setColumnCount(2);
@@ -58,7 +58,7 @@ void DialogLogging::getFiles()
 #endif
 
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Logfiles/"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+pathLogfiles),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -114,7 +114,7 @@ void DialogLogging::processFinished(int exitCode)
         msgBox.exec();
     }
 
-    *busy = false;
+    busy = false;
 
     ui->tableWidget->setEnabled(true);
     ui->buttonBox->setEnabled(true);
@@ -140,7 +140,7 @@ void DialogLogging::on_getLogButton_clicked()
 #endif
 
             // Restrict from closing while getting the log
-            *busy = true;
+            busy = true;
 
             // UI restrictions
             ui->tableWidget->setEnabled(false);
@@ -165,7 +165,7 @@ void DialogLogging::on_getLogButton_clicked()
                 connect( process_log, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
                 // Restrict from closing while flashing
-                *busy = true;
+                busy = true;
 
                 process_log->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -215,14 +215,14 @@ void DialogLogging::on_getLogButton_clicked()
 #endif
 
             // Restrict from closing while getting the log
-            *busy = true;
+            busy = true;
 
             // UI restrictions
             ui->tableWidget->setEnabled(false);
             ui->buttonBox->setEnabled(false);
             ui->getLogButton->setEnabled(false);
 
-            QString fileName = QFileDialog::getSaveFileName(this, tr("Select logfile name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+"/Logfiles")), tr("Text File (*.txt)"));
+            QString fileName = QFileDialog::getSaveFileName(this, tr("Select logfile name or a custom folder"), QDir::toNativeSeparators(QString(temp_path.absolutePath()+pathLogfiles)), tr("Text File (*.txt)"));
             QProcess* process_log = new QProcess(this);
             QString logCommand;
 
@@ -240,7 +240,7 @@ void DialogLogging::on_getLogButton_clicked()
                 connect( process_log, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
                 // Restrict from closing while flashing
-                *busy = true;
+                busy = true;
 
                 process_log->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data"));
 #ifdef Q_OS_WIN
@@ -315,14 +315,14 @@ void DialogLogging::on_openFolderButton_clicked()
     temp_path.cdUp();
 #endif
 
-    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Logfiles");
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+pathLogfiles);
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 
 void DialogLogging::closeEvent(QCloseEvent *event)
 {
     // Let's decide if it's safe to exit or not
-    if(*busy == true)
+    if(busy)
     {
         event->ignore();
     }
@@ -360,7 +360,7 @@ void DialogLogging::on_actionDelete_triggered()
             temp_path.cdUp();
 #endif
 
-            QFile file(temp_path.absolutePath()+"/Logfiles/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
+            QFile file(temp_path.absolutePath()+pathLogfiles+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
             file.remove();
 
             getFiles();

@@ -1,12 +1,12 @@
 #include "dialoginstallapk.h"
 #include "ui_dialoginstallapk.h"
+#include <paths.h>
 
 DialogInstallApk::DialogInstallApk(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogInstallApk)
 {
     ui->setupUi(this);
-    busy = new bool(false);
 
     // Configure the table
     ui->tableWidget->setColumnCount(2);
@@ -60,7 +60,7 @@ void DialogInstallApk::getFiles()
     ui->tableWidget->setRowCount(0);
 
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Apk"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+pathApk),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -116,7 +116,7 @@ void DialogInstallApk::processFinished(int exitCode)
         msgBox.exec();
     }
 
-    *busy = false;
+    busy = false;
 
     ui->tableWidget->setEnabled(true);
     ui->buttonBox->setEnabled(true);
@@ -139,13 +139,13 @@ void DialogInstallApk::on_installButton_clicked()
 #endif
 
             QProcess* process_flash = new QProcess(this);
-            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Apk")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+pathApk)+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
             QString application;
 
             connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
             // Restrict from closing while flashing
-            *busy = true;
+            busy = true;
 
             process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -188,7 +188,7 @@ void DialogInstallApk::on_installButton_clicked()
 void DialogInstallApk::closeEvent(QCloseEvent *event)
 {
     // Let's decide if it's safe to exit or not
-    if(*busy == true)
+    if(busy)
     {
         event->ignore();
     }
@@ -207,7 +207,7 @@ void DialogInstallApk::on_exploreButton_clicked()
     temp_path.cdUp();
 #endif
 
-    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Apk");
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+pathApk);
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 
@@ -241,7 +241,7 @@ void DialogInstallApk::on_actionDelete_triggered()
             temp_path.cdUp();
 #endif
 
-            QFile file(temp_path.absolutePath()+"/Data/Apk/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
+            QFile file(temp_path.absolutePath()+pathApk+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
             file.remove();
 
             getFiles();

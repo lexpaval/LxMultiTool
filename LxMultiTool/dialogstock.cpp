@@ -1,13 +1,12 @@
 #include "dialogstock.h"
 #include "ui_dialogstock.h"
+#include <paths.h>
 
 DialogStock::DialogStock(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogStock)
 {
     ui->setupUi(this);
-
-    busy = new bool(false);
 
     // Configure the table
     ui->tableWidget->setColumnCount(2);
@@ -64,7 +63,7 @@ void DialogStock::getFiles()
     ui->tableWidget->setRowCount(0);
 
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"),QDirIterator::NoIteratorFlags);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+pathStockPackages),QDirIterator::NoIteratorFlags);
 
     while(dirit.hasNext())
     {
@@ -153,7 +152,7 @@ void DialogStock::processFinished(int exitCode)
         msgBox.exec();
     }
 
-    *busy = false;
+    busy = false;
 
     ui->tableWidget->setEnabled(true);
     ui->buttonBox->setEnabled(true);
@@ -186,13 +185,13 @@ void DialogStock::on_flashButton_clicked()
             QString image_path;
 
             QProcess* process_flash = new QProcess(this);
-            QString temp_folder = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"/");
+            QString temp_folder = QDir::toNativeSeparators(temp_path.absolutePath()+pathStockPackages+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"/");
 
             connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
             connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
             // Restrict from closing while flashing
-            *busy = true;
+            busy = true;
 
             QDirIterator dirit(temp_folder,QDirIterator::Subdirectories);
 
@@ -328,7 +327,7 @@ void DialogStock::on_flashButton_clicked()
 void DialogStock::closeEvent(QCloseEvent *event)
 {
     // Let's decide if it's safe to exit or not
-    if(*busy == true)
+    if(busy)
     {
         event->ignore();
     }
@@ -347,7 +346,7 @@ void DialogStock::on_exploreButton_clicked()
     temp_path.cdUp();
 #endif
 
-    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/StockPackages/");
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+pathStockPackages);
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 
@@ -386,7 +385,7 @@ void DialogStock::on_actionDelete_triggered()
             temp_path.cdUp();
 #endif
 
-            QDir folder(temp_path.absolutePath()+"/Data/StockPackages/"+ui->tableWidget->currentItem()->text());
+            QDir folder(temp_path.absolutePath()+pathStockPackages+ui->tableWidget->currentItem()->text());
             folder.removeRecursively();
 
             getFiles();

@@ -1,5 +1,6 @@
 #include "dialogrecovery.h"
 #include "ui_dialogrecovery.h"
+#include <paths.h>
 
 DialogRecovery::DialogRecovery(QWidget *parent) :
     QDialog(parent),
@@ -63,7 +64,7 @@ void DialogRecovery::getFiles()
 #endif
 
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Recoveries/"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+pathRecoveries),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -147,7 +148,7 @@ void DialogRecovery::processFinished(int exitCode)
         msgBox.exec();
     }
 
-    *busy = false;
+    busy = false;
 
     ui->progressBar->setValue(100);
     ui->tableWidget->setEnabled(true);
@@ -171,14 +172,14 @@ void DialogRecovery::on_flashButton_clicked()
 #endif
 
             QProcess* process_flash = new QProcess(this);
-            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Recoveries/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+pathRecoveries)+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
             QString recovery;
 
             connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
             connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
             // Restrict from closing while flashing
-            *busy = true;
+            busy = true;
 
             process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -223,7 +224,7 @@ void DialogRecovery::on_flashButton_clicked()
 void DialogRecovery::closeEvent(QCloseEvent *event)
 {
     // Let's decide if it's safe to exit or not
-    if(*busy == true)
+    if(busy)
     {
         event->ignore();
     }
@@ -242,7 +243,7 @@ void DialogRecovery::on_exploreButton_clicked()
     temp_path.cdUp();
 #endif
 
-    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Recoveries");
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+pathRecoveries);
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 
@@ -282,7 +283,7 @@ void DialogRecovery::on_actionDelete_triggered()
             temp_path.cdUp();
 #endif
 
-            QFile file(temp_path.absolutePath()+"/Data/Recoveries/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
+            QFile file(temp_path.absolutePath()+pathRecoveries+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
             file.remove();
 
             getFiles();
@@ -318,19 +319,19 @@ void DialogRecovery::on_bootButton_clicked()
 #endif
 
             QProcess* process_boot = new QProcess(this);
-            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Recoveries/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+pathRecoveries)+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
             QString recovery;
 
             connect( process_boot, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
             // Restrict from closing while booting
-            *busy = true;
+            busy = true;
 
             process_boot->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
             // Windows code here
             process_boot->start("cmd");
-            recovery = "fastboot.exe -c \"lge.kcal=0|0|0|x\" boot \"" + temp_cmd;
+            recovery = "fastboot.exe-c \"lge.kcal=0|0|0|x\" boot \"" + temp_cmd;
 #elif defined(Q_OS_MACX)
             // MAC code here
             process_boot->start("sh");

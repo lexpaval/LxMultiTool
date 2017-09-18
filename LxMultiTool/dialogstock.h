@@ -39,7 +39,7 @@ private slots:
 
 private:
     Ui::DialogStock *ui;
-    bool *busy;
+    bool busy = false;
     void closeEvent(QCloseEvent *event);
     void getFiles();
 };

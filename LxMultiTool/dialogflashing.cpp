@@ -1,13 +1,12 @@
 #include "dialogflashing.h"
 #include "ui_dialogflashing.h"
+#include <paths.h>
 
 DialogFlashing::DialogFlashing(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogFlashing)
 {
     ui->setupUi(this);
-
-    busy = new bool(false);
 
     // Configure the table
     ui->tableWidget->setColumnCount(2);
@@ -64,7 +63,7 @@ void DialogFlashing::getFiles()
 #endif
 
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Flashable/"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+pathFlashable),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -112,7 +111,7 @@ void DialogFlashing::on_tableWidget_itemClicked()
 void DialogFlashing::closeEvent(QCloseEvent *event)
 {
     // Let's decide if it's safe to exit or not
-    if(*busy == true)
+    if(busy)
     {
         event->ignore();
     }
@@ -145,7 +144,7 @@ void DialogFlashing::on_actionDelete_triggered()
             temp_path.cdUp();
 #endif
 
-            QFile file(temp_path.absolutePath()+"/Data/Flashable/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
+            QFile file(temp_path.absolutePath()+pathFlashable+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
             file.remove();
 
             getFiles();
@@ -201,7 +200,7 @@ void DialogFlashing::processFinished(int exitCode)
         msgBox.exec();
     }
 
-    *busy = false;
+    busy = false;
 
     ui->tableWidget->setEnabled(true);
     ui->buttonBox->setEnabled(true);
@@ -230,12 +229,12 @@ void DialogFlashing::on_flashButton_clicked()
 #endif
 
             QProcess* process_flash = new QProcess(this);
-            QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators("/Data/Flashable/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators(pathFlashable)+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
 
             connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
             // Restrict from closing while flashing
-            *busy = true;
+            busy = true;
 
             if(ui->bootloaderRadio->isChecked())
             {
@@ -717,7 +716,7 @@ void DialogFlashing::on_exploreButton_clicked()
     temp_path.cdUp();
 #endif
 
-    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Flashable");
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+pathFlashable);
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 

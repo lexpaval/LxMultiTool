@@ -42,7 +42,7 @@ private slots:
 
 private:
     Ui::DialogBackups *ui;
-    bool *busy;
+    bool busy = false;
     void getFiles();
     void closeEvent(QCloseEvent *event);
 };

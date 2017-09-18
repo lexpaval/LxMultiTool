@@ -1,12 +1,12 @@
 #include "dialogbackups.h"
 #include "ui_dialogbackups.h"
+#include <paths.h>
 
 DialogBackups::DialogBackups(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogBackups)
 {
     ui->setupUi(this);
-    busy = new bool(false);
 
     // Configure the table
     ui->tableWidget->setColumnCount(2);
@@ -60,7 +60,7 @@ void DialogBackups::getFiles()
 #endif
 
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/Backup/"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+pathBackup),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -131,7 +131,7 @@ void DialogBackups::processFinishedBackup(int exitCode)
         msgBox.exec();
     }
 
-    *busy = false;
+    busy = false;
 
     ui->tableWidget->setEnabled(true);
     ui->buttonBox_2->setEnabled(true);
@@ -177,7 +177,7 @@ void DialogBackups::processFinishedRestore(int exitCode)
         msgBox.exec();
     }
 
-    *busy = false;
+    busy = false;
 
     ui->tableWidget->setEnabled(true);
     ui->buttonBox_2->setEnabled(true);
@@ -220,7 +220,7 @@ void DialogBackups::on_actionDelete_triggered()
             temp_path.cdUp();
 #endif
 
-            QFile file(temp_path.absolutePath()+"/Data/Backup/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
+            QFile file(temp_path.absolutePath()+pathBackup+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
             file.remove();
 
             getFiles();
@@ -347,13 +347,13 @@ void DialogBackups::on_restoreButton_clicked()
 #endif
 
             QProcess* process_restore = new QProcess(this);
-            QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators("/Data/Backup/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators(pathBackup)+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
             QString restore;
 
             connect( process_restore, SIGNAL(finished(int)), this, SLOT(processFinishedRestore(int)));
 
             // Restrict from closing while flashing
-            *busy = true;
+            busy = true;
 
             process_restore->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -397,7 +397,7 @@ void DialogBackups::on_restoreButton_clicked()
 void DialogBackups::closeEvent(QCloseEvent *event)
 {
     // Let's decide if it's safe to exit or not
-    if(*busy == true)
+    if(busy)
     {
         event->ignore();
     }

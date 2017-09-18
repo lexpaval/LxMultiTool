@@ -1,12 +1,12 @@
 #include "dialogsideload.h"
 #include "ui_dialogsideload.h"
+#include <paths.h>
 
 DialogSideload::DialogSideload(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogSideload)
 {
     ui->setupUi(this);
-    busy = new bool(false);
 
     // Configure the table
     ui->tableWidget->setColumnCount(2);
@@ -62,7 +62,7 @@ void DialogSideload::getFiles()
     ui->tableWidget->setRowCount(0);
 
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Sideload"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+pathSideload),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -100,7 +100,7 @@ void DialogSideload::getFiles()
 void DialogSideload::closeEvent(QCloseEvent *event)
 {
     // Let's decide if it's safe to exit or not
-    if(*busy == true)
+    if(busy)
     {
         event->ignore();
     }
@@ -159,7 +159,7 @@ void DialogSideload::processFinished(int exitCode)
         msgBox.exec();
     }
 
-    *busy = false;
+    busy = false;
 
     ui->progressBar->setVisible(false);
     ui->tableWidget->setEnabled(true);
@@ -184,14 +184,14 @@ void DialogSideload::on_sideloadButton_clicked()
 #endif
 
             QProcess* process_flash = new QProcess(this);
-            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+"/Sideload/")+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString temp_cmd = QDir::toNativeSeparators(temp_path.absolutePath()+pathSideload)+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
             QString sideload;
 
             connect( process_flash, SIGNAL(readyReadStandardOutput()), this, SLOT(processOutput()));
             connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
             // Restrict from closing while flashing
-            *busy = true;
+            busy = true;
 
             process_flash->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -244,7 +244,7 @@ void DialogSideload::on_exploreButton_clicked()
     temp_path.cdUp();
 #endif
 
-    QString path = QDir::toNativeSeparators((temp_path.absolutePath()+"/Sideload"));
+    QString path = QDir::toNativeSeparators((temp_path.absolutePath()+pathSideload));
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 
@@ -283,7 +283,7 @@ void DialogSideload::on_actionDelete_triggered()
             temp_path.cdUp();
 #endif
 
-            QFile file(temp_path.absolutePath()+"/Sideload/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
+            QFile file(temp_path.absolutePath()+pathSideload+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
             file.remove();
 
             getFiles();

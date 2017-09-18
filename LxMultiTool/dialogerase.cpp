@@ -6,7 +6,6 @@ DialogErase::DialogErase(QWidget *parent) :
     ui(new Ui::DialogErase)
 {
     ui->setupUi(this);
-    busy = new bool(false);
 }
 
 DialogErase::~DialogErase()
@@ -244,7 +243,7 @@ void DialogErase::processFinished(int exitCode)
         msgBox.exec();
     }
 
-    *busy = false;
+    busy = false;
 
     ui->groupBox->setEnabled(true);
     ui->eraseButton->setEnabled(true);
@@ -253,7 +252,7 @@ void DialogErase::processFinished(int exitCode)
 void DialogErase::closeEvent(QCloseEvent *event)
 {
     // Let's decide if it's safe to exit or not
-    if(*busy == true)
+    if(busy)
     {
         event->ignore();
     }

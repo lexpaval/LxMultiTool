@@ -28,7 +28,7 @@ private slots:
 
 private:
     Ui::DialogErase *ui;
-    bool *busy;
+    bool busy = false;
     void closeEvent(QCloseEvent *event);
 };
 

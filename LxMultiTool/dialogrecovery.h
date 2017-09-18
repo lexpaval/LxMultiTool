@@ -40,7 +40,7 @@ private slots:
 
 private:
     Ui::DialogRecovery *ui;
-    bool *busy;
+    bool busy = false;
     void getFiles();
     void closeEvent(QCloseEvent *event);
 };

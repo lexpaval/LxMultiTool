@@ -49,7 +49,8 @@ HEADERS  += mainwindow.h \
     dialoginstallapk.h \
     deviceconnection.h \
     dialogflashing.h \
-    devicepackage.h
+    devicepackage.h \
+    paths.h
 
 FORMS    += mainwindow.ui \
     dialogrecovery.ui \

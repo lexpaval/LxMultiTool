@@ -1,12 +1,12 @@
 #include "dialogscreenshot.h"
 #include "ui_dialogscreenshot.h"
+#include <paths.h>
 
 DialogScreenshot::DialogScreenshot(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogScreenshot)
 {
     ui->setupUi(this);
-    busy = new bool(false);
 
     // Configure the table
     ui->tableWidget->setColumnCount(2);
@@ -58,7 +58,7 @@ void DialogScreenshot::getFiles()
     ui->tableWidget->setRowCount(0);
 
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+"/Screenshots/"),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath() + pathScreenshots),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -114,7 +114,7 @@ void DialogScreenshot::processFinished(int exitCode)
         msgBox.exec();
     }
 
-    *busy = false;
+    busy = false;
 
     ui->tableWidget->setEnabled(true);
     ui->buttonBox->setEnabled(true);
@@ -135,14 +135,14 @@ void DialogScreenshot::on_exploreButton_clicked()
     temp_path.cdUp();
 #endif
 
-    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+"/Screenshots");
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+pathScreenshots);
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 
 void DialogScreenshot::closeEvent(QCloseEvent *event)
 {
     // Let's decide if it's safe to exit or not
-    if(*busy == true)
+    if(busy)
     {
         event->ignore();
     }
@@ -164,7 +164,7 @@ void DialogScreenshot::on_getScreenButton_clicked()
 #endif
 
         // Restrict from closing while getting the log
-        *busy = true;
+        busy = true;
 
         // UI restrictions
         ui->tableWidget->setEnabled(false);
@@ -186,7 +186,7 @@ void DialogScreenshot::on_getScreenButton_clicked()
             connect( process_screen, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
             // Restrict from closing while flashing
-            *busy = true;
+            busy = true;
 
             process_screen->setWorkingDirectory(QDir::toNativeSeparators(temp_path.absolutePath()+"/Data/"));
 #ifdef Q_OS_WIN
@@ -270,7 +270,7 @@ void DialogScreenshot::on_actionDelete_triggered()
             temp_path.cdUp();
 #endif
 
-            QFile file(temp_path.absolutePath()+"/Screenshots/"+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
+            QFile file(temp_path.absolutePath()+pathScreenshots+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
             file.remove();
 
             getFiles();

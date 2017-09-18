@@ -37,7 +37,7 @@ private slots:
 
 private:
     Ui::DialogSideload *ui;
-    bool *busy;
+    bool busy = false;
     void closeEvent(QCloseEvent *event);
     void getFiles();
 };

@@ -38,7 +38,7 @@ private slots:
 
 private:
     Ui::DialogScreenshot *ui;
-    bool *busy;
+    bool busy = false;
     void closeEvent(QCloseEvent *event);
     void getFiles();
 };
