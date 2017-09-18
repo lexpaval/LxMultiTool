@@ -63,7 +63,7 @@ void DialogFlashing::getFiles()
 #endif
 
     // Let's populate the list
-    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+pathFlashable),QDirIterator::Subdirectories);
+    QDirIterator dirit(QDir::toNativeSeparators(temp_path.absolutePath()+pathImages),QDirIterator::Subdirectories);
 
     while(dirit.hasNext())
     {
@@ -144,7 +144,7 @@ void DialogFlashing::on_actionDelete_triggered()
             temp_path.cdUp();
 #endif
 
-            QFile file(temp_path.absolutePath()+pathFlashable+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
+            QFile file(temp_path.absolutePath()+pathImages+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text());
             file.remove();
 
             getFiles();
@@ -229,7 +229,7 @@ void DialogFlashing::on_flashButton_clicked()
 #endif
 
             QProcess* process_flash = new QProcess(this);
-            QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators(pathFlashable)+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
+            QString temp_cmd = temp_path.absolutePath()+QDir::toNativeSeparators(pathImages)+ui->tableWidget->item(ui->tableWidget->currentRow() ,0)->text()+"\"\n";
 
             connect( process_flash, SIGNAL(finished(int)), this, SLOT(processFinished(int)));
 
@@ -716,7 +716,7 @@ void DialogFlashing::on_exploreButton_clicked()
     temp_path.cdUp();
 #endif
 
-    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+pathFlashable);
+    QString path = QDir::toNativeSeparators(temp_path.absolutePath()+pathImages);
     QDesktopServices::openUrl(QUrl("file:///" + path));
 }
 

@@ -5,7 +5,6 @@
 const char pathScreenshots[]    = "/Data/Screenshots/";
 const char pathApk[]            = "/Data/Apk/";
 const char pathBackup[]         = "/Data/Backup/";
-const char pathFlashable[]      = "/Data/Flashable/";
 const char pathImages[]         = "/Data/Images/";
 const char pathLogfiles[]       = "/Data/Logfiles/";
 const char pathRecoveries[]     = "/Data/Recoveries/";
