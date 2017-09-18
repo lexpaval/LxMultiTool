@@ -4,9 +4,13 @@ Screenshots
 Sideload
 build-LxMultiTool-Desktop_Qt_5_5_1_GCC_64bit-Debug
 build-LxMultiTool-Desktop_Qt_5_5_1_MinGW_32bit-Debug
+build-LxMultiTool-Desktop_Qt_5_7_0_MinGW_32bit-Debug
+build-LxMultiTool-Desktop_Qt_5_8_0_MinGW_32bit-Debug
 build-LxMultiTool-Desktop_Qt_5_5_1_clang_64bit-Debug
 build-LxMultiTool-Desktop_Qt_5_5_1_GCC_64bit-Release
 build-LxMultiTool-Desktop_Qt_5_5_1_MinGW_32bit-Release
+build-LxMultiTool-Desktop_Qt_5_7_0_MinGW_32bit-Release
+build-LxMultiTool-Desktop_Qt_5_8_0_MinGW_32bit-Release
 build-LxMultiTool-Desktop_Qt_5_5_1_clang_64bit-Release
 build-LxMultiTool-Desktop_Qt_5_7_1_clang_64bit-Debug
 build-LxMultiTool-Desktop_Qt_5_7_1_clang_64bit-Release
